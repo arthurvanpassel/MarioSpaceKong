@@ -22,8 +22,9 @@ bootcamp.Game.prototype = {
       up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
     };
 
-		this.barrel = this.add.sprite(0, this.game.world.centerY, 'barrel');
-		this.barrel.scale.setTo(0.1);
+		this.barrel = this.add.sprite(0, bootcamp._HEIGHT - 2, 'barrel');
+		this.barrel.scale.setTo(0.15, 0.2);
+		this.barrel.anchor.setTo(0.5);
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
 		this.barrel.body.collideWorldBounds = true;
 
@@ -46,7 +47,7 @@ bootcamp.Game.prototype = {
 			this.player.scale.setTo(1, 1);
 		}
 		if (controls.up.isDown && this.player.body.blocked.down) {
-			this.player.body.velocity.y -= 200;
+			this.player.body.velocity.y -= 300;
 		}
 
 		if (this.player.body.blocked.down) {
@@ -63,13 +64,21 @@ bootcamp.Game.prototype = {
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
 		var barrelMoveLeft = false;
+		if (this.barrel.body.blocked.right) {
+			barrelMoveLeft = true;
+			console.log('move tot the left');
+		}
+		if (this.barrel.body.blocked.left) {
+			barrelMoveLeft = false;
+			console.log('move tot the right');
+		}
 		if (barrelMoveLeft) {
 			this.barrel.body.velocity.x -= 100
-			this.barrel.angle += 50;
+			this.barrel.angle -= 10;
 		}
 		else {
 			this.barrel.body.velocity.x += 100
-			this.barrel.angle += 50;
+			this.barrel.angle += 10;
 		}
 
 
