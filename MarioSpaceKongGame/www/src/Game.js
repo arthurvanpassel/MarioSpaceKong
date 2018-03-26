@@ -26,6 +26,7 @@ bootcamp.Game.prototype = {
 		this.barrel.scale.setTo(0.15, 0.2);
 		this.barrel.anchor.setTo(0.5);
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
+		this.barrel.body.immovable = true;
 		this.barrel.body.collideWorldBounds = true;
 
 		//bootcamp._player = this.player;
@@ -63,23 +64,16 @@ bootcamp.Game.prototype = {
 		}
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
-		var barrelMoveLeft = false;
 		if (this.barrel.body.blocked.right) {
-			barrelMoveLeft = true;
-			console.log('move tot the left');
+			this.barrel.body.x = 0;
+
 		}
-		if (this.barrel.body.blocked.left) {
-			barrelMoveLeft = false;
-			console.log('move tot the right');
-		}
-		if (barrelMoveLeft) {
-			this.barrel.body.velocity.x -= 100
-			this.barrel.angle -= 10;
-		}
-		else {
-			this.barrel.body.velocity.x += 100
-			this.barrel.angle += 10;
-		}
+		this.barrel.body.velocity.x += 100
+		this.barrel.angle += 10;
+
+		this.physics.arcade.collide(this.player, this.barrel, function() {
+			console.log('death');
+		});
 
 
 	},
