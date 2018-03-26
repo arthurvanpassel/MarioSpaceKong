@@ -27,6 +27,21 @@ bootcamp.Game.prototype = {
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
 		this.barrel.body.collideWorldBounds = true;
 
+		
+			_WIDTH = 200;
+			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
+		
+		var platforms = this.add.group();
+		//platforms.enableBody = true;
+
+		var steel = platforms.create(0,0, 'steel');
+		steel.scale.setTo(0.5);
+		//steel.body.immovable = true;
+		
+		//create random platforms
+		for(i = 0, w=0; i < _HEIGHT;){
+			i= _HEIGHT;
+		}
 		//bootcamp._player = this.player;
 		//window.addEventListener("deviceorientation", this.handleOrientation, true);
 

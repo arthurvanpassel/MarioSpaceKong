@@ -12,6 +12,7 @@ bootcamp.Preloader.prototype = {
 		this.load.image('title', 'img/title.png');
 		this.load.image('screen-mainmenu', 'img/screen-mainmenu.png');
 		this.load.image('screen-howtoplay', 'img/screen-howtoplay.png');
+		this.load.image('steel', 'img/steel.png');
 
 		this.load.spritesheet('button-start', 'img/button-start.png', 146, 51);
 	},
