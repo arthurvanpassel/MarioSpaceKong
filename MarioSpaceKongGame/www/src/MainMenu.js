@@ -1,5 +1,5 @@
-TestGame.MainMenu = function(game) {};
-TestGame.MainMenu.prototype = {
+bootcamp.MainMenu = function(game) {};
+bootcamp.MainMenu.prototype = {
 	create: function() {
 		this.add.sprite(0, 0, 'screen-mainmenu');
 		this.gameTitle = this.add.sprite(TestGame._WIDTH*0.5, 40, 'title');

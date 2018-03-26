@@ -1,6 +1,6 @@
-TestGame.Howto = function(game) {
+bootcamp.Howto = function(game) {
 };
-TestGame.Howto.prototype = {
+bootcamp.Howto.prototype = {
 	create: function() {
 		this.buttonContinue = this.add.button(0, 0, 'screen-howtoplay', this.startGame, this);
 	},

@@ -1,9 +1,9 @@
-var TestGame = {
-	_WIDTH: 320,
-	_HEIGHT: 480
+var bootcamp = {
+	_WIDTH: window.innerWidth * window.devicePixelRatio,
+	_HEIGHT: window.innerHeight * window.devicePixelRatio
 };
-TestGame.Boot = function(game) {};
-TestGame.Boot.prototype = {
+bootcamp.Boot = function(game) {};
+bootcamp.Boot.prototype = {
 	preload: function() {
 		this.load.image('preloaderBg', 'img/loading-bg.png');
 		this.load.image('preloaderBar', 'img/loading-bar.png');

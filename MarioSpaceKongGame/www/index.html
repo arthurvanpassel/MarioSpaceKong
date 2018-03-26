@@ -28,12 +28,12 @@
         }, 5000, false);
     });
     (function() {
-        var game = new Phaser.Game(320, 480, Phaser.CANVAS, 'game');
-        game.state.add('Boot', TestGame.Boot);
-        game.state.add('Preloader', TestGame.Preloader);
-        game.state.add('MainMenu', TestGame.MainMenu);
-        game.state.add('Howto', TestGame.Howto);
-        game.state.add('Game', TestGame.Game);
+        var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
+        game.state.add('Boot', bootcamp.Boot);
+        game.state.add('Preloader', bootcamp.Preloader);
+        game.state.add('MainMenu', bootcamp.MainMenu);
+        game.state.add('Howto', bootcamp.Howto);
+        game.state.add('Game', bootcamp.Game);
         game.state.start('Boot');
     })();
     </script>
