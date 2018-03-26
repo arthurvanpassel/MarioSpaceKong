@@ -36,7 +36,7 @@ bootcamp.Game.prototype = {
 
 		
 		var platforms = this.add.group();
-		//platforms.enableBody = true;
+		platforms.enableBody = true;
 
 		
 		
@@ -48,8 +48,8 @@ bootcamp.Game.prototype = {
 				
 				var steel = platforms.create(w,i, 'steel');
 				steel.scale.setTo(0.5);
-			
-				//this.steel.body.immovable = true;
+				
+				this.steel.body.immovable = true;
 				
 				i +=1.5;
 				w +=22;
