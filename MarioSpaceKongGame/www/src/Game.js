@@ -22,13 +22,21 @@ bootcamp.Game.prototype = {
       up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
     };
 
+		this.barrel = this.add.sprite(0, this.game.world.centerY, 'barrel');
+		this.barrel.scale.setTo(0.5);
+		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
+		this.barrel.body.collideWorldBounds = true;
+
 		//bootcamp._player = this.player;
 		//window.addEventListener("deviceorientation", this.handleOrientation, true);
 
 	},
 	update: function() {
+		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.scale.setTo(5);
 		this.player.body.velocity.x = 0;
+		this.barrel.body.velocity.x = 0;
+
 		if(controls.left.isDown) {
 			this.player.body.velocity.x -= 500;
 			this.player.scale.setTo(-5, 5);
@@ -51,6 +59,17 @@ bootcamp.Game.prototype = {
 		}
 		else {
 			this.player.animations.play('jump');
+		}
+
+		//-----BARREL-MOVEMENT-------------------------------------------------------------
+		var barrelMoveLeft = false;
+		if (barrelMoveLeft) {
+			this.barrel.body.velocity.x -= 500
+			this.barrel.angle += 50;
+		}
+		else {
+			this.barrel.body.velocity.x += 500
+			this.barrel.angle += 50;
 		}
 
 
