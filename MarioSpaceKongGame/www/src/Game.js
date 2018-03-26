@@ -25,6 +25,11 @@ bootcamp.Game.prototype = {
 		this.borderGroup.setAll('body.immovable', true);
 	},
 	update: function() {
+        /-----PLAYER-MOVEMENT-------/
+		this.player.scale.setTo(1);
+		this.player.body.velocity.x = 0;
+
+        
 		if(this.keys.left.isDown) {
 			this.player.body.velocity.x -= this.movementForce;
 		}
