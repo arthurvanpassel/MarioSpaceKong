@@ -7,7 +7,7 @@ bootcamp.Preloader.prototype = {
         
         //SPRITES
         
-        game.load.spritesheet('enemy1', 'img/enemy-sprites.png', 6, 18, )
+        this.load.spritesheet('enemy1', 'img/enemy-sprites.png', 6, 18, )
     },
     
 	create: function() {
