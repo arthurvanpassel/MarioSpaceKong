@@ -3,10 +3,10 @@ bootcamp.Game.prototype = {
     create: function () {
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
-
+        this.bg = this.add.sprite(0, 0, 'bg');
+        
         this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
         this.player.anchor.set(0.5);
-        this.player.scale.setTo(10);
         this.player.smoothed = false;
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 600;
@@ -16,9 +16,6 @@ bootcamp.Game.prototype = {
         this.player.animations.add('walk', [0, 1, 2, 3], 10, true);
         this.player.animations.add('jump', [6], 1, true);
         
-        this.bg = this.add.sprite(0, 0, 'bg');
-
-
         this.keys = this.game.input.keyboard.createCursorKeys();
 
         bootcamp._player = this.player;
@@ -46,10 +43,10 @@ bootcamp.Game.prototype = {
             this.player.animations.play('idle');
         }else if (this.player.body.velocity.x > 0){
             this.player.animations.play('walk');
-            this.player.scale.x = 10;
+            this.player.scale.x = 1;
         }else {
             this.player.animations.play('walk');
-            this.player.scale.x = -10;
+            this.player.scale.x = -1;
         }
         if(this.player.body.velocity.y < 0) {
             this.player.animations.play('jump');
