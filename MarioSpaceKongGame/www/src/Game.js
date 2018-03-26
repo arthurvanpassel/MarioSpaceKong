@@ -4,9 +4,9 @@ bootcamp.Game.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
 
-		this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
-		this.player.anchor.set(0.5);
-		this.physics.enable(this.player, Phaser.Physics.ARCADE);
+		this.enemy = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'enemy1');
+		this.enemy.anchor.set(0.5);
+		this.physics.enable(this.enemy, Phaser.Physics.ARCADE);
 
 		this.keys = this.game.input.keyboard.createCursorKeys();
 
