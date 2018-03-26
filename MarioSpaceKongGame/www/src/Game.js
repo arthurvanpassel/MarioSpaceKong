@@ -3,39 +3,57 @@ bootcamp.Game.prototype = {
 	create: function() {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
-
 		this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
+		this.player.scale.setTo(5);
+		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
+		this.game.physics.arcade.gravity.y = 1200;
 
-		this.keys = this.game.input.keyboard.createCursorKeys();
+		this.player.body.collideWorldBounds = true;
 
-		bootcamp._player = this.player;
-		window.addEventListener("deviceorientation", this.handleOrientation, true);
+		this.player.animations.add('idle', [0], 1, true);
+    this.player.animations.add('walk', [1,2, 3, 4], 10, true);
+		this.player.animations.add('jump', [6], 1, true);
 
-		this.borderGroup = this.add.group();
-		this.borderGroup.enableBody = true;
-		this.borderGroup.physicsBodyType = Phaser.Physics.ARCADE;
-		this.borderGroup.create(0, 0, 'border-horizontal');
-		this.borderGroup.create(0, bootcamp._HEIGHT-2, 'border-horizontal');
-		this.borderGroup.create(0, 0, 'border-vertical');
-		this.borderGroup.create(bootcamp._WIDTH-2, 0, 'border-vertical');
-		this.borderGroup.setAll('body.immovable', true);
+		controls = {
+      left: this.input.keyboard.addKey(Phaser.Keyboard.Q),
+      right: this.input.keyboard.addKey(Phaser.Keyboard.D),
+      up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
+    };
+
+		//bootcamp._player = this.player;
+		//window.addEventListener("deviceorientation", this.handleOrientation, true);
+
 	},
 	update: function() {
-		if(this.keys.left.isDown) {
-			this.player.body.velocity.x -= this.movementForce;
+		this.player.scale.setTo(5);
+		this.player.body.velocity.x = 0;
+		if(controls.left.isDown) {
+			this.player.body.velocity.x -= 500;
+			this.player.scale.setTo(-5, 5);
 		}
-		else if(this.keys.right.isDown) {
-			this.player.body.velocity.x += this.movementForce;
+		else if(controls.right.isDown) {
+			this.player.body.velocity.x += 500;
+			this.player.scale.setTo(5, 5);
 		}
-		if(this.keys.up.isDown) {
-			this.player.body.velocity.y -= this.movementForce;
+		if (controls.up.isDown && this.player.body.blocked.down) {
+			this.player.body.velocity.y -= 500;
 		}
-		else if(this.keys.down.isDown) {
-			this.player.body.velocity.y += this.movementForce;
+
+		if (this.player.body.blocked.down) {
+			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
+				this.player.animations.play('walk');
+			}
+			else {
+				this.player.animations.play('idle');
+			}
 		}
-		this.physics.arcade.collide(this.player, this.borderGroup);
+		else {
+			this.player.animations.play('jump');
+		}
+
+
 	},
 	handleOrientation: function(e) {
 		// Device Orientation API
