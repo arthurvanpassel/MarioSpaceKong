@@ -28,13 +28,14 @@
         }, 5000, false);
     });
     (function() {
-        var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
+        var game = new Phaser.Game(200, 200 * (window.innerHeight / window.innerWidth), Phaser.CANVAS, 'game');
         game.state.add('Boot', bootcamp.Boot);
         game.state.add('Preloader', bootcamp.Preloader);
         game.state.add('MainMenu', bootcamp.MainMenu);
         game.state.add('Howto', bootcamp.Howto);
         game.state.add('Game', bootcamp.Game);
         game.state.start('Boot');
+        game.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
     })();
     </script>
 </body>
