@@ -52,7 +52,7 @@ bootcamp.Game.prototype = {
 				steel.body.bounce.y = 0;
     			steel.body.gravity.y = 0;
     			steel.body.collideWorldBounds = true;
-				i +=0.5;
+				i +=5;
 				w +=20;
 			};
 
@@ -62,7 +62,7 @@ bootcamp.Game.prototype = {
 		//window.addEventListener("deviceorientation", this.handleOrientation, true);
 		
 	},
-	update: functtion() {
+	update: function() {
 		this.physics.arcade.collide(this.player, this.platforms);
     	
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
