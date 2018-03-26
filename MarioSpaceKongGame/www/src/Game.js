@@ -4,6 +4,10 @@ bootcamp.Game.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
 		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);
+<<<<<<< HEAD
+=======
+
+>>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 
 		this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
 		this.player.scale.setTo(1);
@@ -35,6 +39,10 @@ bootcamp.Game.prototype = {
 			_WIDTH = 200;
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 		var platforms = this.add.group();
 		platforms.enableBody = true;
 
@@ -43,9 +51,20 @@ bootcamp.Game.prototype = {
 		steel.scale.setTo(0.5);
 		//steel.body.immovable = true;
 
-		var platforms = this.add.group();
-		//platforms.enableBody = true;
+<<<<<<< HEAD
+=======
 
+		
+>>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
+		var platforms = this.add.group();
+		platforms.enableBody = true;
+
+<<<<<<< HEAD
+=======
+		
+		
+		
+>>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 		//create random platforms
 		for(i = _HEIGHT/100; i < _HEIGHT;){
 
@@ -54,15 +73,31 @@ bootcamp.Game.prototype = {
 				var steel = platforms.create(w,i, 'steel');
 				steel.scale.setTo(0.5);
 
+<<<<<<< HEAD
 				//this.steel.body.immovable = true;
+=======
+				
+				this.steel.body.immovable = true;
+
+			
+				//this.steel.body.immovable = true;
+
+>>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 				steel.body.bounce.y = 0;
     		steel.body.allowGravity = false;
     		steel.body.collideWorldBounds = true;
 				i +=0.5;
 				w +=20;
 
+<<<<<<< HEAD
 				i +=1.5;
 				w +=22;
+=======
+				
+				i +=1.5;
+				w +=22;
+
+>>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 			};
 
 			i+=15;
