@@ -32,7 +32,7 @@ bootcamp.Game.prototype = {
 		this.barrel.body.immovable = true;
 		this.barrel.body.collideWorldBounds = true;
 
-		
+
 			_WIDTH = 200;
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
@@ -41,9 +41,6 @@ bootcamp.Game.prototype = {
 		//platforms.enableBody = true;
 		
 
-		
-		
-		
 		//create random platforms
 		for(i = (_HEIGHT/100) +10; i < (_HEIGHT) - 10;){
 
@@ -51,17 +48,21 @@ bootcamp.Game.prototype = {
 
 				var steel = platforms.create(w,i, 'steel');
 				steel.scale.setTo(0.5);
+
 			
 				i +=0.5;
 				w +=20;
 
-			};
-				i +=15;
-			
+
+
+				//this.steel.body.immovable = true;
+
+
+					
 			
 		};
-		//bootcamp._player = this.player;
-		//window.addEventListener("deviceorientation", this.handleOrientation, true);
+		i +=15;
+			
 
 	},
 	update: function() {
