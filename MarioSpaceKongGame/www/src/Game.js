@@ -2,10 +2,11 @@ bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
+		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);	
 
 		this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
 		this.player.scale.setTo(1);
-		this.player.smoothed = false;
+		this.player.smoothed = false
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.game.physics.arcade.gravity.y = 1200;
@@ -16,11 +17,7 @@ bootcamp.Game.prototype = {
     this.player.animations.add('walk', [1,2, 3, 4], 10, true);
 		this.player.animations.add('jump', [6], 1, true);
 
-		controls = {
-      left: this.input.keyboard.addKey(Phaser.Keyboard.Q),
-      right: this.input.keyboard.addKey(Phaser.Keyboard.D),
-      up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
-    };
+		cursors = this.game.input.keyboard.createCursorKeys();
 
 		this.barrel = this.add.sprite(0, bootcamp._HEIGHT - 2, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
@@ -29,18 +26,28 @@ bootcamp.Game.prototype = {
 		this.barrel.body.immovable = true;
 		this.barrel.body.collideWorldBounds = true;
 
-		
+
 			_WIDTH = 200;
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
+<<<<<<< HEAD
+=======
 
 		
+>>>>>>> af7abe6e1557c7df85a08adc544bb5c996c24c89
 		var platforms = this.add.group();
 		platforms.enableBody = true;
 
+<<<<<<< HEAD
+		var steel = platforms.create(0,0, 'steel');
+		steel.scale.setTo(0.5);
+		//steel.body.immovable = true;
+
+=======
 		
 		
 		
+>>>>>>> af7abe6e1557c7df85a08adc544bb5c996c24c89
 		//create random platforms
 		for(i = _HEIGHT/100; i < _HEIGHT;){
 				
@@ -66,19 +73,18 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.collide(this.player, this.platforms);
     	
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
-		this.player.scale.setTo(1);
 		this.player.body.velocity.x = 0;
 		this.barrel.body.velocity.x = 0;
 
-		if(controls.left.isDown) {
+		if(cursors.left.isDown) {
 			this.player.body.velocity.x -= 200;
 			this.player.scale.setTo(-1, 1);
 		}
-		else if(controls.right.isDown) {
+		else if(cursors.right.isDown) {
 			this.player.body.velocity.x += 200;
 			this.player.scale.setTo(1, 1);
 		}
-		if (controls.up.isDown && this.player.body.blocked.down) {
+		if (cursors.up.isDown && this.player.body.blocked.down) {
 			this.player.body.velocity.y -= 300;
 		}
 
