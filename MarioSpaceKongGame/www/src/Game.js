@@ -54,16 +54,16 @@ bootcamp.Game.prototype = {
 <<<<<<< HEAD
 =======
 
-		
+
 >>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 		var platforms = this.add.group();
 		platforms.enableBody = true;
 
 <<<<<<< HEAD
 =======
-		
-		
-		
+
+
+
 >>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
 		//create random platforms
 		for(i = _HEIGHT/100; i < _HEIGHT;){
@@ -76,10 +76,10 @@ bootcamp.Game.prototype = {
 <<<<<<< HEAD
 				//this.steel.body.immovable = true;
 =======
-				
+
 				this.steel.body.immovable = true;
 
-			
+
 				//this.steel.body.immovable = true;
 
 >>>>>>> efbb0508a5dba4495ae15cb2de0b57ed69296534
@@ -93,7 +93,7 @@ bootcamp.Game.prototype = {
 				i +=1.5;
 				w +=22;
 =======
-				
+
 				i +=1.5;
 				w +=22;
 
