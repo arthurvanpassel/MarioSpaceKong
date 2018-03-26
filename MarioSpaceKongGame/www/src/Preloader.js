@@ -7,7 +7,7 @@ bootcamp.Preloader.prototype = {
 
 
 		this.load.spritesheet('player', 'img/Mario.png', 17, 27, 7);
-		this.load.spritesheet('barrel', 'img/barrel.png', 150, 100, 2);
+		this.load.image('barrel', 'img/barrel.png');
 
 		this.load.image('title', 'img/title.png');
 		this.load.image('screen-mainmenu', 'img/screen-mainmenu.png');
