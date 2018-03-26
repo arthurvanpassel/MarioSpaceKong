@@ -2,7 +2,7 @@ bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
-		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);	
+		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);
 
 		this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
 		this.player.scale.setTo(1);
@@ -30,34 +30,25 @@ bootcamp.Game.prototype = {
 			_WIDTH = 200;
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
-<<<<<<< HEAD
-=======
 
-		
->>>>>>> af7abe6e1557c7df85a08adc544bb5c996c24c89
 		var platforms = this.add.group();
 		platforms.enableBody = true;
 
-<<<<<<< HEAD
+
 		var steel = platforms.create(0,0, 'steel');
 		steel.scale.setTo(0.5);
 		//steel.body.immovable = true;
 
-=======
-		
-		
-		
->>>>>>> af7abe6e1557c7df85a08adc544bb5c996c24c89
 		//create random platforms
 		for(i = _HEIGHT/100; i < _HEIGHT;){
-				
+
 			for( w=_WIDTH/100; w < _WIDTH; ){
-				
+
 				var steel = platforms.create(w,i, 'steel');
 				steel.scale.setTo(0.5);
 				//this.steel.body.immovable = true;
 				steel.body.bounce.y = 0;
-    			steel.body.gravity.y = 0;
+    			steel.body.allowGravity = false;
     			steel.body.collideWorldBounds = true;
 				i +=0.5;
 				w +=20;
@@ -67,11 +58,11 @@ bootcamp.Game.prototype = {
 		};
 		//bootcamp._player = this.player;
 		//window.addEventListener("deviceorientation", this.handleOrientation, true);
-		
+
 	},
-	update: functtion() {
+	update: function() {
 		this.physics.arcade.collide(this.player, this.platforms);
-    	
+
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.body.velocity.x = 0;
 		this.barrel.body.velocity.x = 0;
@@ -111,7 +102,7 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.collide(this.player, this.barrel, function() {
 			console.log('death');
 		});
-		
+
 
 	},
 	handleOrientation: function(e) {
