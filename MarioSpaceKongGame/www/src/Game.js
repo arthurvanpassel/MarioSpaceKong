@@ -36,25 +36,35 @@ bootcamp.Game.prototype = {
 
 		
 		var platforms = this.add.group();
-		//platforms.enableBody = true;
+		platforms.enableBody = true;
 
 		
-		//steel.body.immovable = true;
+		
 		
 		//create random platforms
-		for(i = _HEIGHT/100 , w=_WIDTH/100; i < _HEIGHT;){
+		for(i = _HEIGHT/100; i < _HEIGHT;){
 				
-			for(; w < _WIDTH; ){
-				var steel = platforms.create(0,0, 'steel');
+			for( w=_WIDTH/100; w < _WIDTH; ){
+				
+				var steel = platforms.create(w,i, 'steel');
 				steel.scale.setTo(0.5);
-				
+				//this.steel.body.immovable = true;
+				steel.body.bounce.y = 0;
+    			steel.body.gravity.y = 0;
+    			steel.body.collideWorldBounds = true;
+				i +=0.5;
+				w +=20;
 			};
+
+			i+=10;
 		};
 		//bootcamp._player = this.player;
 		//window.addEventListener("deviceorientation", this.handleOrientation, true);
 		
 	},
-	update: function() {
+	update: functtion() {
+		this.physics.arcade.collide(this.player, this.platforms);
+    	
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.scale.setTo(1);
 		this.player.body.velocity.x = 0;
