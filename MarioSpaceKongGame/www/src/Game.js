@@ -70,10 +70,15 @@ bootcamp.Game.prototype = {
 				this.physics.enable(steel, Phaser.Physics.ARCADE);
 				steel.body.allowGravity = false;
 				if (i > (_HEIGHT)-20) {
-					console.log('blabla');
+					console.log('');
 				}
 				else {
-					i +=0.5;
+					if (holeRight) {
+						i +=0.5;
+					}
+					else {
+						i -=0.5;
+					}
 				}
 				w +=20;
 		};
