@@ -13,9 +13,9 @@ bootcamp.Game.prototype = {
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
-		this.game.physics.arcade.gravity.y = 1200;
-
 		this.player.body.collideWorldBounds = true;
+
+		this.game.physics.arcade.gravity.y = 1200;
 
 		this.player.animations.add('idle', [0], 1, true);
     this.player.animations.add('walk', [1,2, 3, 4], 10, true);
@@ -27,7 +27,7 @@ bootcamp.Game.prototype = {
       up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
     };
 
-		this.barrel = this.add.sprite(0, bootcamp._HEIGHT - 2, 'barrel');
+		this.barrel = this.add.sprite(0, 0, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
 		this.barrel.anchor.setTo(0.5);
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
@@ -45,10 +45,20 @@ bootcamp.Game.prototype = {
 		platforms.setAll('body.allowGravity', false);
 
 		//create random platforms
-		for(i = (_HEIGHT/100); i < (_HEIGHT) - 10;){
+		var holeRight = true;
+		var startposition = _WIDTH;
+		var endposition = _WIDTH;
+		for(i = (_HEIGHT/100)+40; i < (_HEIGHT) - 10;){
+			if (holeRight) {
+				startposition = _WIDTH/100;
+				endposition = _WIDTH-50;
+			}
+			else {
+				startposition =(_WIDTH/100)+30;
+				endposition = _WIDTH;
+			}
 
-			for( w=_WIDTH/100; w < _WIDTH; ){
-
+			for( w=startposition; w < endposition; ){
 				var steel = platforms.create(w,i, 'steel');
 
 				steel.scale.setTo(0.5);
@@ -59,11 +69,13 @@ bootcamp.Game.prototype = {
 				i +=0.5;
 				w +=20;
 		};
-		i +=45;
+		i +=55;
+		holeRight = !holeRight;
 	};
 	},
 	update: function() {
-		this.physics.arcade.collide(this.player, platforms);
+		var hitplatform = this.physics.arcade.collide(this.player, platforms);
+		this.physics.arcade.collide(this.barrel, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.scale.setTo(1);
@@ -78,11 +90,11 @@ bootcamp.Game.prototype = {
 			this.player.body.velocity.x += 200;
 			this.player.scale.setTo(1, 1);
 		}
-		if (controls.up.isDown && this.player.body.blocked.down) {
-			this.player.body.velocity.y -= 300;
+		if (controls.up.isDown && this.player.body.touching.down && hitplatform) {
+			this.player.body.velocity.y -= 400;
 		}
 
-		if (this.player.body.blocked.down) {
+		if (this.player.body.blocked.down || hitplatform) {
 			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 				this.player.animations.play('walk');
 			}
