@@ -3,7 +3,6 @@ bootcamp.Game.prototype = {
     
 	create: function() {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
-
         
         // MARIO
         this.player = this.add.sprite(this.game.world.centerX, 250, 'player');
@@ -20,6 +19,7 @@ bootcamp.Game.prototype = {
         this.bullets.setAll('anchor.y', 1);
         this.bullets.setAll('checkWorldBounds', true);
         this.bullets.setAll('outOfBoundsKill', true);
+        this.bulletTime = 0;
 
         // MARIO CONTROLS
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -46,6 +46,27 @@ bootcamp.Game.prototype = {
         this.explosions.setAll('anchor.y', 0.5);
         this.explosions.forEach(this.setupExplosion, this);
         
+        // SCORES + TEXT
+        this.lives = 3;
+        this.score = 0;
+        this.highscore = 0 ;
+        this.savedHighScore = 240;
+        //Cookies.set('highScore', this.highScore, { expires: '2078-12-31' });
+        
+        this.style = { font: "9px silkscreen", fill: "#fff ", align: "center" };
+        
+        this.livesText = this.add.text(this.world.bounds.width - 5, 0, "LIVES: " + this.lives, this.style);
+        this.livesText.anchor.set(1, 0);
+
+        this.scoreText = this.add.text(this.world.centerX, 0, '', this.style);
+        this.scoreText.anchor.set(0.5, 0);
+
+        this.highScoreText = this.add.text(5, 0, '', this.style);
+        this.highScoreText.anchor.set(0, 0);
+
+        this.getHighScore();
+        this.updateScore();
+        
         // ACCELEROMETER
 		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
@@ -60,8 +81,10 @@ bootcamp.Game.prototype = {
             this.fireBullet();
         }
         
-        // HIT & EXPLODE
+        // BOMBS
+        this.handleBombs();
         
+        // HIT & EXPLODE
         this.physics.arcade.overlap(this.bullets, this.enemies, this.bulletHitsEnemy, null, this);
         this.physics.arcade.overlap(this.bombs, this.player, this.  bombHitsPlayer, null, this);
 	},
@@ -84,17 +107,18 @@ bootcamp.Game.prototype = {
     },
     
     fireBullet: function() {
-        if (this.time.now > 0) {
-        this.bullet = this.bullets.getFirstExists(false);
-
-        if (this.bullet) {
-          // And fire it
-          this.bullet.reset(this.player.x, this.player.y - 16);
-          this.bullet.body.velocity.y = -400;
-          this.bullet.body.velocity.x = this.player.body.velocity.x / 4
-          this.bulletTime = this.time.now + 400;
+        if (this.time.now > this.bulletTime) {
+            this.bullet = this.bullets.getFirstExists(false);
+            // HAS A BULLET BEEN FIRED RECENTLY
+            
+            if (this.bullet) {
+                // NO? THEN FIRE
+                this.bullet.reset(this.player.x, this.player.y - 16);
+                this.bullet.body.velocity.y = -400;
+                this.bullet.body.velocity.x = this.player.body.velocity.x / 4
+                this.bulletTime = this.time.now + 400;
+            }
         }
-      }
     },
     
     createEnemies: function() {
@@ -116,28 +140,73 @@ bootcamp.Game.prototype = {
     
     animateEnemies: function() {
         // LETS THE ENEMIES MOVE
-        /*var tween = this.add.tween(this.enemies).to( { x: 30}, 3000, Phaser.Easing.Quintic.InOut, true, 2, 20, true);
+        var tween = this.add.tween(this.enemies).to( { x: 30}, 3000, Phaser.Easing.Quintic.InOut, true, 0, 1000, true);
         
         // When the tween loops it calls descend
-        tween.onLoop.add(this.descend, this);*/
+            console.log("test");
+        tween.onLoop.add(this.descend, this);
     },
     
     descend: function() {
         if (this.player.alive) {
         //enemies.y += 8;
-        this.add.tween(this.enemies).to( { y: this.enemies.y + 1 }, 2500, Phaser.Easing.Linear.None, true, 0, 0, false);
+        this.add.tween(this.enemies).to( { y: this.enemies.y + 100 }, 3000, Phaser.Easing.Linear.None, true, 0, 0, false);
         }
     },
     
     bulletHitsEnemy: function(bullet, enemy) {
         bullet.kill();
         this.explode(enemy);
-        //score += 10;
-        //updateScore();   
+        this.score += 10;
+        this.updateScore();   
 
-        /*if (enemies.countLiving() == 0) {
-        // LEVEL KLAAR
-        }*/
+        if (this.enemies.countLiving() == 0) {
+            // LEVEL KLAAR
+            console.log("KLAAR")
+        }
+    },
+    
+    dropBomb: function(enemy) {
+        bomb = this.bombs.getFirstExists(false);
+
+        if (bomb && this.player.alive) {
+            //bombSound.play();
+            // And drop it
+            bomb.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
+            bomb.body.velocity.y = +100;
+            bomb.body.gravity.y = 250
+        }
+    },
+    
+    handleBombs: function() {
+        this.enemies.forEachAlive(function (enemy) {
+            chanceOfDroppingBomb = this.rnd.integerInRange(0, 50 * this.enemies.countLiving());
+            if (chanceOfDroppingBomb == 0) {
+                this.dropBomb(enemy);
+                console.log("bom");
+            }
+        }, this)
+    },
+    
+    bombHitsPlayer: function(bomb, player) {
+        bomb.kill();
+        this.explode(player);
+        this.lives -= 1;
+        this.livesText.text = "LIVES: " + this.lives;
+        if (this.lives > 0) {
+            this.respawnPlayer();
+        }
+        else {
+            this.gameOver();
+        }
+    },
+    
+    respawnPlayer: function() {
+        this.player.body.x = this.game.world.centerX;
+        setTimeout(function () {
+            console.log("DOOD")
+            this.player.reset();
+        }, 1000);
     },
     
     setupExplosion: function(explosion) {
@@ -154,6 +223,28 @@ bootcamp.Game.prototype = {
         explosion.play('explode', 30, false, true);
     },
     
+    getHighScore: function() {
+        //this.savedHighScore = this.Cookies.get('highScore');
+        if (this.savedHighScore != undefined) {
+            this.highScore = this.savedHighScore;
+        }
+    },
+    
+    updateScore: function() {
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+        }
+        this.scoreText.text = this.pad(this.score, 4);
+        this.highScoreText.text = "HIGH: " + this.pad(this.highScore, 4);
+    },
+    
+    pad: function(number, length) {
+        var str = '' + number;
+        while (str.length < length) {
+            str = '0' + str;
+        }
+        return str;
+     }
 	/* handleOrientation: function(e) {
 		// Device Orientation API
 		var x = e.gamma; // range [-90,90], left-right
