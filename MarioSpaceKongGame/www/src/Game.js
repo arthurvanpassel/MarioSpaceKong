@@ -7,16 +7,22 @@ bootcamp.Game.prototype = {
 
 		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);
 
+		_WIDTH = 200;
+		_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
-		this.player = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
-		this.player.scale.setTo(1);
+		this.player = this.add.sprite(_WIDTH -20, _HEIGHT -75, 'player');
+		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.body.setCircle(13);
+		//this.player.body.friction = 0.5;
+		this.player.body.mass = 50;
 		this.player.body.collideWorldBounds = true;
 
-		this.game.physics.arcade.gravity.y = 1200;
+		this.game.physics.arcade.TILE_BIAS = 32;
+
+		this.game.physics.arcade.gravity.y = 600;
 
 		this.player.animations.add('idle', [0], 1, true);
     this.player.animations.add('walk', [1,2, 3, 4], 10, true);
@@ -36,9 +42,6 @@ bootcamp.Game.prototype = {
 		this.barrel.body.collideWorldBounds = true;
 		*/
 
-			_WIDTH = 200;
-			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
-
 
 		platforms = this.add.group();
 		platforms.physicsBodyType = Phaser.Physics.ARCADE;
@@ -49,7 +52,7 @@ bootcamp.Game.prototype = {
 		var holeRight = true;
 		var startposition = _WIDTH;
 		var endposition = _WIDTH;
-		for(i = (_HEIGHT/100)+10; i < (_HEIGHT) - 10;){
+		for(i = (_HEIGHT/100)+45; i < (_HEIGHT) - 10;){
 			if (holeRight) {
 				startposition = _WIDTH/100;
 				endposition = _WIDTH-50;
@@ -58,34 +61,38 @@ bootcamp.Game.prototype = {
 				startposition =(_WIDTH/100)+30;
 				endposition = _WIDTH;
 			}
-			if (i > (_HEIGHT)-20) {
+			if (i > (_HEIGHT)-50) {
 				startposition = _WIDTH/100;
 				endposition = _WIDTH;
 			}
 
 			for( w=startposition; w < endposition; ){
-				var steel = platforms.create(w,i, 'steel');
+					var steel = platforms.create(w,i, 'steel');
 
-				steel.scale.setTo(0.5);
-				steel.body.immovable = true;
-				this.physics.enable(steel, Phaser.Physics.ARCADE);
-				steel.body.allowGravity = false;
-				if (i > (_HEIGHT)-20) {
-					console.log('');
-				}
-				else {
-					if (holeRight) {
-						i +=0.5;
+					steel.scale.setTo(0.5);
+					steel.body.immovable = true;
+					this.physics.enable(steel, Phaser.Physics.ARCADE);
+					steel.body.allowGravity = false;
+					//steel.body.friction = 0.5;
+					steel.body.width = 24;
+					steel.body.height = 16;
+					if (i > (_HEIGHT)-50) {
+						console.log('');
 					}
 					else {
-						i -=0.5;
+						if (holeRight) {
+							i +=0.5;
+						}
+						else {
+							i -=0.5;
+						}
 					}
-				}
-				w +=20;
-		};
+					w +=15;
+		}
+
 		i +=65;
 		holeRight = !holeRight;
-	};
+		};
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
@@ -96,18 +103,18 @@ bootcamp.Game.prototype = {
 		//this.barrel.body.velocity.x = 0;
 
 		if(controls.left.isDown) {
-			this.player.body.velocity.x -= 200;
+			this.player.body.velocity.x -= 150;
 			this.player.scale.setTo(-1, 1);
 		}
 		else if(controls.right.isDown) {
-			this.player.body.velocity.x += 200;
+			this.player.body.velocity.x += 150;
 			this.player.scale.setTo(1, 1);
 		}
 		if (controls.up.isDown && this.player.body.touching.down && hitplatform) {
-			this.player.body.velocity.y -= 400;
+			this.player.body.velocity.y -= 300;
 		}
 
-		if (this.player.body.blocked.down || hitplatform) {
+		if (this.player.body.blocked.down || hitplatform || this.player.body.touching.down ) {
 			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 				this.player.animations.play('walk');
 			}
