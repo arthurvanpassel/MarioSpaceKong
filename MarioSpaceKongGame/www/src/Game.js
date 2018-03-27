@@ -44,13 +44,13 @@ bootcamp.Game.prototype = {
 		platforms.enableBody = true;
 		platforms.setAll('body.allowGravity', false);
 
-
 		//create random platforms
 		for(i = (_HEIGHT/100); i < (_HEIGHT) - 10;){
 
 			for( w=_WIDTH/100; w < _WIDTH; ){
 
 				var steel = platforms.create(w,i, 'steel');
+
 				steel.scale.setTo(0.5);
 				steel.body.immovable = true;
 				this.physics.enable(steel, Phaser.Physics.ARCADE);
