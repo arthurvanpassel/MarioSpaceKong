@@ -28,7 +28,6 @@ bootcamp.Game.prototype = {
         // MARIO CONTROLS
         this.cursors = this.input.keyboard.createCursorKeys();
         this.fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.fireButton = this.input.keyboard.addKey(this.game.input.pointer1.IsDown);
         
         
         // ENEMIES
@@ -83,6 +82,11 @@ bootcamp.Game.prototype = {
         
         // MOVEMENT
 		this.playerMovement();
+        
+        // PHONE CONTROLS
+        if (this.game.input.pointer1.isDown) {
+            this.fireBullet();
+        }
         
         // FIRE
         if (this.fireButton.isDown) {
@@ -268,7 +272,6 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-		bootcamp._player.body.velocity.x += x;
-		bootcamp._player.body.velocity.y += y*0.5;
+		this.player.body.velocity.x += 10*x;
 	}
 };
