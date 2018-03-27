@@ -29,14 +29,14 @@ bootcamp.Game.prototype = {
 		this.game.physics.arcade.gravity.y = 400;
 
 		this.player.animations.add('idle', [0], 1, true);
-    this.player.animations.add('walk', [1,2, 3, 4], 10, true);
+    	this.player.animations.add('walk', [1,2, 3, 4], 10, true);
 		this.player.animations.add('jump', [6], 1, true);
 
 		controls = {
-      left: this.input.keyboard.addKey(Phaser.Keyboard.Q),
-      right: this.input.keyboard.addKey(Phaser.Keyboard.D),
-      up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
-    };
+      			left: this.input.keyboard.addKey(Phaser.Keyboard.Q),
+      			right: this.input.keyboard.addKey(Phaser.Keyboard.D),
+      			up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
+    			};
 		bootcamp._player = this.player;
 		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
@@ -157,6 +157,20 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.collide(this.player, this.barrel, function() {
 			bootcamp._game.state.start('Game');
 		});
+
+		if (this.barrel.body.blocked.down){
+
+		this.barrel.destroy();
+
+		this.barrel = this.add.sprite(0, 0, 'barrel');
+		this.barrel.scale.setTo(0.15, 0.2);
+		this.barrel.anchor.setTo(0.5);
+		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
+		this.player.body.mass = 20;
+		this.barrel.body.collideWorldBounds = true;
+		this.barrel.body.friction = 0.1;
+
+		}
 
 
 	},
