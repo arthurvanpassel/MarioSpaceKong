@@ -37,6 +37,8 @@ bootcamp.Game.prototype = {
       right: this.input.keyboard.addKey(Phaser.Keyboard.D),
       up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
     };
+		bootcamp._player = this.player;
+		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
 		this.barrel = this.add.sprite(0, 0, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
@@ -116,6 +118,9 @@ bootcamp.Game.prototype = {
 			this.player.scale.setTo(1, 1);
 		}
 		if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
+			this.player.body.velocity.y -= 300;
+		}
+		if (this.game.input.pointer1.isDown && this.player.body.touching.down && hitplatform) {
 			this.player.body.velocity.y -= 300;
 		}
 
