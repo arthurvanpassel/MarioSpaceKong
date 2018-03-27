@@ -3,7 +3,7 @@ var platforms;
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
-		this.physics.startSystem(Phaser.Physics.ARCADE);
+		this.physics.startSystem(Phaser.Physics.P2JS);
 
 		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);
 
@@ -12,12 +12,12 @@ bootcamp.Game.prototype = {
 		this.player.scale.setTo(1);
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
-		this.physics.enable(this.player, Phaser.Physics.ARCADE);
-		this.player.body.setCircle(3);
-		this.player.body.offset.y = 17;
+		this.physics.enable(this.player, Phaser.Physics.P2JS);
+		//this.player.body.addCircle(13);
+		this.player.body.offset.y = 0;
 		this.player.body.collideWorldBounds = true;
 
-		this.game.physics.arcade.gravity.y = 1200;
+		//this.game.physics.P2JS.gravity.y = 1200;
 
 		this.player.animations.add('idle', [0], 1, true);
     this.player.animations.add('walk', [1,2, 3, 4], 10, true);
@@ -32,7 +32,7 @@ bootcamp.Game.prototype = {
 		/*this.barrel = this.add.sprite(0, 0, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
 		this.barrel.anchor.setTo(0.5);
-		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
+		this.physics.enable(this.barrel, Phaser.Physics.P2JS);
 		this.barrel.body.immovable = true;
 		this.barrel.body.collideWorldBounds = true;
 		*/
@@ -42,7 +42,7 @@ bootcamp.Game.prototype = {
 
 
 		platforms = this.add.group();
-		platforms.physicsBodyType = Phaser.Physics.ARCADE;
+		platforms.physicsBodyType = Phaser.Physics.P2JS;
 		platforms.enableBody = true;
 		platforms.setAll('body.allowGravity', false);
 
@@ -69,7 +69,7 @@ bootcamp.Game.prototype = {
 
 				steel.scale.setTo(0.5);
 				steel.body.immovable = true;
-				this.physics.enable(steel, Phaser.Physics.ARCADE);
+				this.physics.enable(steel, Phaser.Physics.P2JS);
 				steel.body.allowGravity = false;
 				if (i > (_HEIGHT)-20) {
 					console.log('');
@@ -89,8 +89,8 @@ bootcamp.Game.prototype = {
 	};
 	},
 	update: function() {
-		var hitplatform = this.physics.arcade.collide(this.player, platforms);
-		//this.physics.arcade.collide(this.barrel, platforms);
+		//var hitplatform = this.physics.P2JS.collide(this.player, platforms);
+		//this.physics.P2JS.collide(this.barrel, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.body.velocity.x = 0;
@@ -108,7 +108,7 @@ bootcamp.Game.prototype = {
 			this.player.body.velocity.y -= 400;
 		}
 
-		if (this.player.body.blocked.down || hitplatform) {
+		/*if (this.player.body.blocked.down || hitplatform) {
 			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 				this.player.animations.play('walk');
 			}
@@ -118,7 +118,7 @@ bootcamp.Game.prototype = {
 		}
 		else {
 			this.player.animations.play('jump');
-		}
+		}*/
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
 		/*if (this.barrel.body.blocked.right) {
@@ -128,7 +128,7 @@ bootcamp.Game.prototype = {
 		this.barrel.body.velocity.x += 100
 		this.barrel.angle += 10;
 
-		this.physics.arcade.collide(this.player, this.barrel, function() {
+		this.physics.P2JS.collide(this.player, this.barrel, function() {
 			console.log('death');
 		});
 		*/
