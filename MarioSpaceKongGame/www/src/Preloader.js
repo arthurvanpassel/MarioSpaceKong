@@ -9,14 +9,15 @@ bootcamp.Preloader.prototype = {
 		this.load.spritesheet('player', 'img/Mario.png', 17, 27, 7);
 		this.load.image('barrel', 'img/barrel.png');
 
-		this.load.image('title', 'img/title.png');
-		this.load.image('screen-mainmenu', 'img/screen-mainmenu.png');
-		this.load.image('screen-howtoplay', 'img/screen-howtoplay.png');
+		
+		this.load.image('screen-mainmenu', 'img/Home.png');
+		
 		this.load.image('steel', 'img/steel.png');
+		this.load.image('button', 'img/button.png');
 
-		this.load.spritesheet('button-start', 'img/button-start.png', 146, 51);
+		
 	},
 	create: function() {
-		this.game.state.start('Game');
+		this.game.state.start('MainMenu');
 	}
 };
