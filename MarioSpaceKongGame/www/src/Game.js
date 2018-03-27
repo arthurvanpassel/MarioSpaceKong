@@ -1,3 +1,5 @@
+var platforms;
+
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
@@ -37,38 +39,31 @@ bootcamp.Game.prototype = {
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
 
-		var platforms = this.add.group();
-<<<<<<< HEAD
-		this.platforms.physicsBodyType = Phaser.Physics.ARCADE;
-		this.platforms.enableBody = true;
-		this.platforms.setAll('body.allowGravity', false);
-		
-		
-=======
+		platforms = this.add.group();
+		platforms.physicsBodyType = Phaser.Physics.ARCADE;
 		platforms.enableBody = true;
+		platforms.setAll('body.allowGravity', false);
 
->>>>>>> 3fb72945b111e47671ce3106e06af869a5632183
+
 		//create random platforms
 		for(i = (_HEIGHT/100); i < (_HEIGHT) - 10;){
 
 			for( w=_WIDTH/100; w < _WIDTH; ){
 
 				var steel = platforms.create(w,i, 'steel');
-				this.steel.scale.setTo(0.5);
-				this.steel.body.immovable = true;
-<<<<<<< HEAD
-			
-=======
+				steel.scale.setTo(0.5);
+				steel.body.immovable = true;
+				this.physics.enable(steel, Phaser.Physics.ARCADE);
+				steel.body.allowGravity = false;
 
->>>>>>> 3fb72945b111e47671ce3106e06af869a5632183
 				i +=0.5;
 				w +=20;
 		};
-		i +=25;
+		i +=45;
 	};
 	},
 	update: function() {
-		this.physics.arcade.collide(this.player, this.platforms);
+		this.physics.arcade.collide(this.player, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.scale.setTo(1);
