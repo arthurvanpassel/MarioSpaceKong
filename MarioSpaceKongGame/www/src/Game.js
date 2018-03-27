@@ -9,12 +9,11 @@ bootcamp.Game.prototype = {
         this.bg.anchor.set(0, 1);
 
         this.player = this.add.sprite(40, this.game.world.centerY, 'player');
+        this.player.name = "player";
         this.player.anchor.set(0.5, 0.5);
-        this.player.smoothed = false;
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 600;
         this.player.body.collideWorldBounds = true;
-        this.player.body.tilePadding.y = 5;
         this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
 
         this.player.animations.add('idle', [0], 1, true);
@@ -23,14 +22,15 @@ bootcamp.Game.prototype = {
 
         // Create 3 groups that will contain our objects
         this.ground = this.game.add.group();
-        
+        this.enemies = this.game.add.group();
+
         // Design the level. x = wall, o = coin, ! = lava.
         var level1 = [
             '                                        ',
             '                                        ',
             '                                        ',
-            '                                        ',
-            '                                        ',
+            '          e                             ',
+            '          e                             ',
             'gggggggggggggggggggggggggggggggggggggggg',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
@@ -48,10 +48,17 @@ bootcamp.Game.prototype = {
 
                 // Create ground top
                 else if (level1[i][j] == 'g') {
-                    var ground = this.game.add.sprite(16 * j,bootcamp._HEIGHT - 112 + 16 * i, 'ground');
+                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 112 + 16 * i, 'ground');
                     ground.frame = 1;
                     ground.body.immovable = true;
                     this.ground.add(ground);
+                }
+
+                // Create enemy
+                else if (level1[i][j] == 'e') {
+                    var enemy = new Enemy(this.game, 16 * j, bootcamp._HEIGHT - 112 + 16 * i);
+                    enemy.name = "enemy" + i + j;
+                    this.enemies.add(enemy);
                 }
             }
         }
@@ -64,7 +71,10 @@ bootcamp.Game.prototype = {
     },
     update: function () {
         this.physics.arcade.collide(this.player, this.ground);
-        
+        this.physics.arcade.collide(this.enemies, this.ground);
+        this.physics.arcade.overlap(this.player, this.enemies, this.collisionHandler, null, this);
+        this.physics.arcade.collide(this.enemies);
+
         if (this.keys.left.isDown) {
             this.player.body.velocity.x = -200;
         } else if (this.keys.right.isDown) {
@@ -91,6 +101,14 @@ bootcamp.Game.prototype = {
             this.player.animations.play('jump');
         }
     },
+    collisionHandler: function(player, enemy) {
+            if(enemy.body.touching.up) {
+                enemy.kill();
+                player.body.velocity.y = -250;
+            }else {
+                player.kill();
+            }
+    },
     handleOrientation: function (e) {
         // Device Orientation API
         var x = e.gamma; // range [-90,90], left-right
@@ -100,6 +118,6 @@ bootcamp.Game.prototype = {
         bootcamp._player.body.velocity.y += y * 0.5;
     },
     render: function () {
-        this.game.debug.cameraInfo(this.game.camera, 0, 32);
+
     }
 };
