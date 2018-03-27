@@ -38,9 +38,11 @@ bootcamp.Game.prototype = {
 
 
 		var platforms = this.add.group();
-		this.platforms.physicsBodyType = Phaser.Physics.ARCADE;
-		this.platforms.enableBody = true;
-		this.platforms.setAll('body.allowGravity', false);
+		platforms.physicsBodyType = Phaser.Physics.ARCADE;
+		platforms.enableBody = true;
+		platforms.body.allowGravity = false;
+
+		
 		
 		
 		//create random platforms
@@ -49,8 +51,9 @@ bootcamp.Game.prototype = {
 			for( w=_WIDTH/100; w < _WIDTH; ){
 
 				var steel = platforms.create(w,i, 'steel');
-				this.steel.scale.setTo(0.5);
-				this.steel.body.immovable = true;
+				steel.scale.setTo(0.5);
+				steel.body.immovable = true;
+				steel.body.static= false;
 			
 				i +=0.5;
 				w +=20;
