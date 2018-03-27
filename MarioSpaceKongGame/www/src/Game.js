@@ -38,16 +38,11 @@ bootcamp.Game.prototype = {
 
 
 		var platforms = this.add.group();
-<<<<<<< HEAD
 		this.platforms.physicsBodyType = Phaser.Physics.ARCADE;
 		this.platforms.enableBody = true;
 		this.platforms.setAll('body.allowGravity', false);
 		
 		
-=======
-		platforms.enableBody = true;
-
->>>>>>> 3fb72945b111e47671ce3106e06af869a5632183
 		//create random platforms
 		for(i = (_HEIGHT/100); i < (_HEIGHT) - 10;){
 
@@ -56,11 +51,7 @@ bootcamp.Game.prototype = {
 				var steel = platforms.create(w,i, 'steel');
 				this.steel.scale.setTo(0.5);
 				this.steel.body.immovable = true;
-<<<<<<< HEAD
 			
-=======
-
->>>>>>> 3fb72945b111e47671ce3106e06af869a5632183
 				i +=0.5;
 				w +=20;
 		};
