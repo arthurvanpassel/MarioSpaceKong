@@ -27,7 +27,7 @@
         }, 5000, false);
     });
     (function() {
-        var game = new Phaser.Game(200, 200 * (window.innerHeight / window.innerWidth), Phaser.CANVAS, 'game');
+        var game = new Phaser.Game(200, 200 * (window.innerHeight / window.innerWidth), Phaser.CANVAS, 'game', null, false, false);
         game.state.add('Boot', bootcamp.Boot);
         game.state.add('Preloader', bootcamp.Preloader);
         game.state.add('MainMenu', bootcamp.MainMenu);
