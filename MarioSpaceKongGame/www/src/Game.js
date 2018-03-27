@@ -42,7 +42,7 @@ bootcamp.Game.prototype = {
 	},
     
     playerMovement: function() {
-        var maxVelocity = 500;
+        var maxVelocity = 1000;
         
         if (this.cursors.left.isDown && this.player.body.velocity.x > -maxVelocity) {
             // Move to the left
