@@ -52,7 +52,7 @@ bootcamp.Game.prototype = {
         this.explosions.forEach(this.setupExplosion, this);
         
         // SCORES + TEXT
-        this.lives = 3;
+        this.lives = 5;
         this.score = 0;
         this.highscore = 0 ;
         this.savedHighScore = 240;
