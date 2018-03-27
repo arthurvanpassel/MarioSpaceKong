@@ -6,6 +6,7 @@ bootcamp.Game.prototype = {
         
         // MARIO
         this.player = this.add.sprite(this.game.world.centerX, 250, 'player');
+        this.player.frame = 1
         this.player.anchor.setTo(0.5, 0.5);
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
