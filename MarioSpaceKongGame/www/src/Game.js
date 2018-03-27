@@ -29,8 +29,8 @@ bootcamp.Game.prototype = {
             '                                        ',
             '                                        ',
             '                                        ',
-            '          e                             ',
-            '          e                             ',
+            '                                        ',
+            '          e e e e e                     ',
             'gggggggggggggggggggggggggggggggggggggggg',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
@@ -87,6 +87,10 @@ bootcamp.Game.prototype = {
         if (this.keys.up.isDown && this.player.body.touching.down) {
             this.player.body.velocity.y = -250;
         }
+        
+        if (this.game.input.pointer1.isDown && this.player.body.touching.down) {
+            this.player.body.velocity.y = -250;
+        }
 
         if (this.player.body.velocity.x == 0) {
             this.player.animations.play('idle');
@@ -115,7 +119,6 @@ bootcamp.Game.prototype = {
         var y = e.beta; // range [-180,180], top-bottom
         var z = e.alpha; // range [0,360], up-down
         bootcamp._player.body.velocity.x += x;
-        bootcamp._player.body.velocity.y += y * 0.5;
     },
     render: function () {
 
