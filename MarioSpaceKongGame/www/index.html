@@ -31,7 +31,7 @@
         }, 5000, false);
     });
     (function() {
-        var game = new Phaser.Game(200, 200 * (window.innerHeight / window.innerWidth), Phaser.AUTO, 'game', this, false, false);
+        var game = new Phaser.Game(200, 200 * (window.innerHeight / window.innerWidth), Phaser.AUTO, 'game', null, false, false);
         game.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         game.state.add('Boot', bootcamp.Boot);
         game.state.add('Preloader', bootcamp.Preloader);
