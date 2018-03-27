@@ -1,3 +1,4 @@
+var platforms;
 
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
@@ -38,40 +39,23 @@ bootcamp.Game.prototype = {
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
 
 
-<<<<<<< HEAD
-		var platforms = this.add.group();
-		platforms.physicsBodyType = Phaser.Physics.ARCADE;
-		platforms.enableBody = true;
-		platforms.body.allowGravity = false;
-
-		
-		
-		
 		platforms = this.add.group();
 		platforms.physicsBodyType = Phaser.Physics.ARCADE;
 		platforms.enableBody = true;
 		platforms.setAll('body.allowGravity', false);
 
->>>>>>> 9271ee5a24546eb6fc85d69bae7a3485de1773fb
 		//create random platforms
 		for(i = (_HEIGHT/100); i < (_HEIGHT) - 10;){
 
 			for( w=_WIDTH/100; w < _WIDTH; ){
 
 				var steel = platforms.create(w,i, 'steel');
-<<<<<<< HEAD
-				steel.scale.setTo(0.5);
-				steel.body.immovable = true;
-				steel.body.static= false;
-			
-=======
 
 				steel.scale.setTo(0.5);
 				steel.body.immovable = true;
 				this.physics.enable(steel, Phaser.Physics.ARCADE);
 				steel.body.allowGravity = false;
 
->>>>>>> 9271ee5a24546eb6fc85d69bae7a3485de1773fb
 				i +=0.5;
 				w +=20;
 		};
