@@ -1,7 +1,9 @@
 bootcamp.MainMenu = function(game) {};
 bootcamp.MainMenu.prototype = {
 	create: function() {
-		this.add.sprite(0, 0, 'screen-mainmenu');
+		this.home = this.add.sprite(0, 0, 'mainmenuGif');
+		this.home.animations.add('homeGif', Phaser.ArrayUtils.numberArray(0, 61), 24, true);
+		this.home.animations.play('homeGif');
 
 			_WIDTH = 200;
 			_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
