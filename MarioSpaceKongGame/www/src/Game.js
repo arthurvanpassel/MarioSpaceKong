@@ -161,7 +161,7 @@ bootcamp.Game.prototype = {
 
 		if (this.barrel.body.blocked.down){
 
-			this.barrel.destroy();
+		this.barrel.destroy();
 
 		this.barrel = this.add.sprite(0, 0, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
@@ -170,7 +170,7 @@ bootcamp.Game.prototype = {
 		this.player.body.mass = 20;
 		this.barrel.body.collideWorldBounds = true;
 		this.barrel.body.friction = 0.1;
-		console.log("ROBIN IS GAY");
+		
 		}
 
 		
