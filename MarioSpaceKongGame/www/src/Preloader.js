@@ -8,6 +8,8 @@ bootcamp.Preloader.prototype = {
         // MARIO ASSETS ///////////////////////////////////////////////////////////////////////////////////////////////////
         this.load.spritesheet('player', 'img/Mario.png', 17, 27, 7);
         this.load.spritesheet('bg', 'img/bg.png', 516, 434, 8);
+        this.load.spritesheet('ground', 'img/ground.png', 16, 16, 9);
+        this.load.spritesheet('enemy', 'img/enemies.png', 16, 16, 3);
 	},
 	create: function() {
 		this.game.state.start('Game');
