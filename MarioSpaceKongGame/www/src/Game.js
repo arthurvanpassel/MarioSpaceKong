@@ -38,32 +38,25 @@ bootcamp.Game.prototype = {
 
 
 		var platforms = this.add.group();
-		//platforms.enableBody = true;
+		this.platforms.physicsBodyType = Phaser.Physics.ARCADE;
+		this.platforms.enableBody = true;
+		this.platforms.setAll('body.allowGravity', false);
 		
-
+		
 		//create random platforms
-		for(i = (_HEIGHT/100) +10; i < (_HEIGHT) - 10;){
+		for(i = (_HEIGHT/100); i < (_HEIGHT) - 10;){
 
 			for( w=_WIDTH/100; w < _WIDTH; ){
 
 				var steel = platforms.create(w,i, 'steel');
-				steel.scale.setTo(0.5);
-
+				this.steel.scale.setTo(0.5);
+				this.steel.body.immovable = true;
 			
 				i +=0.5;
 				w +=20;
-
-
-
-				//this.steel.body.immovable = true;
-
-
-					
-			
 		};
-		i +=15;
-			
-
+		i +=25;
+	};
 	},
 	update: function() {
 		this.physics.arcade.collide(this.player, this.platforms);
