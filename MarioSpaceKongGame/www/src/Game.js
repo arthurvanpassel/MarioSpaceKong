@@ -13,7 +13,8 @@ bootcamp.Game.prototype = {
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
-		this.player.body.setCircle = true;
+		this.player.body.setCircle(3);
+		this.player.body.offset.y = 17;
 		this.player.body.collideWorldBounds = true;
 
 		this.game.physics.arcade.gravity.y = 1200;
@@ -92,7 +93,6 @@ bootcamp.Game.prototype = {
 		//this.physics.arcade.collide(this.barrel, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
-		this.player.scale.setTo(1);
 		this.player.body.velocity.x = 0;
 		//this.barrel.body.velocity.x = 0;
 
