@@ -5,7 +5,7 @@ bootcamp.Preloader.prototype = {
 		this.preloadBar = this.add.sprite((bootcamp._WIDTH-158)*0.5, (bootcamp._HEIGHT-50)*0.5, 'preloaderBar');
 		this.load.setPreloadSprite(this.preloadBar);
 
-
+		this.load.spritesheet('kong', 'img/kong.png', 37,38, 6);
 		this.load.spritesheet('player', 'img/Mario.png', 17, 27, 7);
 		this.load.image('barrel', 'img/barrel.png');
 

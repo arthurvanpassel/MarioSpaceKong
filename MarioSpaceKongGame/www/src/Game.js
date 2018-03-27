@@ -9,7 +9,12 @@ bootcamp.Game.prototype = {
 
 		_WIDTH = 200;
 		_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
+		this.kong = this.add.sprite(0,10, 'kong');
+		this.kong.animations.add('donkey', [0,1,2,3,4,5], 10,true);
+		this.kong.animations.play('donkey');
+		
 
+		// player 
 		this.player = this.add.sprite(_WIDTH -20, _HEIGHT -75, 'player');
 		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
@@ -19,8 +24,9 @@ bootcamp.Game.prototype = {
 		this.player.body.mass = 50;
 		this.player.body.collideWorldBounds = true;
 
+
 		this.game.physics.arcade.TILE_BIAS = 32;
-		this.game.physics.arcade.gravity.y = 600;
+		this.game.physics.arcade.gravity.y = 400;
 
 		this.player.animations.add('idle', [0], 1, true);
     this.player.animations.add('walk', [1,2, 3, 4], 10, true);
@@ -111,7 +117,7 @@ bootcamp.Game.prototype = {
 			this.player.body.velocity.x += 150;
 			this.player.scale.setTo(1, 1);
 		}
-		if (controls.up.isDown && this.player.body.touching.down && hitplatform) {
+		if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
 			this.player.body.velocity.y -= 300;
 		}
 		if (this.game.input.pointer1.isDown && this.player.body.touching.down && hitplatform) {
