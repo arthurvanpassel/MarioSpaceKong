@@ -30,10 +30,14 @@ bootcamp.Game.prototype = {
         var level1 = [
             '                                                  ',
             '                                                  ',
+            '                !                                 ',
+            '              bbb                                 ',
             '                                                  ',
-            '                                                  ',
-            '          e                               s       ',
-            'gggggggggggggggggggggggggggggggggggggggggggggggggg',
+            '                                          !s      ',
+            '            bbb bbb                      !LGR     ',
+            '                                        !LxxxR    ',
+            '              !   !                    !LxxxxxR   ',
+            'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGxxxxxxxGGG',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
 
@@ -42,27 +46,54 @@ bootcamp.Game.prototype = {
 
                 // Create ground
                 if (level1[i][j] == 'x') {
-                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 112 + 16 * i, 'ground');
+                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tiles');
                     ground.frame = 4;
                     ground.body.immovable = true;
                     this.ground.add(ground);
                 }
 
                 // Create ground top
-                else if (level1[i][j] == 'g') {
-                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 112 + 16 * i, 'ground');
+                else if (level1[i][j] == 'G') {
+                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tiles');
                     ground.frame = 1;
+                    ground.body.immovable = true;
+                    this.ground.add(ground);
+                }
+                
+                // Create ground left top border
+                else if (level1[i][j] == 'L') {
+                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tiles');
+                    ground.frame = 0;
+                    ground.body.immovable = true;
+                    this.ground.add(ground);
+                }
+                
+                // Create ground right top border
+                else if (level1[i][j] == 'R') {
+                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tiles');
+                    ground.frame = 2;
+                    ground.body.immovable = true;
+                    this.ground.add(ground);
+                }
+                
+                // Create ground right top border
+                else if (level1[i][j] == 'b') {
+                    var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tiles');
+                    ground.frame = 9;
                     ground.body.immovable = true;
                     this.ground.add(ground);
                 }
 
                 // Create enemy
-                else if (level1[i][j] == 'e') {
-                    var enemy = new Enemy(this.game, 16 * j, bootcamp._HEIGHT - 112 + 16 * i);
+                else if (level1[i][j] == '!') {
+                    var enemy = new Enemy(this.game, 16 * j, bootcamp._HEIGHT - 176 + 16 * i);
                     enemy.name = "enemy" + i + j;
                     this.enemies.add(enemy);
-                } else if (level1[i][j] == 's') {
-                    this.ship = this.game.add.sprite(16 * j + 8, bootcamp._HEIGHT - 112 + 16 * i - 39, 'ship');
+                } 
+                
+                // Create ship
+                else if (level1[i][j] == 's') {
+                    this.ship = this.game.add.sprite(16 * j - 16, bootcamp._HEIGHT - 176 + 16 * i - 39, 'ship');
                     this.ship.frame = 0;
                     this.ship.body.immovable = true;
                     this.ship.name = "ship";
@@ -140,9 +171,9 @@ bootcamp.Game.prototype = {
         var x = e.gamma; // range [-90,90], left-right
         var y = e.beta; // range [-180,180], top-bottom
         var z = e.alpha; // range [0,360], up-down
-        bootcamp._player.body.velocity.x += 10x;
+        bootcamp._player.body.velocity.x += 10*x;
     },
     render: function () {
-
+        //this.game.debug.cameraInfo(this.game.camera, 0, 32);
     }
 };

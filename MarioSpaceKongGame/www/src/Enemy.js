@@ -7,6 +7,7 @@ Enemy = function (game, x, y) {
     this.xSpeed = -1;
     this.body.gravity.y = 600;
     this.body.collideWorldBounds = true;
+    this.walking = false;
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -17,7 +18,12 @@ Enemy.prototype.constructor = Enemy;
  */
 Enemy.prototype.update = function () {
 
-    this.body.position.x += this.xSpeed;
+    if(this.body.position.x < this.game.camera.x + 200) {
+        this.walking = true;
+    }
+    if(this.walking) {
+        this.body.position.x += this.xSpeed;
+    }
     
     if(this.xSpeed < 0) {
         this.body.scale = 1;
