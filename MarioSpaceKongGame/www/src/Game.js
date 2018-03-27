@@ -36,9 +36,11 @@ bootcamp.Game.prototype = {
 		this.barrel.scale.setTo(0.15, 0.2);
 		this.barrel.anchor.setTo(0.5);
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
-		this.barrel.body.immovable = true;
+		this.player.body.mass = 20;
 		this.barrel.body.collideWorldBounds = true;
 		this.barrel.body.friction = 0.1;
+
+		var barrelMoveLeft = false;
 
 		platforms = this.add.group();
 		platforms.physicsBodyType = Phaser.Physics.ARCADE;
@@ -74,7 +76,7 @@ bootcamp.Game.prototype = {
 					steel.body.width = 24;
 					steel.body.height = 16;
 					if (i > (_HEIGHT)-50) {
-						console.log('');
+
 					}
 					else {
 						if (holeRight) {
@@ -87,7 +89,7 @@ bootcamp.Game.prototype = {
 					w +=15;
 		}
 
-		i +=65;
+		i +=70;
 		holeRight = !holeRight;
 		};
 	},
@@ -125,11 +127,20 @@ bootcamp.Game.prototype = {
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
 		if (this.barrel.body.blocked.right) {
-			this.barrel.body.x = 0;
-
+			barrelMoveLeft = true;
 		}
-		this.barrel.body.velocity.x += 2
-		this.barrel.angle += 10;
+		if (this.barrel.body.blocked.left) {
+			barrelMoveLeft = false;
+		}
+		if (barrelMoveLeft) {
+			this.barrel.body.velocity.x = -75;
+		}
+		else {
+			this.barrel.body.velocity.x = 75;
+		}
+
+		this.barrel.angle += (this.barrel.body.velocity.x)/10
+
 
 		bootcamp._game = this.game;
 		this.physics.arcade.collide(this.player, this.barrel, function() {
