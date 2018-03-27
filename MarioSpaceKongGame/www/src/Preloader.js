@@ -10,6 +10,8 @@ bootcamp.Preloader.prototype = {
         this.load.spritesheet('bg', 'img/bg.png', 516, 434, 8);
         this.load.spritesheet('ground', 'img/ground.png', 16, 16, 9);
         this.load.spritesheet('enemy', 'img/enemies.png', 16, 16, 3);
+        this.load.spritesheet('ship', 'img/ship.png', 52, 55, 2);
+        
 	},
 	create: function() {
 		this.game.state.start('Game');
