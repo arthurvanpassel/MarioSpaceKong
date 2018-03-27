@@ -13,6 +13,7 @@ bootcamp.Game.prototype = {
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
+		this.player.body.setCircle = true;
 		this.player.body.collideWorldBounds = true;
 
 		this.game.physics.arcade.gravity.y = 1200;
