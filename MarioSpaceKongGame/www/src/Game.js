@@ -5,7 +5,7 @@ bootcamp.Game.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
         
         // MARIO
-        this.player = this.add.sprite(this.game.world.centerX, 250, 'player');
+        this.player = this.add.sprite(this.game.world.centerX, bootcamp._HEIGHT - 10, 'player');
         this.player.frame = 1
         this.player.anchor.setTo(0.5, 0.5);
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
