@@ -57,6 +57,10 @@ bootcamp.Game.prototype = {
 				startposition =(_WIDTH/100)+30;
 				endposition = _WIDTH;
 			}
+			if (i > (_HEIGHT)-20) {
+				startposition = _WIDTH/100;
+				endposition = _WIDTH;
+			}
 
 			for( w=startposition; w < endposition; ){
 				var steel = platforms.create(w,i, 'steel');
@@ -65,8 +69,12 @@ bootcamp.Game.prototype = {
 				steel.body.immovable = true;
 				this.physics.enable(steel, Phaser.Physics.ARCADE);
 				steel.body.allowGravity = false;
-
-				i +=0.5;
+				if (i > (_HEIGHT)-20) {
+					console.log('blabla');
+				}
+				else {
+					i +=0.5;
+				}
 				w +=20;
 		};
 		i +=55;
