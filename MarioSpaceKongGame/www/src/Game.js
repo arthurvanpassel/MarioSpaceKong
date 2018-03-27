@@ -16,7 +16,6 @@ bootcamp.Game.prototype = {
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.body.setCircle(13);
-		//this.player.body.friction = 0.5;
 		this.player.body.mass = 50;
 		this.player.body.collideWorldBounds = true;
 
@@ -34,14 +33,13 @@ bootcamp.Game.prototype = {
       up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
     };
 
-		/*this.barrel = this.add.sprite(0, 0, 'barrel');
+		this.barrel = this.add.sprite(0, 0, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
 		this.barrel.anchor.setTo(0.5);
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
 		this.barrel.body.immovable = true;
 		this.barrel.body.collideWorldBounds = true;
-		*/
-
+		this.barrel.body.friction = 0.1;
 
 		platforms = this.add.group();
 		platforms.physicsBodyType = Phaser.Physics.ARCADE;
@@ -96,7 +94,7 @@ bootcamp.Game.prototype = {
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
-		//this.physics.arcade.collide(this.barrel, platforms);
+		this.physics.arcade.collide(this.barrel, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.body.velocity.x = 0;
@@ -127,17 +125,17 @@ bootcamp.Game.prototype = {
 		}
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
-		/*if (this.barrel.body.blocked.right) {
+		if (this.barrel.body.blocked.right) {
 			this.barrel.body.x = 0;
 
 		}
-		this.barrel.body.velocity.x += 100
+		this.barrel.body.velocity.x += 2
 		this.barrel.angle += 10;
 
 		this.physics.arcade.collide(this.player, this.barrel, function() {
-			console.log('death');
+			this.game.start('game');
 		});
-		*/
+
 
 	},
 	handleOrientation: function(e) {
