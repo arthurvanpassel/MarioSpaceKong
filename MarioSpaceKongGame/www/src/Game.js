@@ -20,7 +20,6 @@ bootcamp.Game.prototype = {
 		this.player.body.collideWorldBounds = true;
 
 		this.game.physics.arcade.TILE_BIAS = 32;
-
 		this.game.physics.arcade.gravity.y = 600;
 
 		this.player.animations.add('idle', [0], 1, true);
@@ -132,8 +131,9 @@ bootcamp.Game.prototype = {
 		this.barrel.body.velocity.x += 2
 		this.barrel.angle += 10;
 
+		bootcamp._game = this.game;
 		this.physics.arcade.collide(this.player, this.barrel, function() {
-			this.game.start('game');
+			bootcamp._game.state.start('Game');
 		});
 
 
