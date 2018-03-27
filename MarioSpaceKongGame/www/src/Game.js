@@ -4,8 +4,11 @@ bootcamp.Game.prototype = {
 	create: function() {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
         
+        // BACKGROUND
+        this.background = this.add.tileSprite(0,0,1000, 500, 'background');
+        
         // MARIO
-        this.player = this.add.sprite(this.game.world.centerX, bootcamp._HEIGHT - 10, 'player');
+        this.player = this.add.sprite(this.game.world.centerX, bootcamp._HEIGHT - 20, 'player');
         this.player.frame = 1
         this.player.anchor.setTo(0.5, 0.5);
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -25,6 +28,8 @@ bootcamp.Game.prototype = {
         // MARIO CONTROLS
         this.cursors = this.input.keyboard.createCursorKeys();
         this.fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.fireButton = this.input.keyboard.addKey(this.game.input.pointer1.IsDown);
+        
         
         // ENEMIES
         this.createEnemies();
@@ -73,6 +78,8 @@ bootcamp.Game.prototype = {
 
 	},
 	update: function() {
+        //SCROLL BACKGROUND
+        this.background.tilePosition.y += 2;
         
         // MOVEMENT
 		this.playerMovement();
@@ -128,15 +135,15 @@ bootcamp.Game.prototype = {
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
         
         for (var y = 0; y < 3; y++) {
-            for (var x = 0; x < 8; x++) {
-                var enemy = this.enemies.create(x * 22, y * 33, 'enemy');
+            for (var x = 0; x < 6; x++) {
+                var enemy = this.enemies.create(x * 32, y * 25, 'enemy');
                 enemy.anchor.setTo(0.5, 0.5);
                 enemy.body.moves = false;
             }
         }
         
-        this.enemies.x = 10;
-        this.enemies.y = 10;
+        this.enemies.x = 16;
+        this.enemies.y = 28;
     },
     
     animateEnemies: function() {
@@ -195,18 +202,27 @@ bootcamp.Game.prototype = {
         this.lives -= 1;
         this.livesText.text = "LIVES: " + this.lives;
         if (this.lives > 0) {
-            this.respawnPlayer();
-        }
+             this.respawnPlayer(this.player);
+         }
         else {
             this.gameOver();
         }
     },
     
-    respawnPlayer: function() {
+    respawnPlayer: function(player) {
         this.player.body.x = this.game.world.centerX;
         setTimeout(function () {
             console.log("DOOD")
-            this.player.reset();
+            player.revive();
+        }, 1000);
+    },
+    
+    gameOver: function() {
+        setTimeout(function() {
+            gameOverText = this.add.text(this.world.centerX, this.world.centerY, "GAME OVER", this.style);
+            gameOverText.anchor.set(0.5, 0.5);
+            restartText = this.add.text(this.world.centerX, this.world.height - 16, "PRESS 'SPACE' TO RESTART", style);
+            restartText.anchor.set(0.5, 1);
         }, 1000);
     },
     
@@ -245,13 +261,14 @@ bootcamp.Game.prototype = {
             str = '0' + str;
         }
         return str;
-     }
-	/* handleOrientation: function(e) {
+     },
+    
+	handleOrientation: function(e) {
 		// Device Orientation API
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
 		bootcamp._player.body.velocity.x += x;
 		bootcamp._player.body.velocity.y += y*0.5;
-	}*/
+	}
 };
