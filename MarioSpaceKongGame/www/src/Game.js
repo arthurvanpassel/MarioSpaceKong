@@ -69,7 +69,7 @@ bootcamp.Game.prototype = {
 			}
 			if (i > (_HEIGHT)-50) {
 				startposition = _WIDTH/100;
-				endposition = _WIDTH-50;
+				endposition = _WIDTH;
 			}
 
 			for( w=startposition; w < endposition; ){
@@ -83,9 +83,10 @@ bootcamp.Game.prototype = {
 					steel.body.width = 24;
 					steel.body.height = 16;
 					if (i > (_HEIGHT)-50) {
-                        steel.name = 'lowestSteel';
+                        steel.name = 'steelLow';
 					}
 					else {
+                        steel.name = 'steel';
 						if (holeRight) {
 							i +=0.5;
 						}
@@ -103,7 +104,7 @@ bootcamp.Game.prototype = {
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
-		this.physics.arcade.collide(this.barrels, platforms);
+		this.physics.arcade.collide(this.barrels, platforms, this.collideBarrelPlatform, null, this);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.body.velocity.x = 0;
@@ -124,7 +125,7 @@ bootcamp.Game.prototype = {
 			this.player.body.velocity.y -= 300;
 		}
 
-		if (this.player.body.blocked.down || hitplatform || this.player.body.touching.down ) {
+		if (this.player.body.blocked.down || hitplatform) {
 			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 				this.player.animations.play('walk');
 			}
@@ -156,10 +157,6 @@ bootcamp.Game.prototype = {
 			barrelTimer = this.game.time.now + 3000;
 		};
 
- 		
-
-		this.physics.arcade.collide(barrel, platforms, this.loweSteelcollide );
-
     
 
 
@@ -171,13 +168,20 @@ bootcamp.Game.prototype = {
 		var z = e.alpha; // range [0,360], up-down
 		bootcamp._player.body.velocity.x += x;
 		bootcamp._player.body.velocity.y += y*0.5;
+        
+        if (x > 0) {
+            this.player.body.velocity.x += 150;
+			this.player.scale.setTo(1, 1);
+        }
+        else if (x > 0) {
+            this.player.body.velocity.x -= 150;
+			this.player.scale.setTo(-1, 1);
+        }
 	},
-	loweSteelcollide: function(){ 
-		console.log("fuckers");
-		if(steel.name === 'lowestSteel'){
-
-			
-			console.log("killl alllll barrels fuckers");
+	collideBarrelPlatform: function(steel, barrel){ 
+        console.log('blablaBuite if');
+		if(steel.name == 'steelLow'){
+			console.log('blabla');
 		};
 	},
 

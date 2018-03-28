@@ -6,8 +6,7 @@ Barrel = function (game, x, y) {
     this.body.gravity.y = 600;
     this.body.collideWorldBounds = true;
     this.barrelMoveLeft = false;
-
-		this.body.friction = 0.1;
+    this.body.friction = 0.1;
 	
 };
 
@@ -33,7 +32,6 @@ Barrel.prototype.update = function () {
 
   this.angle += (this.body.velocity.x)/10
 
-  
     
   if (this.body.blocked.down){
     this.kill();
