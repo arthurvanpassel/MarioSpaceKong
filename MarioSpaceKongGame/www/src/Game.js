@@ -69,7 +69,7 @@ bootcamp.Game.prototype = {
 			}
 			if (i > (_HEIGHT)-50) {
 				startposition = _WIDTH/100;
-				endposition = _WIDTH;
+				endposition = _WIDTH-50;
 			}
 
 			for( w=startposition; w < endposition; ){
@@ -158,7 +158,7 @@ bootcamp.Game.prototype = {
 
  		
 
-		this.physics.arcade.collide(barrels, platforms, this.loweSteelcollide );
+		this.physics.arcade.collide(barrel, platforms, this.loweSteelcollide );
 
     
 
