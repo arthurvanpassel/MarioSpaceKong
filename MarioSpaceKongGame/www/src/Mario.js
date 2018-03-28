@@ -207,19 +207,22 @@ bootcamp.Mario.prototype = {
             if (this.player.body.velocity.y < 0) {
                 this.player.animations.play('jump');
             }
+            
+            console.log(this.ship.body.position.y);
 
             //END LEVEL
             if (this.inShip) {
                 this.ship.body.velocity.y -= 5;
             }
             if (this.ship.body.position.y < 0) {
+                this.inShip = false;
+                this.started = false;
                 this.game.state.start('Space');
             }
 
             if (this.player.body.position.y > 227) {
                 this.player.kill;
             }
-            console.log("nee");
 
             this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
         } else if (this.playerDead == true && this.started) {
@@ -227,7 +230,7 @@ bootcamp.Mario.prototype = {
             this.player.animations.play("dead");
             this.player.body.velocity.x = 0;
         } else if (!this.playerDead && !this.started) {
-            console.log("ja");
+            console.log("startanimation");
             if(this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
                 this.startShip.frame = 0;
                 this.player.body.position.y = this.startShip.body.position.y;

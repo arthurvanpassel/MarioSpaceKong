@@ -5,6 +5,8 @@ bootcamp.Space.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.world.setBounds(0, 0, 200, bootcamp._HEIGHT);
         
+        this.levelCompleteVar = 0;
+        
         // BACKGROUND
         this.background = this.add.tileSprite(0,0,1000, 500, 'background');
         
@@ -102,13 +104,16 @@ bootcamp.Space.prototype = {
 	},
 	update: function() {
         //INTRO
-        if(this.player.body.position.y < bootcamp._HEIGHT - 60) {
-            this.player.body.position.y = bootcamp._HEIGHT - 60;
-            this.player.body.collideWorldBounds = true;
-            this.player.body.velocity.y = 0;
-        }if(this.player.body.position.y > bootcamp._HEIGHT - 60) {
-            this.player.body.velocity.y += 3.5;
+        if (this.levelCompleteVar == 0) {
+            if(this.player.body.position.y < bootcamp._HEIGHT - 60) {
+                this.player.body.position.y = bootcamp._HEIGHT - 60;
+                this.player.body.collideWorldBounds = true;
+                this.player.body.velocity.y = 0;
+            }if(this.player.body.position.y > bootcamp._HEIGHT - 60) {
+                this.player.body.velocity.y += 3.5;
+            }
         }
+            
         
         //SCROLL BACKGROUND
         this.background.tilePosition.y += 2;
@@ -140,6 +145,16 @@ bootcamp.Space.prototype = {
             this.player.body.velocity.x = -200;
         }else if(this.player.body.velocity.x > 200) {
             this.player.body.velocity.x = 200;
+        }
+        
+        //LEVELCOMPLETE
+        if (this.levelCompleteVar) {
+            this.player.body.collideWorldBounds = false;
+            this.player.body.velocity.y -= 5;
+        }
+        if (this.player.body.position.y < 0) {
+            this.game.state.start('Mario');
+            this.player.body.position.y = 0
         }
 	},
     
@@ -180,8 +195,8 @@ bootcamp.Space.prototype = {
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
         
-        for (var y = 0; y < 3; y++) {
-            for (var x = 0; x < 6; x++) {
+        for (var y = 0; y < 1; y++) {
+            for (var x = 0; x < 1; x++) {
                 var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
                 enemy.anchor.setTo(0.5, 0.5);
                 enemy.body.moves = false;
@@ -219,6 +234,7 @@ bootcamp.Space.prototype = {
         if (this.enemies.countLiving() == 0) {
             // LEVEL KLAAR
             console.log("KLAAR")
+            this.levelCompleteVar = 1;
         }
     },
     
