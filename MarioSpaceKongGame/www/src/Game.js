@@ -12,7 +12,11 @@ bootcamp.Game.prototype = {
 		this.physics.startSystem(Phaser.Physics.ARCADE); 
         
         //kong-----------------------------------------------------------------------------------------
-		this.kong = this.add.sprite(0,10, 'kong');
+		this.kong = this.add.sprite(20,30, 'kong');
+        this.kong.anchor.setTo(0.5);
+        this.physics.enable(this.kong, Phaser.Physics.ARCADE);
+        this.kong.body.allowGravity = false;
+        this.kong.body.immovable = true;
 		this.kong.animations.add('donkey', [0,1,2,3,4,5], 10,true);
 		this.kong.animations.play('donkey');
 
@@ -58,6 +62,8 @@ bootcamp.Game.prototype = {
 		this.Bottoms.physicsBodyType = Phaser.Physics.ARCADE;
 		this.Bottoms.enableBody = true;
 		this.Bottoms.setAll('body.allowGravity', false);
+        
+        bootcamp._platforms = this.platforms;
 
 		//create random platforms-----------------------------------------------------------------------------------------
 		var holeRight = true;
@@ -119,9 +125,11 @@ bootcamp.Game.prototype = {
         //collide-----------------------------------------------------------------------------------------
 		var hitplatform = this.physics.arcade.collide(this.player, this.platforms);
         var hitplatformBottom = this.physics.arcade.collide(this.player, this.Bottoms);
+        this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
         
-        this.physics.arcade.collide(this.player, this.kong, this.finishGame(), null, this);
+        
+        this.physics.arcade.collide(this.player, this.kong, this.finishGame, null, this);
 
 		//player movement-----------------------------------------------------------------------------------------
 
@@ -164,6 +172,7 @@ bootcamp.Game.prototype = {
 
 
 		//create barrel-----------------------------------------------------------------------------------------
+        /*
         if (this.game.time.now > barrelTimer) {
 			var barrel = new Barrel(this.game,0,0);
             barrel.name = "barrel" + barrelCount ;
@@ -171,6 +180,7 @@ bootcamp.Game.prototype = {
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
 		};
+        */
 	},
 	
 	handleOrientation: function(e) {
@@ -186,7 +196,13 @@ bootcamp.Game.prototype = {
 		};
 	},
     finishGame: function() {
-        console.log('finish');
+        bootcamp._platforms.setAll('body.allowGravity', true);
+        bootcamp._player.body.allowGravity = false;
+        setTimeout()
+        var fallTimer = this.time.now + 3000;
+        if (this.time.now > fallTimer) {
+            bootcamp._player.body.allowGravity = true;
+        }
     }
 
 };
