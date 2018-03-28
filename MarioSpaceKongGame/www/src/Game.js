@@ -2,6 +2,7 @@ var platforms, barrels, barrel;
 var barrelCount;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
+
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
@@ -163,9 +164,10 @@ bootcamp.Game.prototype = {
 		
 
 		if (this.game.time.now > barrelTimer) {
-			var enemy = new barrel(this.game,0,0);
-			enemy.name = "barrel" + barrelCount ;
-			this.barrels.add(barrel);
+			var barrel = new Barrel(this.game,0,0);
+            barrel.name = "barrel" + barrelCount ;
+            barrelName= "barrel" + barrelCount;
+			barrels.add(barrelName);
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
 		}

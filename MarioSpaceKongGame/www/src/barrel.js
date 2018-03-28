@@ -1,4 +1,4 @@
-barrel = function (game, x, y) {
+Barrel = function (game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'barrel');
     this.anchor.setTo(0.5);
     game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -7,13 +7,13 @@ barrel = function (game, x, y) {
     this.barrelMoveLeft = false;
 };
 
-barrel.prototype = Object.create(Phaser.Sprite.prototype);
-barrel.prototype.constructor = barrel;
+Barrel.prototype = Object.create(Phaser.Sprite.prototype);
+Barrel.prototype.constructor = barrel;
 
 /**
  * Automatically called by World.update
  */
-barrel.prototype.update = function () {
+Barrel.prototype.update = function () {
 
   if (barrel.body.blocked.right) {
     barrelMoveLeft = true;

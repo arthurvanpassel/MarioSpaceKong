@@ -17,6 +17,7 @@
     <script src="src/Preloader.js"></script>
     <script src="src/MainMenu.js"></script>
     <script src="src/Howto.js"></script>
+    <script src="src/Barrel.js"></script>
     <script src="src/Game.js"></script>
 </head>
 
@@ -34,6 +35,7 @@
         game.state.add('MainMenu', bootcamp.MainMenu);
         game.state.add('Howto', bootcamp.Howto);
         game.state.add('Game', bootcamp.Game);
+        game.state.add('Barrel', bootcamp.Barrel);
         game.state.start('Boot');
         game.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
     })();
