@@ -5,6 +5,9 @@ var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
 var steel;
+var coins;
+
+
 
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
@@ -15,6 +18,10 @@ bootcamp.Game.prototype = {
 		this.kong = this.add.sprite(0,10, 'kong');
 		this.kong.animations.add('donkey', [0,1,2,3,4,5], 10,true);
 		this.kong.animations.play('donkey');
+
+		//coins-----------------------------------------------------------------
+		this.coins = this.add.group();
+		
 
 		// player-----------------------------------------------------------------------------------------
 		this.player = this.add.sprite(bootcamp._WIDTH -20, bootcamp._HEIGHT -75, 'player');
@@ -100,6 +107,7 @@ bootcamp.Game.prototype = {
 						//steel.body.friction = 0.5;
 						steel.body.width = 24;
 						steel.body.height = 16;
+						this.coinCreator(i,w);
 						if (holeRight) {
 							i +=0.5;
 						}
@@ -185,6 +193,17 @@ bootcamp.Game.prototype = {
 			console.log('blabla');
 		};
 	},
+	coinCreator : function(i,w){ 
+		i-=15;
+		w++;
+		var coin = this.game.add.sprite(w,i, 'tiles');
+		coin.animations.add('coin', [17, 18, 19, 18], 10, true);
+		coin.animations.play('coin');
+		//coin.body.immovable = true;
+		coin.name = "coin" + i;
+		this.coins.add(coin);
+	},
+	
     finishGame: function() {
         console.log('finish');
     }

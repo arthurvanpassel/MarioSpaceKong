@@ -5,7 +5,7 @@ bootcamp.Preloader.prototype = {
 		this.load.spritesheet('kong', 'img/kong.png', 37,38, 6);
 		this.load.spritesheet('player', 'img/Mario.png', 17, 27, 7);
 		this.load.image('barrel', 'img/barrel.png');
-
+		this.load.spritesheet('tiles', 'img/tiles.png', 16, 16, 20);
 
 		this.load.spritesheet('mainmenuGif', 'img/HomePageSpriteSheet.png', 200, 400, 61);
 
