@@ -12,8 +12,8 @@ bootcamp.Mario.prototype = {
         this.ground = this.game.add.group();
         this.enemies = this.game.add.group();
         this.coins = this.game.add.group();
-        this.ship = null;
-        
+        this.ships = this.game.add.group();
+
         var inShip = false;
         var started = false;
 
@@ -101,14 +101,20 @@ bootcamp.Mario.prototype = {
                 }
             }
         }
+        this.startShip = this.game.add.sprite(100, bootcamp._HEIGHT + 60, 'shipM');
+        this.startShip.frame = 1;
+        this.startShip.body.immovable = true;
+        this.startShip.name = "startShip";
+        this.startShip.anchor.set(0.5, 1);
+        this.startShip.body.velocity.y = -400;
 
         this.playerDead = false;
-        this.player = this.add.sprite(40, 100, 'playerM');
+        this.player = this.add.sprite(40, 1000, 'playerM');
         this.player.name = "player";
         this.player.anchor.set(0.5, 0.5);
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.gravity.y = 600;
-        this.player.body.collideWorldBounds = true;
+        this.player.body.collideWorldBounds = false;
         this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
 
         this.player.animations.add('idle', [0], 1, true);
@@ -136,7 +142,7 @@ bootcamp.Mario.prototype = {
         this.scoreText.stroke = '#000000';
         this.scoreText.strokeThickness = 3;
         this.scoreText.fixedToCamera = true;
-        
+
         this.livesText = this.add.text(195, -1, bootcamp._LIVES, this.style);
         this.livesText.anchor.set(0.5, 0);
         this.livesText.stroke = '#000000';
@@ -157,6 +163,10 @@ bootcamp.Mario.prototype = {
         this.physics.arcade.collide(this.enemies);
 
         if (this.playerDead == false && this.started) {
+            if(this.startShip.body.position.y < -100) {
+                this.startShip.kill();
+            }
+            
             this.physics.arcade.collide(this.player, this.ground, null, function () {
                 if (this.playerDead) {
                     return false;
@@ -209,11 +219,23 @@ bootcamp.Mario.prototype = {
             if (this.player.body.position.y > 227) {
                 this.player.kill;
             }
+            console.log("nee");
 
             this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
-        } else {
+        } else if (this.playerDead == true && this.started) {
+            
             this.player.animations.play("dead");
             this.player.body.velocity.x = 0;
+        } else if (!this.playerDead && !this.started) {
+            console.log("ja");
+            if(this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
+                this.startShip.frame = 0;
+                this.player.body.position.y = this.startShip.body.position.y;
+                this.player.body.position.x = this.startShip.body.position.x;
+                this.player.body.velocity.y = -300;
+                this.player.body.collideWorldBounds = false;
+                this.started = true;
+            }
         }
 
         //MAX SPEED
