@@ -45,6 +45,7 @@ bootcamp.Game.prototype = {
 
 //barrels----------------------------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
+		
 
 		/*barrel = barrels.create(0,0, 'barrel');
 		barrel.scale.setTo(0.15, 0.2);
