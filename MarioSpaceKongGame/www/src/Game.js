@@ -1,5 +1,7 @@
-var platforms;
+var platforms, barrels, barrel;
 var barrelCount;
+var barrelMoveLeft = false;
+var barrelTimer = 3000;
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
@@ -12,9 +14,9 @@ bootcamp.Game.prototype = {
 		this.kong = this.add.sprite(0,10, 'kong');
 		this.kong.animations.add('donkey', [0,1,2,3,4,5], 10,true);
 		this.kong.animations.play('donkey');
-		
 
-		// player 
+
+		// player
 		this.player = this.add.sprite(_WIDTH -20, _HEIGHT -75, 'player');
 		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
@@ -40,17 +42,28 @@ bootcamp.Game.prototype = {
 		bootcamp._player = this.player;
 		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
+//barrels----------------------------------------------------------------------------------------------------------
+		barrels = this.add.group();
+		barrels.physicsBodyType = Phaser.Physics.ARCADE;
+		barrels.enableBody = true;
+		barrels.setAll('body.allowGravity', false);
+		barrels.setAll('body.collideWorldBounds', true);
+
+		barrel = barrels.create(0,0, 'barrel');
+		barrel.scale.setTo(0.15, 0.2);
+		barrel.anchor.setTo(0.5);
+		barrel.body.collideWorldBounds = true;
+
+		/*
 		this.barrel = this.add.sprite(0, 0, 'barrel');
 		this.barrel.scale.setTo(0.15, 0.2);
 		this.barrel.anchor.setTo(0.5);
 		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
-		this.player.body.mass = 20;
 		this.barrel.body.collideWorldBounds = true;
 		this.barrel.body.friction = 0.1;
 		barrelCount ++;
-
-		var barrelMoveLeft = false;
-
+		*/
+//platforms----------------------------------------------------------------------------------------------------------
 		platforms = this.add.group();
 		platforms.physicsBodyType = Phaser.Physics.ARCADE;
 		platforms.enableBody = true;
@@ -104,7 +117,7 @@ bootcamp.Game.prototype = {
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
-		this.physics.arcade.collide(this.barrel, platforms);
+		this.physics.arcade.collide(barrels, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.body.velocity.x = 0;
@@ -138,42 +151,42 @@ bootcamp.Game.prototype = {
 		}
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
-		if (this.barrel.body.blocked.right) {
-			barrelMoveLeft = true;
-		}
-		if (this.barrel.body.blocked.left) {
-			barrelMoveLeft = false;
-		}
-		if (barrelMoveLeft) {
-			this.barrel.body.velocity.x = -75;
-		}
-		else {
-			this.barrel.body.velocity.x = 75;
-		}
+		barrels.forEach(function(barrel) {
+			if (barrel.body.blocked.right) {
+				barrelMoveLeft = true;
+			}
+			if (barrel.body.blocked.left) {
+				barrelMoveLeft = false;
+			}
+			if (barrelMoveLeft) {
+				barrel.body.velocity.x = -75;
+			}
+			else {
+				barrel.body.velocity.x = 75;
+			}
 
-		this.barrel.angle += (this.barrel.body.velocity.x)/10
+			barrel.angle += (barrel.body.velocity.x)/10
+		}.bind(this));
+
 
 
 		bootcamp._game = this.game;
-		this.physics.arcade.collide(this.player, this.barrel, function() {
-			bootcamp._game.state.start('Game');
+		this.physics.arcade.collide(this.player, barrels, function() {
+			console.log('death');
 		});
 
-		if (this.barrel.body.blocked.down){
-
-		this.barrel.destroy();
-
-		this.barrel = this.add.sprite(0, 0, 'barrel');
-		this.barrel.scale.setTo(0.15, 0.2);
-		this.barrel.anchor.setTo(0.5);
-		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
-		this.player.body.mass = 20;
-		this.barrel.body.collideWorldBounds = true;
-		this.barrel.body.friction = 0.1;
-		
+		if (barrel.body.blocked.down){
+			barrel.destroy();
 		}
 
-		
+		if (this.game.time.now > barrelTimer) {
+			barrel = barrels.create(0,0, 'barrel');
+			barrel.scale.setTo(0.15, 0.2);
+			barrel.anchor.setTo(0.5);
+			barrel.body.collideWorldBounds = true;
+
+			barrelTimer = this.game.time.now + 3000;
+		}
 
 
 	},
