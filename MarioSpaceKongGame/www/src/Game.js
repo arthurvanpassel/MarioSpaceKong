@@ -166,8 +166,6 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-		bootcamp._player.body.velocity.x += x;
-		bootcamp._player.body.velocity.y += y*0.5;
         
         if (x > 0) {
             this.player.body.velocity.x += 150;
