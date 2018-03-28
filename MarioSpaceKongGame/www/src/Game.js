@@ -3,6 +3,7 @@ var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
 var steel;
+var player;
 
 
 bootcamp.Game = function(game) {};
@@ -21,6 +22,7 @@ bootcamp.Game.prototype = {
 
 		// player
 		this.player = this.add.sprite(_WIDTH -20, _HEIGHT -75, 'player');
+		player = this.player;
 		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
@@ -99,6 +101,15 @@ bootcamp.Game.prototype = {
 		i +=70;
 		holeRight = !holeRight;
 		};
+
+		// setting gyroscope update frequency
+		gyro.frequency = 10;
+		// start gyroscope detection
+          gyro.startTracking(function(o) {
+               // updating player velocity
+        	player.body.velocity.x += o.gamma/20;
+               //player.body.velocity.y += o.beta/20;
+          });		
         
 	},
 	update: function() {
@@ -125,7 +136,7 @@ bootcamp.Game.prototype = {
 		}
 
 		if (this.player.body.blocked.down || hitplatform || this.player.body.touching.down ) {
-			if (this.player.body.velocity.x >= 0 ) {
+			if (this.player.body.velocity.x >= 0 || this.player.body.velocity.x < 0) {
 				this.player.animations.play('walk');
 			}
 			else {
@@ -161,17 +172,10 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.collide(barrel, platforms, this.loweSteelcollide );
 
     
-
+		
 
 	},
-	handleOrientation: function(e) {
-		// Device Orientation API
-		var x = e.gamma; // range [-90,90], left-right
-		var y = e.beta;  // range [-180,180], top-bottom
-		var z = e.alpha; // range [0,360], up-down
-		bootcamp._player.body.velocity.x += x;
-		bootcamp._player.body.velocity.y += y*0.5;
-	},
+	
 	loweSteelcollide: function(){ 
 		console.log("fuckers");
 		if(steel.name === 'lowestSteel'){
