@@ -24,8 +24,12 @@ bootcamp.Preloader.prototype = {
         this.load.spritesheet('explosion', 'img/explosion.png', 80, 80);
         this.load.spritesheet('powerUp', 'img/objects.png', 16, 16, 2);
         
+        // MAIN MENU ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.load.spritesheet('mainmenuGif', 'img/HomePageSpriteSheet.png', 200, 400, 61);
+        this.load.image('button', 'img/button.png');
+        
 	},
 	create: function() {
-		this.game.state.start('Mario');
+		this.game.state.start('MainMenu');
 	}
 };
