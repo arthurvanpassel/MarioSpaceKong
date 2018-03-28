@@ -8,11 +8,13 @@ bootcamp.Game.prototype = {
         this.background = this.add.tileSprite(0,0,1000, 500, 'background');
         
         // MARIO
-        this.player = this.add.sprite(this.game.world.centerX, bootcamp._HEIGHT - 20, 'player');
+        this.player = this.add.sprite(this.game.world.centerX, bootcamp._HEIGHT + 55, 'player');
         this.player.frame = 1
         this.player.anchor.setTo(0.5, 0.5);
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
-        this.player.body.collideWorldBounds = true;
+        this.player.body.collideWorldBounds = false;
+        
+        this.player.body.velocity.y = -200;
         
         // MARIO BULLETS
         this.bullets = this.add.group();
@@ -98,6 +100,15 @@ bootcamp.Game.prototype = {
 
 	},
 	update: function() {
+        //INTRO
+        if(this.player.body.position.y < bootcamp._HEIGHT - 60) {
+            this.player.body.position.y = bootcamp._HEIGHT - 60;
+            this.player.body.collideWorldBounds = true;
+            this.player.body.velocity.y = 0;
+        }if(this.player.body.position.y > bootcamp._HEIGHT - 60) {
+            this.player.body.velocity.y += 3.5;
+        }
+        
         //SCROLL BACKGROUND
         this.background.tilePosition.y += 2;
         
