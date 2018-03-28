@@ -1,4 +1,6 @@
-var platforms, barrels, barrel;
+var platforms;
+var barrels;
+var barrel;
 var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
