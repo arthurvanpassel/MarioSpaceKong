@@ -45,8 +45,7 @@ bootcamp.Game.prototype = {
 
 //barrels----------------------------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
-		this.barrels.setAll('body.allowGravity', false);
-		this.barrels.setAll('body.collideWorldBounds', true);
+		
 
 		/*barrel = barrels.create(0,0, 'barrel');
 		barrel.scale.setTo(0.15, 0.2);

@@ -5,6 +5,9 @@ Barrel = function (game, x, y) {
     this.body.gravity.y = 600;
     this.body.collideWorldBounds = true;
     this.barrelMoveLeft = false;
+
+		this.barrel.body.friction = 0.1;
+	
 };
 
 Barrel.prototype = Object.create(Phaser.Sprite.prototype);
