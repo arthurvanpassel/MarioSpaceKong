@@ -93,6 +93,7 @@ bootcamp.Game.prototype = {
         this.updateScore();
         
         // ACCELEROMETER
+        bootcamp._player = this.player;
 		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
 	},
@@ -145,7 +146,7 @@ bootcamp.Game.prototype = {
             this.bullet = this.bullets.getFirstExists(false);
             // HAS A BULLET BEEN FIRED RECENTLY
             
-            if (this.bullet) {
+            if (this.bullet && this.player.alive) {
                 // NO? THEN FIRE
                 this.bullet.reset(this.player.x, this.player.y - 16);
                 this.bullet.body.velocity.y = -400;
@@ -331,6 +332,6 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-		this.player.body.velocity.x += 10*x;
+		bootcamp._player.body.velocity.x += 10*x;
 	}
 };
