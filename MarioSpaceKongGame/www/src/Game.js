@@ -44,6 +44,26 @@ bootcamp.Game.prototype = {
         this.bombs.setAll('checkWorldBounds', true);
         this.bombs.setAll('outOfBoundsKill', true);
         
+        // POWERUPS
+        this.oneUps = this.add.group();
+        this.oneUps.enableBody = true;
+        this.oneUps.physicsBodyType = Phaser.Physics.ARCADE;
+        this.oneUps.createMultiple(10, 'powerUp', [0]);
+        this.oneUps.frame = 0;
+        this.oneUps.setAll('anchor.x', 0.5);
+        this.oneUps.setAll('anchor.y', 0.5);
+        this.oneUps.setAll('checkWorldBounds', true);
+        this.oneUps.setAll('outOfBoundsKill', true);
+        
+        this.coins = this.add.group();
+        this.coins.enableBody = true;
+        this.coins.physicsBodyType = Phaser.Physics.ARCADE;
+        this.coins.createMultiple(10, 'powerUp', [1]);
+        this.coins.setAll('anchor.x', 0.5);
+        this.coins.setAll('anchor.y', 0.5);
+        this.coins.setAll('checkWorldBounds', true);
+        this.coins.setAll('outOfBoundsKill', true);
+        
         // EXPLOSIONS
         this.explosions = this.add.group();
         this.explosions.createMultiple(10, 'explosion');
@@ -98,7 +118,9 @@ bootcamp.Game.prototype = {
         
         // HIT & EXPLODE
         this.physics.arcade.overlap(this.bullets, this.enemies, this.bulletHitsEnemy, null, this);
-        this.physics.arcade.overlap(this.bombs, this.player, this.  bombHitsPlayer, null, this);
+        this.physics.arcade.overlap(this.bombs, this.player, this.bombHitsPlayer, null, this);
+        this.physics.arcade.overlap(this.oneUps, this.player, this.oneUpHitsPlayer, null, this);
+        this.physics.arcade.overlap(this.coins, this.player, this.coinHitsPlayer, null, this);
 	},
     
     playerMovement: function() {
@@ -168,9 +190,11 @@ bootcamp.Game.prototype = {
     
     bulletHitsEnemy: function(bullet, enemy) {
         bullet.kill();
+        this.dropItem(enemy);
+        
         this.explode(enemy);
         this.score += 10;
-        this.updateScore();   
+        this.updateScore();
 
         if (this.enemies.countLiving() == 0) {
             // LEVEL KLAAR
@@ -188,6 +212,41 @@ bootcamp.Game.prototype = {
             bomb.body.velocity.y = +100;
             bomb.body.gravity.y = 250
         }
+    },
+    
+    dropItem: function(enemy) {
+        if (this.player.alive) {
+            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 10);
+            chanceOfDroppingCoin = this.rnd.integerInRange(0, 3);
+            if (chanceOfDroppingCoin == 0) {
+                console.log("COIN");
+                coin = this.coins.getFirstExists(false);
+                coin.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
+                coin.body.velocity.y = +100;
+                coin.body.gravity.y = 75
+            }
+            if (chanceOfDroppingOneUp == 0 && chanceOfDroppingCoin != 0) {
+                console.log("1UP");        
+                oneUp = this.oneUps.getFirstExists(false);
+                oneUp.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
+                oneUp.body.velocity.y = +100;
+                oneUp.body.gravity.y = 75
+            }
+        }
+    },
+    
+    oneUpHitsPlayer: function(player, oneUp) {
+        oneUp.kill();
+        console.log("oneuphitsplayer");
+        this.lives += 1;
+        this.livesText.text = "LIVES: " + this.lives;
+    },
+    
+    coinHitsPlayer: function(player, coin) {
+        coin.kill();
+        console.log("coinhitsplayer");
+        this.score += 10;
+        this.updateScore();
     },
     
     handleBombs: function() {
