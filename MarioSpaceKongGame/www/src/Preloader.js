@@ -28,6 +28,9 @@ bootcamp.Preloader.prototype = {
         this.load.spritesheet('mainmenuGif', 'img/HomePageSpriteSheet.png', 200, 400, 61);
         this.load.image('button', 'img/button.png');
         
+        // SCORE //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.load.spritesheet('stats', 'img/stats.png', 22, 12, 2);
+        
 	},
 	create: function() {
 		this.game.state.start('MainMenu');
