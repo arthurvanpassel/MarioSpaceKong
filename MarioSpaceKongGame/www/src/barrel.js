@@ -15,24 +15,24 @@ Barrel.prototype.constructor = Barrel;
  */
 Barrel.prototype.update = function () {
 
-  if (barrel.body.blocked.right) {
+  if (this.body.blocked.right) {
     barrelMoveLeft = true;
   }
-  if (barrel.body.blocked.left) {
+  if (this.body.blocked.left) {
     barrelMoveLeft = false;
   }
   if (barrelMoveLeft) {
-    barrel.body.velocity.x = -75;
+    this.body.velocity.x = -75;
   }
   else {
-    barrel.body.velocity.x = 75;
+    this.body.velocity.x = 75;
   }
 
-  barrel.angle += (barrel.body.velocity.x)/10
+  this.angle += (this.body.velocity.x)/10
 
 
-  if (barrel.body.blocked.down){
-    barrel.kill();
+  if (this.body.blocked.down){
+    this.kill();
   }
 
 };
