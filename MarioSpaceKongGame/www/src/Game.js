@@ -125,7 +125,7 @@ bootcamp.Game.prototype = {
 		}
 
 		if (this.player.body.blocked.down || hitplatform || this.player.body.touching.down ) {
-			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
+			if (this.player.body.velocity.x >= 0 ) {
 				this.player.animations.play('walk');
 			}
 			else {
