@@ -7,7 +7,7 @@ Barrel = function (game, x, y) {
     this.body.collideWorldBounds = true;
     this.barrelMoveLeft = false;
 
-		this.barrel.body.friction = 0.1;
+		this.body.friction = 0.1;
 	
 };
 
