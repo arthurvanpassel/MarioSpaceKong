@@ -17,23 +17,29 @@
     <script src="src/Preloader.js"></script>
     <script src="src/MainMenu.js"></script>
     <script src="src/Howto.js"></script>
-    <script src="src/Game.js"></script>
+    <script src="src/Mario.js"></script>
+    <script src="src/Space.js"></script>
+    <script src="src/Enemy.js"></script>
 </head>
 
 <body>
     <script>
+    var pixel = { scale: window.innerWidth/200, canvas: null, context: null, width: 0, height: 0 }
+        
     document.addEventListener("deviceready", function() {
         setTimeout(function() {
             navigator.splashscreen.hide();
         }, 5000, false);
     });
     (function() {
-        var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
+        var game = new Phaser.Game(200, 200 * (window.innerHeight / window.innerWidth), Phaser.AUTO, 'game', null, false, false);
+        game.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
         game.state.add('Boot', bootcamp.Boot);
         game.state.add('Preloader', bootcamp.Preloader);
         game.state.add('MainMenu', bootcamp.MainMenu);
         game.state.add('Howto', bootcamp.Howto);
-        game.state.add('Game', bootcamp.Game);
+        game.state.add('Mario', bootcamp.Mario);
+        game.state.add('Space', bootcamp.Space);
         game.state.start('Boot');
     })();
     </script>

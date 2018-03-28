@@ -1,6 +1,6 @@
 var bootcamp = {
-	_WIDTH: window.innerWidth * window.devicePixelRatio,
-	_HEIGHT: window.innerHeight * window.devicePixelRatio
+	_WIDTH: 200,
+	_HEIGHT: 200 * (window.innerHeight / window.innerWidth)
 };
 bootcamp.Boot = function(game) {};
 bootcamp.Boot.prototype = {
