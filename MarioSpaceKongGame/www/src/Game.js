@@ -53,6 +53,11 @@ bootcamp.Game.prototype = {
 		this.platforms.physicsBodyType = Phaser.Physics.ARCADE;
 		this.platforms.enableBody = true;
 		this.platforms.setAll('body.allowGravity', false);
+		//bottoms 
+		this.Bottoms = this.add.group();
+		this.Bottoms.physicsBodyType = Phaser.Physics.ARCADE;
+		this.Bottoms.enableBody = true;
+		this.Bottoms.setAll('body.allowGravity', false);
 
 		//create random platforms-----------------------------------------------------------------------------------------
 		var holeRight = true;
@@ -73,7 +78,9 @@ bootcamp.Game.prototype = {
 			}
 
 			for( w=startposition; w < endposition; ){
-					steel = this.platforms.create(w,i, 'steel');
+					
+					if (i > (bootcamp._HEIGHT)-50) {
+					steel = this.Bottoms.create(w,i, 'steel');
 
 					steel.scale.setTo(0.5);
 					steel.body.immovable = true;
@@ -82,11 +89,17 @@ bootcamp.Game.prototype = {
 					//steel.body.friction = 0.5;
 					steel.body.width = 24;
 					steel.body.height = 16;
-					if (i > (bootcamp._HEIGHT)-50) {
-                        steel.name = 'steelLow';
 					}
 					else {
-                        steel.name = 'steel';
+                        steel = this.platforms.create(w,i, 'steel');
+
+						steel.scale.setTo(0.5);
+						steel.body.immovable = true;
+						this.physics.enable(steel, Phaser.Physics.ARCADE);
+						steel.body.allowGravity = false;
+						//steel.body.friction = 0.5;
+						steel.body.width = 24;
+						steel.body.height = 16;
 						if (holeRight) {
 							i +=0.5;
 						}
