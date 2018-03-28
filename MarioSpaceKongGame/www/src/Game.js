@@ -177,7 +177,6 @@ bootcamp.Game.prototype = {
         }
 	},
 	collideBarrelPlatform: function(steel, barrel){ 
-        console.log('blablaBuite if');
 		if(steel.name == 'steelLow'){
 			console.log('blabla');
 		};
