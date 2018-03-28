@@ -31,7 +31,12 @@ Barrel.prototype.update = function () {
 
   this.angle += (this.body.velocity.x)/10
 
+  var touchingLowestSteel = this.game.physics.arcade.collide(this, 'lowestSteel');
 
+    if (touchingLowestSteel) {
+        console.log('collided');
+    }
+    
   if (this.body.blocked.down){
     this.kill();
   }

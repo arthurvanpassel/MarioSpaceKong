@@ -81,7 +81,7 @@ bootcamp.Game.prototype = {
 					steel.body.width = 24;
 					steel.body.height = 16;
 					if (i > (_HEIGHT)-50) {
-
+                        steel.name = 'lowestSteel';
 					}
 					else {
 						if (holeRight) {
@@ -97,6 +97,7 @@ bootcamp.Game.prototype = {
 		i +=70;
 		holeRight = !holeRight;
 		};
+        console.log(steel.name);
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
