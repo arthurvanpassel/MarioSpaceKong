@@ -73,6 +73,8 @@ bootcamp.Game.prototype = {
         this.coinSound = this.add.audio('coin', 1, false);
         this.fireballSound = this.add.audio('fireball', 1, false);
         this.lostLifeSound = this.add.audio('lostlife', 3, false);
+        this.enemyHitSound = this.add.audio('enemyhit', 1, false);
+        this.bombSound = this.add.audio('bomb', 1, false);
         
         // EXPLOSIONS
         this.explosions = this.add.group();
@@ -204,15 +206,15 @@ bootcamp.Game.prototype = {
     
     descend: function() {
         if (this.player.alive) {
-        //enemies.y += 8;
-        this.add.tween(this.enemies).to( { y: this.enemies.y + 100 }, 3000, Phaser.Easing.Linear.None, true, 0, 0, false);
+            //enemies.y += 8;
+            this.add.tween(this.enemies).to( { y: this.enemies.y + 100 }, 3000, Phaser.Easing.Linear.None, true, 0, 0, false);
         }
     },
     
     bulletHitsEnemy: function(bullet, enemy) {
         bullet.kill();
         this.dropItem(enemy);
-        
+        this.enemyHitSound.play();
         this.explode(enemy);
         this.score += 10;
         this.updateScore();
@@ -227,7 +229,7 @@ bootcamp.Game.prototype = {
         bomb = this.bombs.getFirstExists(false);
 
         if (bomb && this.player.alive) {
-            //bombSound.play();
+            this.bombSound.play();
             // And drop it
             bomb.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
             bomb.body.velocity.y = +100;
@@ -301,7 +303,7 @@ bootcamp.Game.prototype = {
         setTimeout(function () {
             console.log("DOOD")
             player.revive();
-        }, 1000);
+        }, 3000);
     },
     
     gameOver: function() {
@@ -355,7 +357,7 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-		bootcamp._player.body.velocity.x += 10*x;
+		//bootcamp._player.body.velocity.x += 10*x;
         
         // PLAYER MOVEMENT
         var maxVelocity = 1000;

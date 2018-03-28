@@ -18,6 +18,9 @@ bootcamp.Preloader.prototype = {
         this.load.audio('coin', 'aud/coin.wav');
         this.load.audio('fireball', 'aud/fireball.wav');
         this.load.audio('lostlife', 'aud/lost_a_life.wav');
+        this.load.audio('enemyhit', 'aud/enemyHit.wav');
+        this.load.audio('bomb', 'aud/bomb.wav');
+        
     },
     
 	create: function() {
