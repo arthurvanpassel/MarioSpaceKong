@@ -151,22 +151,7 @@ bootcamp.Game.prototype = {
 		}
 
 		//-----BARREL-MOVEMENT-------------------------------------------------------------
-		barrels.forEach(function(barrel) {
-			if (barrel.body.blocked.right) {
-				barrelMoveLeft = true;
-			}
-			if (barrel.body.blocked.left) {
-				barrelMoveLeft = false;
-			}
-			if (barrelMoveLeft) {
-				barrel.body.velocity.x = -75;
-			}
-			else {
-				barrel.body.velocity.x = 75;
-			}
 
-			barrel.angle += (barrel.body.velocity.x)/10
-		}.bind(this));
 
 
 
@@ -175,9 +160,7 @@ bootcamp.Game.prototype = {
 			console.log('death');
 		});
 
-		if (barrel.body.blocked.down){
-			barrel.destroy();
-		}
+		
 
 		if (this.game.time.now > barrelTimer) {
 			barrel = barrels.create(0,0, 'barrel');
