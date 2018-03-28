@@ -114,7 +114,7 @@ bootcamp.Game.prototype = {
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
-		this.physics.arcade.collide(barrels, platforms);
+		this.physics.arcade.collide(this.barrels, platforms);
 
 		//-----PLAYER-MOVEMENT-------------------------------------------------------------
 		this.player.body.velocity.x = 0;
@@ -153,7 +153,7 @@ bootcamp.Game.prototype = {
 
 
 		bootcamp._game = this.game;
-		this.physics.arcade.collide(this.player, barrels, function() {
+		this.physics.arcade.collide(this.player, this.barrels, function() {
 			console.log('death');
 		});
 
