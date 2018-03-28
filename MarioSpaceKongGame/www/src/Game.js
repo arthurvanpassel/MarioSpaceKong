@@ -155,8 +155,8 @@ bootcamp.Game.prototype = {
 			console.log('death');
 		});
 
-		this.physics.arcade.collide(this.barrels, this.Bottoms, function(){
-			this.barrels.kill();
+		this.physics.arcade.collide(this.barrels, this.Bottoms, function(barrel){
+			barrel.kill();
 		});
 
 
