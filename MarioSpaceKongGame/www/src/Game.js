@@ -44,11 +44,9 @@ bootcamp.Game.prototype = {
 		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
 //barrels----------------------------------------------------------------------------------------------------------
-		barrels = this.add.group();
-		barrels.physicsBodyType = Phaser.Physics.ARCADE;
-		barrels.enableBody = true;
-		barrels.setAll('body.allowGravity', false);
-		barrels.setAll('body.collideWorldBounds', true);
+		this.barrels = this.add.group();
+		this.barrels.setAll('body.allowGravity', false);
+		this.barrels.setAll('body.collideWorldBounds', true);
 
 		/*barrel = barrels.create(0,0, 'barrel');
 		barrel.scale.setTo(0.15, 0.2);
@@ -166,8 +164,7 @@ bootcamp.Game.prototype = {
 		if (this.game.time.now > barrelTimer) {
 			var barrel = new Barrel(this.game,0,0);
             barrel.name = "barrel" + barrelCount ;
-            barrelName= "barrel" + barrelCount;
-			barrels.add(barrelName);
+			this.barrels.add(barrel);
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
 		}

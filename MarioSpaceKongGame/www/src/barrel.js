@@ -8,7 +8,7 @@ Barrel = function (game, x, y) {
 };
 
 Barrel.prototype = Object.create(Phaser.Sprite.prototype);
-Barrel.prototype.constructor = barrel;
+Barrel.prototype.constructor = Barrel;
 
 /**
  * Automatically called by World.update
@@ -32,7 +32,7 @@ Barrel.prototype.update = function () {
 
 
   if (barrel.body.blocked.down){
-    barrel.destroy();
+    barrel.kill();
   }
 
 };
