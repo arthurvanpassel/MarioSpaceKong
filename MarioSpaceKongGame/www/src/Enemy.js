@@ -1,13 +1,14 @@
 Enemy = function (game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'enemy');
     this.animations.add('walk', [0, 1], 5, true);
+    this.animations.add('dead', [2], 1, true);
     this.animations.play('walk');
     this.anchor.setTo(0.5, 0.5);
     game.physics.enable(this, Phaser.Physics.ARCADE);
     this.xSpeed = -1;
     this.body.gravity.y = 600;
-    this.body.collideWorldBounds = true;
     this.walking = false;
+    this.dead = false;
 };
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -35,6 +36,10 @@ Enemy.prototype.update = function () {
         this.xSpeed = -1;
     }else if (this.body.blocked.right) {
         this.xSpeed = 1;
+    }
+    
+    if(this.body.position.y > 216) {
+        this.kill;
     }
 
 };
