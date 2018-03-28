@@ -8,7 +8,7 @@ bootcamp.Game.prototype = {
         this.background = this.add.tileSprite(0,0,1000, 500, 'background');
         
         // MARIO
-        this.player = this.add.sprite(this.game.world.centerX, bootcamp._HEIGHT + 55, 'player');
+        this.player = this.add.sprite(100, bootcamp._HEIGHT + 55, 'player');
         this.player.frame = 1
         this.player.anchor.setTo(0.5, 0.5);
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -26,6 +26,7 @@ bootcamp.Game.prototype = {
         this.bullets.setAll('checkWorldBounds', true);
         this.bullets.setAll('outOfBoundsKill', true);
         this.bulletTime = 0;
+    
 
         // MARIO CONTROLS
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -65,6 +66,13 @@ bootcamp.Game.prototype = {
         this.coins.setAll('anchor.y', 0.5);
         this.coins.setAll('checkWorldBounds', true);
         this.coins.setAll('outOfBoundsKill', true);
+        
+        //SOUNDS
+        // Initialize sounds
+        this.oneUpSound = this.add.audio('1up', 1, false);
+        this.coinSound = this.add.audio('coin', 1, false);
+        this.fireballSound = this.add.audio('fireball', 1, false);
+        this.lostLifeSound = this.add.audio('lostlife', 3, false);
         
         // EXPLOSIONS
         this.explosions = this.add.group();
@@ -159,6 +167,7 @@ bootcamp.Game.prototype = {
             
             if (this.bullet && this.player.alive) {
                 // NO? THEN FIRE
+                this.fireballSound.play();
                 this.bullet.reset(this.player.x, this.player.y - 16);
                 this.bullet.body.velocity.y = -400;
                 this.bullet.body.velocity.x = this.player.body.velocity.x / 4
@@ -228,14 +237,16 @@ bootcamp.Game.prototype = {
     
     dropItem: function(enemy) {
         if (this.player.alive) {
-            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 10);
-            chanceOfDroppingCoin = this.rnd.integerInRange(0, 3);
+            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 12);
+            chanceOfDroppingCoin = this.rnd.integerInRange(0, 6);
             if (chanceOfDroppingCoin == 0) {
                 console.log("COIN");
                 coin = this.coins.getFirstExists(false);
                 coin.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
                 coin.body.velocity.y = +100;
-                coin.body.gravity.y = 75
+                coin.body.gravity.y = 75;
+                coin.animations.add('powerUp', [1, 2, 3, 2, 1], 10, true);
+                coin.animations.play('powerUp');
             }
             if (chanceOfDroppingOneUp == 0 && chanceOfDroppingCoin != 0) {
                 console.log("1UP");        
@@ -249,14 +260,14 @@ bootcamp.Game.prototype = {
     
     oneUpHitsPlayer: function(player, oneUp) {
         oneUp.kill();
-        console.log("oneuphitsplayer");
+        this.oneUpSound.play();
         this.lives += 1;
         this.livesText.text = "LIVES: " + this.lives;
     },
     
     coinHitsPlayer: function(player, coin) {
         coin.kill();
-        console.log("coinhitsplayer");
+        this.coinSound.play();
         this.score += 10;
         this.updateScore();
     },
@@ -274,6 +285,7 @@ bootcamp.Game.prototype = {
     bombHitsPlayer: function(bomb, player) {
         bomb.kill();
         this.explode(player);
+        this.lostLifeSound.play();
         this.lives -= 1;
         this.livesText.text = "LIVES: " + this.lives;
         if (this.lives > 0) {
