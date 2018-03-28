@@ -1,5 +1,6 @@
 Barrel = function (game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'barrel');
+    this.scale.setTo(0.15, 0.2)
     this.anchor.setTo(0.5);
     game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.gravity.y = 600;
