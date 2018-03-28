@@ -357,10 +357,10 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-		//bootcamp._player.body.velocity.x += 10*x;
+		bootcamp._player.body.velocity.x += 10*x;
         
         // PLAYER MOVEMENT
-        var maxVelocity = 1000;
+        /*var maxVelocity = 1000;
         
         if (x<0 && this.player.body.velocity.x > -maxVelocity) {
             // Move to the left
@@ -373,6 +373,6 @@ bootcamp.Game.prototype = {
         else {
             // Stop
             this.player.body.velocity.x = 0 ;
-        }
+        }*/
 	}
 };
