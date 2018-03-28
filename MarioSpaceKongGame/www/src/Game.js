@@ -121,8 +121,6 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
 
 		//player movement-----------------------------------------------------------------------------------------
-		this.player.body.velocity.x = 0;
-		//this.barrel.body.velocity.x = 0;
 
 		if(controls.left.isDown) {
 			this.player.body.velocity.x -= 150;
@@ -171,15 +169,7 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-        
-        if (x > 0) {
-            this.player.body.velocity.x += 150;
-			this.player.scale.setTo(1, 1);
-        }
-        else if (x > 0) {
-            this.player.body.velocity.x -= 150;
-			this.player.scale.setTo(-1, 1);
-        }
+        bootcamp._player.body.velocity.x += 5*x;
 	},
 	collideBarrelPlatform: function(steel, barrel){ 
 		if(steel.name == 'steelLow'){
