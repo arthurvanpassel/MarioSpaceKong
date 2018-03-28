@@ -2,6 +2,8 @@ var platforms, barrels, barrel;
 var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
+var steel;
+
 
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
@@ -71,7 +73,7 @@ bootcamp.Game.prototype = {
 			}
 
 			for( w=startposition; w < endposition; ){
-					var steel = platforms.create(w,i, 'steel');
+					steel = platforms.create(w,i, 'steel');
 
 					steel.scale.setTo(0.5);
 					steel.body.immovable = true;
@@ -97,7 +99,7 @@ bootcamp.Game.prototype = {
 		i +=70;
 		holeRight = !holeRight;
 		};
-        console.log(steel.name);
+        
 	},
 	update: function() {
 		var hitplatform = this.physics.arcade.collide(this.player, platforms);
@@ -152,7 +154,13 @@ bootcamp.Game.prototype = {
 			this.barrels.add(barrel);
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
-		}
+		};
+
+ 		
+
+		this.physics.arcade.collide(barrels, platforms, this.loweSteelcollide );
+
+    
 
 
 	},
@@ -163,5 +171,14 @@ bootcamp.Game.prototype = {
 		var z = e.alpha; // range [0,360], up-down
 		bootcamp._player.body.velocity.x += x;
 		bootcamp._player.body.velocity.y += y*0.5;
-	}
+	},
+	loweSteelcollide: function(){ 
+		console.log("fuckers");
+		if(steel.name === 'lowestSteel'){
+
+			
+			console.log("killl alllll barrels fuckers");
+		};
+	},
+
 };
