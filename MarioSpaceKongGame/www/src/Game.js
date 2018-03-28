@@ -41,7 +41,7 @@ bootcamp.Game.prototype = {
     			};
         
 		bootcamp._player = this.player;
-		//window.addEventListener("deviceorientation", this.handleOrientation, true);
+		window.addEventListener("deviceorientation", this.handleOrientation, true);
 
         //barrels-----------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
@@ -143,7 +143,7 @@ bootcamp.Game.prototype = {
 		});
 
 		//create barrel-----------------------------------------------------------------------------------------
-		if (this.game.time.now > barrelTimer) {
+        if (this.game.time.now > barrelTimer) {
 			var barrel = new Barrel(this.game,0,0);
             barrel.name = "barrel" + barrelCount ;
 			this.barrels.add(barrel);
