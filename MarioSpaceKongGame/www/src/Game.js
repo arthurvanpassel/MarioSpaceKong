@@ -155,6 +155,11 @@ bootcamp.Game.prototype = {
 			console.log('death');
 		});
 
+		this.physics.arcade.collide(this.barrels, this.Bottoms, function(){
+			this.barrels.kill();
+		});
+
+
 		//create barrel-----------------------------------------------------------------------------------------
         if (this.game.time.now > barrelTimer) {
 			var barrel = new Barrel(this.game,0,0);
@@ -164,6 +169,7 @@ bootcamp.Game.prototype = {
 			barrelTimer = this.game.time.now + 3000;
 		};
 	},
+	
 	handleOrientation: function(e) {
 		// Device Orientation API
 		var x = e.gamma; // range [-90,90], left-right
