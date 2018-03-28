@@ -1,7 +1,7 @@
 var platforms, barrels, barrel;
 var barrelCount;
 var barrelMoveLeft = false;
-var barrelTimer = 3000;
+var barrelTimer = 0;
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
@@ -49,10 +49,10 @@ bootcamp.Game.prototype = {
 		barrels.setAll('body.allowGravity', false);
 		barrels.setAll('body.collideWorldBounds', true);
 
-		barrel = barrels.create(0,0, 'barrel');
+		/*barrel = barrels.create(0,0, 'barrel');
 		barrel.scale.setTo(0.15, 0.2);
 		barrel.anchor.setTo(0.5);
-		barrel.body.collideWorldBounds = true;
+		barrel.body.collideWorldBounds = true; */
 
 		/*
 		this.barrel = this.add.sprite(0, 0, 'barrel');
@@ -163,11 +163,10 @@ bootcamp.Game.prototype = {
 		
 
 		if (this.game.time.now > barrelTimer) {
-			barrel = barrels.create(0,0, 'barrel');
-			barrel.scale.setTo(0.15, 0.2);
-			barrel.anchor.setTo(0.5);
-			barrel.body.collideWorldBounds = true;
-
+			var enemy = new barrel(this.game,0,0);
+			enemy.name = "barrel" + barrelCount ;
+			this.barrels.add(barrel);
+			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
 		}
 
