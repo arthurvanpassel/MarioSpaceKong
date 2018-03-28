@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 var platforms;
 var barrels;
 var barrel;
-=======
-var barrels, barrel;
->>>>>>> 5d2d77db0ab54e617531be7cd9a5dbe7a6e27023
 var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
