@@ -1,28 +1,27 @@
+<<<<<<< HEAD
 var platforms;
 var barrels;
 var barrel;
+=======
+var barrels, barrel;
+>>>>>>> 5d2d77db0ab54e617531be7cd9a5dbe7a6e27023
 var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
 var steel;
 
-
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
-		this.physics.startSystem(Phaser.Physics.ARCADE);
-
-		Phaser.Canvas.setSmoothingEnabled(this.game.context, false);
-
-		_WIDTH = 200;
-		_HEIGHT = 200 * (window.innerHeight / window.innerWidth);
+		this.physics.startSystem(Phaser.Physics.ARCADE); 
+        
+        //kong-----------------------------------------------------------------------------------------
 		this.kong = this.add.sprite(0,10, 'kong');
 		this.kong.animations.add('donkey', [0,1,2,3,4,5], 10,true);
 		this.kong.animations.play('donkey');
 
-
-		// player
-		this.player = this.add.sprite(_WIDTH -20, _HEIGHT -75, 'player');
+		// player-----------------------------------------------------------------------------------------
+		this.player = this.add.sprite(bootcamp._WIDTH -20, bootcamp._HEIGHT -75, 'player');
 		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
@@ -31,51 +30,54 @@ bootcamp.Game.prototype = {
 		this.player.body.mass = 50;
 		this.player.body.collideWorldBounds = true;
 
-
+        //physics-----------------------------------------------------------------------------------------
 		this.game.physics.arcade.TILE_BIAS = 32;
 		this.game.physics.arcade.gravity.y = 400;
 
+        //animations-----------------------------------------------------------------------------------------
 		this.player.animations.add('idle', [0], 1, true);
     	this.player.animations.add('walk', [1,2, 3, 4], 10, true);
 		this.player.animations.add('jump', [6], 1, true);
 
+        //controls-----------------------------------------------------------------------------------------
 		controls = {
       			left: this.input.keyboard.addKey(Phaser.Keyboard.Q),
       			right: this.input.keyboard.addKey(Phaser.Keyboard.D),
       			up: this.input.keyboard.addKey(Phaser.Keyboard.Z)
     			};
+        
 		bootcamp._player = this.player;
-		window.addEventListener("deviceorientation", this.handleOrientation, true);
+		//window.addEventListener("deviceorientation", this.handleOrientation, true);
 
-//barrels----------------------------------------------------------------------------------------------------------
+        //barrels-----------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
 	
-//platforms----------------------------------------------------------------------------------------------------------
-		platforms = this.add.group();
-		platforms.physicsBodyType = Phaser.Physics.ARCADE;
-		platforms.enableBody = true;
-		platforms.setAll('body.allowGravity', false);
+        //platforms-----------------------------------------------------------------------------------------
+		this.platforms = this.add.group();
+		this.platforms.physicsBodyType = Phaser.Physics.ARCADE;
+		this.platforms.enableBody = true;
+		this.platforms.setAll('body.allowGravity', false);
 
-		//create random platforms
+		//create random platforms-----------------------------------------------------------------------------------------
 		var holeRight = true;
-		var startposition = _WIDTH;
-		var endposition = _WIDTH;
-		for(i = (_HEIGHT/100)+45; i < (_HEIGHT) - 10;){
+		var startposition = bootcamp._WIDTH;
+		var endposition = bootcamp._WIDTH;
+		for(i = (bootcamp._HEIGHT/100)+45; i < (bootcamp._HEIGHT) - 10;){
 			if (holeRight) {
-				startposition = _WIDTH/100;
-				endposition = _WIDTH-50;
+				startposition = bootcamp._WIDTH/100;
+				endposition = bootcamp._WIDTH-50;
 			}
 			else {
-				startposition =(_WIDTH/100)+30;
-				endposition = _WIDTH;
+				startposition =(bootcamp._WIDTH/100)+30;
+				endposition = bootcamp._WIDTH;
 			}
-			if (i > (_HEIGHT)-50) {
-				startposition = _WIDTH/100;
-				endposition = _WIDTH;
+			if (i > (bootcamp._HEIGHT)-50) {
+				startposition = bootcamp._WIDTH/100;
+				endposition = bootcamp._WIDTH;
 			}
 
 			for( w=startposition; w < endposition; ){
-					steel = platforms.create(w,i, 'steel');
+					steel = this.platforms.create(w,i, 'steel');
 
 					steel.scale.setTo(0.5);
 					steel.body.immovable = true;
@@ -84,7 +86,7 @@ bootcamp.Game.prototype = {
 					//steel.body.friction = 0.5;
 					steel.body.width = 24;
 					steel.body.height = 16;
-					if (i > (_HEIGHT)-50) {
+					if (i > (bootcamp._HEIGHT)-50) {
                         steel.name = 'steelLow';
 					}
 					else {
@@ -105,10 +107,11 @@ bootcamp.Game.prototype = {
         
 	},
 	update: function() {
-		var hitplatform = this.physics.arcade.collide(this.player, platforms);
-		this.physics.arcade.collide(this.barrels, platforms, this.collideBarrelPlatform, null, this);
+        //collide-----------------------------------------------------------------------------------------
+		var hitplatform = this.physics.arcade.collide(this.player, this.platforms);
+		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
 
-		//-----PLAYER-MOVEMENT-------------------------------------------------------------
+		//player movement-----------------------------------------------------------------------------------------
 		this.player.body.velocity.x = 0;
 		//this.barrel.body.velocity.x = 0;
 
@@ -139,18 +142,13 @@ bootcamp.Game.prototype = {
 			this.player.animations.play('jump');
 		}
 
-		//-----BARREL-MOVEMENT-------------------------------------------------------------
-
-
-
-
+		//barrel movement-----------------------------------------------------------------------------------------
 		bootcamp._game = this.game;
 		this.physics.arcade.collide(this.player, this.barrels, function() {
 			console.log('death');
 		});
 
-		
-
+		//create barrel-----------------------------------------------------------------------------------------
 		if (this.game.time.now > barrelTimer) {
 			var barrel = new Barrel(this.game,0,0);
             barrel.name = "barrel" + barrelCount ;
@@ -158,10 +156,6 @@ bootcamp.Game.prototype = {
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
 		};
-
-    
-
-
 	},
 	handleOrientation: function(e) {
 		// Device Orientation API
@@ -179,7 +173,6 @@ bootcamp.Game.prototype = {
         }
 	},
 	collideBarrelPlatform: function(steel, barrel){ 
-        console.log('blablaBuite if');
 		if(steel.name == 'steelLow'){
 			console.log('blabla');
 		};
