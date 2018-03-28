@@ -146,7 +146,6 @@ bootcamp.Game.prototype = {
             if (this.keys.left.isDown) {
                 this.player.body.velocity.x = -200;
             } else if (this.keys.right.isDown) {
-                Phaser.Camera.x += 2;
                 this.player.body.velocity.x = 200;
             } else {
                 this.player.body.velocity.x = 0;
@@ -213,6 +212,14 @@ bootcamp.Game.prototype = {
         var x = e.gamma; // range [-90,90], left-right
         var y = e.beta; // range [-180,180], top-bottom
         var z = e.alpha; // range [0,360], up-down
+        
+        if(x > 5) {
+            this.player.body.velocity.x = 200;
+        }else if(x < -5) {
+            this.player.body.velocity.x = -200;
+        }else if(x > -5 && x < 5) {
+            this.player.body.velocity.x = 0;
+        }
         bootcamp._player.body.velocity.x += 10 * x;
     },
     render: function () {
