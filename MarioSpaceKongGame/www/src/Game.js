@@ -118,16 +118,19 @@ bootcamp.Game.prototype = {
 	update: function() {
         //collide-----------------------------------------------------------------------------------------
 		var hitplatform = this.physics.arcade.collide(this.player, this.platforms);
+        var hitplatformBottom = this.physics.arcade.collide(this.player, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
+        
+        this.physics.arcade.collide(this.player, this.kong, this.finishGame(), null, this);
 
 		//player movement-----------------------------------------------------------------------------------------
 
 		if(controls.left.isDown) {
-			this.player.body.velocity.x -= 150;
+			this.player.body.velocity.x -= 50;
 			this.player.scale.setTo(-1, 1);
 		}
 		else if(controls.right.isDown) {
-			this.player.body.velocity.x += 150;
+			this.player.body.velocity.x += 50;
 			this.player.scale.setTo(1, 1);
 		}
 		if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
@@ -137,7 +140,7 @@ bootcamp.Game.prototype = {
 			this.player.body.velocity.y -= 300;
 		}
 
-		if (this.player.body.blocked.down || hitplatform) {
+		if (this.player.body.blocked.down || hitplatform || hitplatformBottom) {
 			if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 				this.player.animations.play('walk');
 			}
@@ -182,5 +185,8 @@ bootcamp.Game.prototype = {
 			console.log('blabla');
 		};
 	},
+    finishGame: function() {
+        console.log('finish');
+    }
 
 };
