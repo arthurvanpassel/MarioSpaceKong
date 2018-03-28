@@ -20,17 +20,14 @@ Barrel.prototype.constructor = Barrel;
 Barrel.prototype.update = function () {
 
   if (this.body.blocked.right) {
-    barrelMoveLeft = true;
-  }
-  if (this.body.blocked.left) {
-    barrelMoveLeft = false;
-  }
-  if (barrelMoveLeft) {
+    
     this.body.velocity.x = -75;
   }
-  else {
+  if (this.body.blocked.left) {
+  
     this.body.velocity.x = 75;
   }
+  
 
   this.angle += (this.body.velocity.x)/10
 

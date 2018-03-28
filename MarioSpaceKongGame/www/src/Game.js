@@ -1,5 +1,5 @@
 var platforms, barrels, barrel;
-var barrelCount;
+var barrelCount = 0;
 var barrelMoveLeft = false;
 var barrelTimer = 0;
 
@@ -45,22 +45,7 @@ bootcamp.Game.prototype = {
 
 //barrels----------------------------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
-		
-
-		/*barrel = barrels.create(0,0, 'barrel');
-		barrel.scale.setTo(0.15, 0.2);
-		barrel.anchor.setTo(0.5);
-		barrel.body.collideWorldBounds = true; */
-
-		/*
-		this.barrel = this.add.sprite(0, 0, 'barrel');
-		this.barrel.scale.setTo(0.15, 0.2);
-		this.barrel.anchor.setTo(0.5);
-		this.physics.enable(this.barrel, Phaser.Physics.ARCADE);
-		this.barrel.body.collideWorldBounds = true;
-		this.barrel.body.friction = 0.1;
-		barrelCount ++;
-		*/
+	
 //platforms----------------------------------------------------------------------------------------------------------
 		platforms = this.add.group();
 		platforms.physicsBodyType = Phaser.Physics.ARCADE;
