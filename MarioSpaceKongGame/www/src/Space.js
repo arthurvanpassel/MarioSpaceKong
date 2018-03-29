@@ -236,8 +236,9 @@ bootcamp.Space.prototype = {
                         var bowser = this.enemies.create(x * 67, y * 97, 'bowser');
                         bowser.anchor.setTo(0.5, 0.5);
                         bowser.body.moves = false;
-                        bowser.animations.add('bowser', [0, 1, 2, 3, 4], 10, true);
-                        bowser.animations.play('bowser');
+                        bowser.animations.add('bowserLive', [0, 1, 2, 3, 4], 8, true);
+                        bowser.animations.add('bowserDead', [5,6], 8, true);
+                        bowser.animations.play('bowserLive');
                     }
                 }
             }
@@ -270,7 +271,13 @@ bootcamp.Space.prototype = {
         this.timesToHit --;
         console.log("timesToHit271: " +this.timesToHit);
         
-        
+        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+            enemy.animations.play('bowserDead');
+            setTimeout(function () {
+                enemy.animations.play('bowserLive');
+            }, 500);
+            
+        }
         
         if (this.timesToHit == 0) {
             this.explode(enemy);
@@ -390,21 +397,6 @@ bootcamp.Space.prototype = {
         explosion.reset(entity.body.x + (entity.width / 2), entity.body.y + (entity.height / 2));
         explosion.play('explode', 30, false, true);
     },
-    
-    /* getHighScore: function() {
-        //this.savedHighScore = this.Cookies.get('highScore');
-        if (this.savedHighScore != undefined) {
-            this.highScore = this.savedHighScore;
-        }
-    }, */
-    
-    pad: function(number, length) {
-        var str = '' + number;
-        while (str.length < length) {
-            str = '0' + str;
-        }
-        return str;
-     },
     
 	handleOrientation: function(e) {
 		// Device Orientation API
