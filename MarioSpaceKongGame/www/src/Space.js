@@ -38,7 +38,7 @@ bootcamp.Space.prototype = {
         // ENEMIES
         this.createEnemies();
         this.animateEnemies();
-        this.timesToHit = 1;
+        //this.timesToHit = 1;
         console.log("timesToHit42: "+this.timesToHit);
         
         // ENEMY BOMBS
@@ -208,6 +208,7 @@ bootcamp.Space.prototype = {
         this.enemies = this.add.group();
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+        this.timesToHit = 1;
         
         if (bootcamp._SPACEINVADERSLEVELS == 0) {
             for (var y = 0; y < 1; y++) {
@@ -215,21 +216,6 @@ bootcamp.Space.prototype = {
                     var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
                     enemy.anchor.setTo(0.5, 0.5);
                     enemy.body.moves = false;
-                }
-            }
-
-            this.enemies.x = 16;
-            this.enemies.y = 28;
-        }
-        
-        if (bootcamp._SPACEINVADERSLEVELS == 1) {
-            for (var y = 0; y < 3; y++) {
-                for (var x = 0; x < 6; x++) {
-                    if (x == 2 || x == 3) {
-                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
-                        enemy.anchor.setTo(0.5, 0.5);
-                        enemy.body.moves = false;
-                    }
                 }
             }
 
@@ -252,7 +238,22 @@ bootcamp.Space.prototype = {
             this.enemies.y = 28;
         }
         
-        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+        if (bootcamp._SPACEINVADERSLEVELS == 3) {
+            for (var y = 0; y < 3; y++) {
+                for (var x = 0; x < 6; x++) {
+                    if (x == 2 || x == 3) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }
+        
+        if (bootcamp._SPACEINVADERSLEVELS == 4) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 2; x++) {
                     if (x == 1) {
@@ -271,6 +272,22 @@ bootcamp.Space.prototype = {
             this.enemies.x = 16;
             this.enemies.y = 50;
         }
+        
+        if (bootcamp._SPACEINVADERSLEVELS > 4) {
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 6; x++) {
+                    rnd = this.rnd.integerInRange(0, 1);
+                    if (rnd==0) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }       
         
     },
     
