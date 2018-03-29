@@ -12,14 +12,14 @@ var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
 var winningSound, walkSound;
-
+var bootcamp;
 
 
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
 		bootcamp._this = this;
-
+		bootcamp = this.player;
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
         //kong-----------------------------------------------------------------------------------------
@@ -132,9 +132,11 @@ bootcamp.Game.prototype = {
 						//steel.body.friction = 0.5;
 						steel.body.width = 24;
 						steel.body.height = 16;
-						if((i%2===0||i%3===0)&&w >=5){
+						if(w >= 30){
+							if(w%2==0){
 							this.coinCreator(i,w);
-						};
+							}
+						}
 						if (holeRight) {
 							i +=0.5;
 						}
@@ -165,24 +167,25 @@ bootcamp.Game.prototype = {
 		//player movement-----------------------------------------------------------------------------------------
 
 		if (gameFinished == false) {
-			if(controls.left.isDown) {
-				this.player.body.velocity.x -= 20;
+			/*if(controls.left.isDown) {
+				this.player.body.velocity.x -= 25;
 				this.player.scale.setTo(-1, 1);
-			}
-			else if(controls.right.isDown) {
-				this.player.body.velocity.x += 20;
+			}*/
+			/*else if(controls.right.isDown) {
+				this.player.body.velocity.x += 25;
 				this.player.scale.setTo(1, 1);
-			}
+			} */
 			if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
 				this.player.body.velocity.y -= 300;
 			}
-			if (this.game.input.pointer1.isDown && this.player.body.touching.down && hitplatform) {
+			if (this.game.input.pointer1.isDown && this.player.body.touching.down && ( hitplatform||hitplatformBottom)) {
 				this.player.body.velocity.y -= 300;
 			}
 
 			if (this.player.body.blocked.down || hitplatform || hitplatformBottom) {
 				if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 					this.player.animations.play('walk');
+					
 				}
 				else {
 					this.player.animations.play('idle');
@@ -223,7 +226,12 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-        bootcamp._player.body.velocity.x += 5*x;
+		bootcamp._player.body.velocity.x += 5*x;
+		
+		if(bootcamp._player.body.velocity.x > 0){
+			bootcamp._player.scale.setTo(-1, 1);
+		}
+		
 	},
 	collideBarrelPlatform: function(steel, barrel){
 		if(steel.name == 'steelLow'){
@@ -247,8 +255,10 @@ bootcamp.Game.prototype = {
         coin.kill();
     },
     finishGame: function() {
-        if (endGamePlayed == false) {
-            //bool to remove animation conditions
+
+
+			//bool to remove animation conditions
+
 			gameFinished = true;
 			bootcamp._player.animations.play('idle');
 
