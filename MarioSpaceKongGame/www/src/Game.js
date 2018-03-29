@@ -225,9 +225,7 @@ bootcamp.Game.prototype = {
 		var z = e.alpha; // range [0,360], up-down
 		bootcamp._player.body.velocity.x += 5*x;
 		
-		if(bootcamp._player.body.velocity.x > 0){
-			bootcamp._player.scale.setTo(-1, 1);
-		}
+
 		
 	},
 	collideBarrelPlatform: function(steel, barrel){
