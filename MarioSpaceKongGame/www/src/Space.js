@@ -199,6 +199,7 @@ bootcamp.Space.prototype = {
                 this.bullet.body.velocity.y = -400;
                 this.bullet.body.velocity.x = this.player.body.velocity.x / 4
                 this.bulletTime = this.time.now + 400;
+                this.fireballSound.play();
             }
         }
     },
@@ -269,7 +270,7 @@ bootcamp.Space.prototype = {
     bulletHitsEnemy: function(bullet, enemy) {
         bullet.kill();
         this.dropItem(enemy);
-        
+        this.enemyHitSound.play();
         this.timesToHit --;
         console.log("timesToHit271: " +this.timesToHit);
         
@@ -331,6 +332,7 @@ bootcamp.Space.prototype = {
     
     oneUpHitsplayer: function(player, oneUp) {
         oneUp.kill();
+        this.oneUpSound.play();
         console.log("oneuphitsplayer");
         bootcamp._LIVES += 1;
         this.livesText.text = bootcamp._LIVES;
@@ -338,6 +340,7 @@ bootcamp.Space.prototype = {
     
     coinHitsPlayer: function(player, coin) {
         coin.kill();
+        this.coinSound.play();
         console.log("coinhitsplayer");
         bootcamp._SCORE += 1;
         this.scoreText.text = bootcamp._SCORE;
@@ -348,6 +351,7 @@ bootcamp.Space.prototype = {
             chanceOfDroppingBomb = this.rnd.integerInRange(0, 50 * this.enemies.countLiving());
             if (chanceOfDroppingBomb == 0) {
                 this.dropBomb(enemy);
+                this.bombSound.play();
                 console.log("bom");
             }
         }, this)
@@ -359,6 +363,7 @@ bootcamp.Space.prototype = {
         bootcamp._LIVES -= 1;
         this.livesText.text = bootcamp._LIVES;
         if (bootcamp._LIVES > 0) {
+            this.setT
              this.respawnPlayer(this.player);
          }
         else {
@@ -368,10 +373,11 @@ bootcamp.Space.prototype = {
     
     respawnPlayer: function(player) {
         this.player.body.x = this.game.world.centerX;
+        this.lostLifeSound.play();
         setTimeout(function () {
             console.log("DOOD")
             player.revive();
-        }, 1000);
+        }, 3000);
     },
     
     gameOver: function() {
