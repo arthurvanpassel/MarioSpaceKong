@@ -31,8 +31,8 @@ bootcamp.Mario.prototype = {
             'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGxxxxxxxGGG',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
-        
-        var level1 = [
+
+        var level3 = [
             '          ccc                                     ',
             '          bbb      bbbbb                          ',
             '                c                                 ',
@@ -44,6 +44,20 @@ bootcamp.Mario.prototype = {
             '               ccc   !LxxxxxxxxR    c   LxxxxxR   ',
             'GGGGGGGGGGGGGGGGGGGGGGxxxxxxxxxxGGGGGGGGxxxxxxxGGG',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        ];
+
+        var level1 = [
+            '            c                                    ',
+            '           bbb                                    ',
+            '                                                  ',
+            '     bbb                                        cc',
+            '                    !                           cb',
+            '               cc bbb    !       !         s    cc',
+            'bbb                     bb    bbbb   bb  bbbbb  cc',
+            '                                                cb',
+            '                                                cc',
+            'bbbbbbbbbbb                                     cc',
+            '                                        b    b  bb',
         ];
 
         for (var i = 0; i < level1.length; i++) {
@@ -200,7 +214,7 @@ bootcamp.Mario.prototype = {
             } else if (this.keys.right.isDown) {
                 this.player.body.velocity.x = 200;
             } else {
-                /*this.player.body.velocity.x = 0;*/
+                this.player.body.velocity.x = 0;
             }
             // Make the player jump if he is touching the ground
             if (this.keys.up.isDown && this.player.body.touching.down) {
@@ -222,6 +236,13 @@ bootcamp.Mario.prototype = {
             }
             if (this.player.body.velocity.y < 0) {
                 this.player.animations.play('jump');
+            }
+
+            //KILL WHEN ON THE GROUND
+            if (this.player.body.blocked.down) {
+                this.playerDead = true;
+                this.player.body.velocity.y = -300;
+                this.player.body.collideWorldBounds = false;
             }
 
             //END LEVEL
