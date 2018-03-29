@@ -168,7 +168,13 @@ bootcamp.Space.prototype = {
         }
         if (this.player.body.position.y == 0) {
             bootcamp._SPACEINVADERSLEVELS ++;
-            this.game.state.start('Mario');
+            bootcamp._LASTSTATE = "Space";
+            var rand = this.rnd.integerInRange(0, 1);
+            if(rand == 0) {
+                this.game.state.start('Kong');
+            }else if(rand == 1) {
+                this.game.state.start('Mario');
+            }
         }
 	},
     
@@ -214,12 +220,27 @@ bootcamp.Space.prototype = {
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
         this.timesToHit = 1;
         
-        if (bootcamp._SPACEINVADERSLEVELS == 4) {
+        if (bootcamp._SPACEINVADERSLEVELS == 0) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 6; x++) {
                     var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
                     enemy.anchor.setTo(0.5, 0.5);
                     enemy.body.moves = false;
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }
+        
+        if (bootcamp._SPACEINVADERSLEVELS == 1) {
+            for (var y = 0; y < 3; y++) {
+                for (var x = 0; x < 6; x++) {
+                    if (x == 2 || x == 3) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
                 }
             }
 
@@ -243,21 +264,6 @@ bootcamp.Space.prototype = {
         }
         
         if (bootcamp._SPACEINVADERSLEVELS == 3) {
-            for (var y = 0; y < 3; y++) {
-                for (var x = 0; x < 6; x++) {
-                    if (x == 2 || x == 3) {
-                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
-                        enemy.anchor.setTo(0.5, 0.5);
-                        enemy.body.moves = false;
-                    }
-                }
-            }
-
-            this.enemies.x = 16;
-            this.enemies.y = 28;
-        }
-        
-        if (bootcamp._SPACEINVADERSLEVELS == 0) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 2; x++) {
                     if (x == 1) {
@@ -278,7 +284,7 @@ bootcamp.Space.prototype = {
             this.enemies.y = 50;
         }
         
-        if (bootcamp._SPACEINVADERSLEVELS > 4) {
+        if (bootcamp._SPACEINVADERSLEVELS > 3) {
             for (var y = 0; y < 4; y++) {
                 for (var x = 0; x < 6; x++) {
                     rnd = this.rnd.integerInRange(0, 1);
