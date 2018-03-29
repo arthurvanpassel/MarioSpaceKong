@@ -220,7 +220,7 @@ bootcamp.Space.prototype = {
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
         this.timesToHit = 1;
         
-        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+        if (bootcamp._SPACEINVADERSLEVELS == 3) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 6; x++) {
                     var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
@@ -263,7 +263,7 @@ bootcamp.Space.prototype = {
             this.enemies.y = 28;
         }
         
-        if (bootcamp._SPACEINVADERSLEVELS == 3) {
+        if (bootcamp._SPACEINVADERSLEVELS == 0) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 2; x++) {
                     if (x == 1) {
@@ -322,6 +322,7 @@ bootcamp.Space.prototype = {
             if (this.bossLevel) {
                 console.log("dksjflkqdsjfmkjqdsjf");
                 this.bowserDefeatSound.play();
+                this.bossLevel = false;
             }
             this.explode(enemy);
             this.timesToHit = 1;

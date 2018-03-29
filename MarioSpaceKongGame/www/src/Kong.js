@@ -430,6 +430,7 @@ bootcamp.Kong.prototype = {
 
                         setTimeout(function () {
                             var spaceShipMario = bootcamp._this.add.sprite((screenWidth / 2) - 30, screenHeight, 'shipM');
+                            spaceshipSound.play();
                             bootcamp._this.physics.enable(spaceShipMario, Phaser.Physics.ARCADE);
                             spaceShipMario.body.allowGravity = false;
                             spaceShipMario.body.velocity.y -= 400;
@@ -443,7 +444,6 @@ bootcamp.Kong.prototype = {
                                     bootcamp._player.body.allowGravity = true;
                                     bootcamp._game.physics.arcade.gravity.y = 600;
                                     endGamePlayed = false;
-                                    spaceshipSound.play();
                                     bootcamp._player.body.collideWorldBounds = true;
                                     bootcamp._LASTSTATE = 'Kong';
                                     bootcamp._game.state.start('Space');

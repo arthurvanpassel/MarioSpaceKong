@@ -389,6 +389,7 @@ bootcamp.Mario.prototype = {
             
             if (deadSoundPlayed == false) {
                 this.lostLifeSound.play();
+                bootcamp._LIVES = bootcamp._LIVES-1;
                 deadSoundPlayed = true;
                 setTimeout(function () {
                     deadSoundPlayed = false;
