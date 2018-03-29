@@ -12,6 +12,9 @@ bootcamp.Preloader.prototype = {
 		this.load.image('steel', 'img/steel.png');
 		this.load.image('greenTube', 'img/greenTube.png');
 		this.load.image('button', 'img/button.png');
+        
+        this.game.load.audio('winningSound', 'audio/dk-a2600_victory.wav');
+        this.game.load.audio('walkSound', 'audio/dk-a2600_walk.wav');
 
 
 	},
