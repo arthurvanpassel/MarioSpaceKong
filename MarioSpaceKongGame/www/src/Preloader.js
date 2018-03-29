@@ -40,6 +40,20 @@ bootcamp.Preloader.prototype = {
         this.load.audio('enemyhit', 'aud/enemyHit.wav');
         this.load.audio('bomb', 'aud/bomb.wav');
         
+        // DONKEY KONG ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.load.spritesheet('kong', 'img/kong.png', 37,38, 6);
+		this.load.image('barrel', 'img/barrel.png');
+
+		this.load.spritesheet('mainmenuGif', 'img/HomePageSpriteSheet.png', 200, 400, 61);
+		this.load.spritesheet('explosionAnim', 'img/explosion.png', 80, 80 , 10);
+		this.load.spritesheet('gameover', 'img/GameOver.png', 200, 400, 45);
+
+		this.load.image('steel', 'img/steel.png');
+		this.load.image('greenTube', 'img/tube.png');
+        
+        this.game.load.audio('winningSound', 'aud/dk-a2600_victory.wav');
+        this.game.load.audio('walkSound', 'aud/dk-a2600_walk.wav');
+        
         
 	},
 	create: function() {
