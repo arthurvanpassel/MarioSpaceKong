@@ -175,7 +175,7 @@ bootcamp.Game.prototype = {
         
         */
         
-        this.beginAnim();
+        this.beginAnimSpace();
 	},
 	update: function() {
         //collide-----------------------------------------------------------------------------------------
@@ -301,13 +301,21 @@ bootcamp.Game.prototype = {
                 gameFinished = false;
             }, 1400)
         }, 600)
-        /*setTimeout(function() {
-            bootcamp._player.body.collideWorldBounds = true;
-            greentube.body.velocity.x += 50;
-            setTimeout(function() {
-                greentube.destroy();
-            })
-        }, 500);*/
+    },
+    beginAnimSpace: function() {
+        bootcamp._player.body.allowGravity = false;
+        gameFinished = true;
+        var spaceShipMario = bootcamp._this.add.sprite(screenWidth-60, screenHeight, 'spaceShipMario');
+        spaceShipMario.frame = 1
+        bootcamp._this.physics.enable(spaceShipMario, Phaser.Physics.ARCADE);
+        spaceShipMario.body.allowGravity = false;
+        spaceShipMario.body.velocity.y -= 400;
+        setTimeout (function() {
+            spaceShipMario.frame = 0;
+            bootcamp._player.x = screenWidth-50;
+            bootcamp._player.y = screenHeight-75;
+            bootcamp._player.body.allowGravity = true;
+        }, 300)
     },
     finishGame: function() {
     
