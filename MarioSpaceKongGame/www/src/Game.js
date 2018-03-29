@@ -231,6 +231,7 @@ bootcamp.Game.prototype = {
         this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
 		this.physics.arcade.collide(this.barrels, this.MovingSteels);
+		this.physics.arcade.collide(this.player, this.MovingSteels);
 		//bewegende platformen----------------------------------------
 		this.physics.arcade.collide(this.MovingSteels,this.platforms,  function(MovingSteels){
 			if((MovingSteels.body.velocity.x) > 0){
