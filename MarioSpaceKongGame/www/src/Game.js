@@ -40,14 +40,13 @@ bootcamp.Game.prototype = {
 		this.coins.setAll('body.allowGravity', false);
 
 		// player-----------------------------------------------------------------------------------------
-		this.player = this.add.sprite(bootcamp._WIDTH -25, bootcamp._HEIGHT -60, 'player');
+		this.player = this.add.sprite(bootcamp._WIDTH +50, bootcamp._HEIGHT -42, 'player');
 		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.body.setCircle(13);
 		this.player.body.mass = 50;
-        this.player.body.collideWorldBounds = true;
 
         //physics-----------------------------------------------------------------------------------------
 		this.game.physics.arcade.TILE_BIAS = 32;
@@ -74,6 +73,7 @@ bootcamp.Game.prototype = {
         
         //barrels-----------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
+        bootcamp._barrels = this.barrels;
 
         //platforms-----------------------------------------------------------------------------------------
 		this.platforms = this.add.group();
@@ -254,7 +254,32 @@ bootcamp.Game.prototype = {
         coin.kill();
     },
     beginAnim: function() {
-        console.log('begin');
+        bootcamp._player.body.allowGravity = false;
+        gameFinished = true;
+        bootcamp._player.animations.play('walk');
+        var greentube = bootcamp._this.add.sprite(screenWidth, screenHeight-30, 'greenTube');
+        greentube.angle = -90;
+        bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
+        greentube.body.allowGravity = false;
+        greentube.body.velocity.x -= 50;
+        setTimeout (function() {
+            greentube.body.velocity.x = 0;
+            bootcamp._player.body.velocity.x -= 75;
+            setTimeout( function () {
+                bootcamp._player.body.velocity.x = 0;
+                bootcamp._player.body.collideWorldBounds = true;
+                greentube.body.velocity.x += 50;
+                bootcamp._player.body.allowGravity = true;
+                gameFinished = false;
+            }, 1400)
+        }, 600)
+        /*setTimeout(function() {
+            bootcamp._player.body.collideWorldBounds = true;
+            greentube.body.velocity.x += 50;
+            setTimeout(function() {
+                greentube.destroy();
+            })
+        }, 500);*/
     },
     finishGame: function() {
     
@@ -267,6 +292,7 @@ bootcamp.Game.prototype = {
 
 			//destroy coins
 			bootcamp._coins.destroy();
+            bootcamp._barrels.destroy();
         
             var explode = this.add.sprite(-15, -10, 'explosionAnim')        
             explode.animations.add('explode', [0,1,2,3,4,5,6,7,8,9], 10, false);
