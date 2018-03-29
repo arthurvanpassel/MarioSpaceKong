@@ -152,7 +152,7 @@ bootcamp.Game.prototype = {
         
         //create random platforms2-----------------------------------------------------------------------------------------
 		var startposition = 0;
-		var endposition = bootcamp._WIDTH;
+		var endposition = bootcamp._WIDTH + 100;
 		for(i = (bootcamp._HEIGHT/100)+45; i < (bootcamp._HEIGHT) - 10;){
 
 			for(w = startposition; w < endposition;){
@@ -167,7 +167,7 @@ bootcamp.Game.prototype = {
 					steel.body.width = 24;
 					steel.body.height = 16;
 				}
-                else if(w < 100 ) {
+                else if((w < 100)||(w > 200)) {
                     	steel = this.platforms.create(w,i, 'steel');
 
 						steel.scale.setTo(0.5);
@@ -185,7 +185,7 @@ bootcamp.Game.prototype = {
 					
 					    
 				}
-				else if(w > 150 ) {
+				else if((w >= 150 )&&(w < 200)) {
 					movePlatform = this.MovingSteels.create(w,i, 'steel');
 
 					movePlatform.scale.setTo(0.5);
@@ -193,11 +193,13 @@ bootcamp.Game.prototype = {
 					this.physics.enable(movePlatform, Phaser.Physics.ARCADE);
 					movePlatform.body.allowGravity = false;
 					//steel.body.friction = 0.5;
+					
 					movePlatform.body.width = 24;
 					movePlatform.body.height = 16;
-					movePlatform.body.velocity.x = -100;
+					movePlatform.body.velocity.x = -50;
 					
-					if(w<(bootcamp._WIDTH-5)){
+					
+					if(w<(bootcamp._WIDTH-10)){
 					this.coinCreator(i,w);
 					}
 			}
@@ -219,13 +221,25 @@ bootcamp.Game.prototype = {
         }        
         this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
+		//bewegende platformen----------------------------------------
 		this.physics.arcade.collide(this.MovingSteels,this.platforms,  function(MovingSteels){
-			MovingSteels.body.velocity.x = 150;
+			if((MovingSteels.body.velocity.x) > 0){
+				
+				MovingSteels.body.velocity.x =  -50;
+			}
+			else{
+				
+			MovingSteels.body.velocity.x = 50;
+			}
 		}, null, this);
+
+		////--------------------------------------------------
 		this.physics.arcade.overlap(this.player, this.coins, this.collisionHandlerCoin, null, this);
 
 
-        this.physics.arcade.collide(this.player, this.kong, this.finishGameSpace, null, this);
+		this.physics.arcade.collide(this.player, this.kong, this.finishGameSpace, null, this);
+		
+		
 
 		//player movement-----------------------------------------------------------------------------------------
         if (this.player.body.velocity.x > 150) {
