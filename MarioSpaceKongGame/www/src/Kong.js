@@ -277,7 +277,7 @@ bootcamp.Kong.prototype = {
     beginAnimSpace: function () {
         bootcamp._player.body.allowGravity = false;
         gameFinished = true;
-        var spaceShipMario = bootcamp._this.add.sprite(screenWidth - 60, screenHeight, 'spaceShipMario');
+        var spaceShipMario = bootcamp._this.add.sprite(screenWidth - 60, screenHeight, 'shipM');
         spaceShipMario.frame = 1
         bootcamp._this.physics.enable(spaceShipMario, Phaser.Physics.ARCADE);
         spaceShipMario.body.allowGravity = false;
@@ -389,22 +389,25 @@ bootcamp.Kong.prototype = {
                         bootcamp._game.physics.arcade.gravity.y = 400;
 
                         setTimeout(function () {
-                            var spaceShipMario = bootcamp._this.add.sprite((screenWidth / 2) - 30, screenHeight, 'ship');
+                            var spaceShipMario = bootcamp._this.add.sprite((screenWidth / 2) - 30, screenHeight, 'shipM');
                             bootcamp._this.physics.enable(spaceShipMario, Phaser.Physics.ARCADE);
                             spaceShipMario.body.allowGravity = false;
                             spaceShipMario.body.velocity.y -= 400;
                             setTimeout(function () {
                                 bootcamp._player.kill();
                                 spaceShipMario.frame = 1;
-                                console.log("anim");
-                                gameFinished = false;
-                                bootcamp._player.body.allowGravity = true;
-                                bootcamp._game.physics.arcade.gravity.y = 600;
-                                greentube.kill();
-                                endGamePlayed = false;
-                                bootcamp._player.body.collideWorldBounds = true;
-                                bootcamp._LASTSTATE = 'Kong';
-                                bootcamp._game.state.start('Space');
+
+                                setTimeout(function () {
+                                    console.log("anim");
+                                    gameFinished = false;
+                                    bootcamp._player.body.allowGravity = true;
+                                    bootcamp._game.physics.arcade.gravity.y = 600;
+                                    endGamePlayed = false;
+                                    bootcamp._player.body.collideWorldBounds = true;
+                                    bootcamp._LASTSTATE = 'Kong';
+                                    bootcamp._game.state.start('Space');
+                                }, 500)
+
                             }, 300);
                         }, 500);
                     }, 2000);
