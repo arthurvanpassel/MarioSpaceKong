@@ -38,8 +38,7 @@ bootcamp.Space.prototype = {
         // ENEMIES
         this.createEnemies();
         this.animateEnemies();
-        this.timesToHit = 1;
-        console.log("timesToHit42: "+this.timesToHit);
+        //this.bossLevel = false;
         
         // ENEMY BOMBS
         this.bombs = this.add.group();
@@ -85,6 +84,8 @@ bootcamp.Space.prototype = {
         this.lostLifeSound = this.add.audio('lostlife', 3, false);
         this.enemyHitSound = this.add.audio('enemyhit', 1, false);
         this.bombSound = this.add.audio('bomb', 1, false);
+        this.bowserDefeatSound = this.add.audio('bowserDefeat', 1, false);
+        
         
         // SCORES + TEXT
         this.score = this.add.sprite(1, 1, 'stats');
@@ -208,28 +209,14 @@ bootcamp.Space.prototype = {
         this.enemies = this.add.group();
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+        this.timesToHit = 1;
         
-        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+        if (bootcamp._SPACEINVADERSLEVELS == 4) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 6; x++) {
                     var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
                     enemy.anchor.setTo(0.5, 0.5);
                     enemy.body.moves = false;
-                }
-            }
-
-            this.enemies.x = 16;
-            this.enemies.y = 28;
-        }
-        
-        if (bootcamp._SPACEINVADERSLEVELS == 1) {
-            for (var y = 0; y < 3; y++) {
-                for (var x = 0; x < 6; x++) {
-                    if (x == 2 || x == 3) {
-                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
-                        enemy.anchor.setTo(0.5, 0.5);
-                        enemy.body.moves = false;
-                    }
                 }
             }
 
@@ -252,10 +239,26 @@ bootcamp.Space.prototype = {
             this.enemies.y = 28;
         }
         
+        if (bootcamp._SPACEINVADERSLEVELS == 3) {
+            for (var y = 0; y < 3; y++) {
+                for (var x = 0; x < 6; x++) {
+                    if (x == 2 || x == 3) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }
+        
         if (bootcamp._SPACEINVADERSLEVELS == 0) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 2; x++) {
                     if (x == 1) {
+                        this.bossLevel = true;
                         this.timesToHit = 5;
                         console.log("timesToHit237: "+this.timesToHit);
                         var bowser = this.enemies.create(x * 67, y * 97, 'bowser');
@@ -271,6 +274,22 @@ bootcamp.Space.prototype = {
             this.enemies.x = 16;
             this.enemies.y = 50;
         }
+        
+        if (bootcamp._SPACEINVADERSLEVELS > 4) {
+            for (var y = 0; y < 4; y++) {
+                for (var x = 0; x < 6; x++) {
+                    rnd = this.rnd.integerInRange(0, 1);
+                    if (rnd==0) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }       
         
     },
     
@@ -291,6 +310,10 @@ bootcamp.Space.prototype = {
         
         
         if (this.timesToHit == 0) {
+            if (this.bossLevel) {
+                console.log("dksjflkqdsjfmkjqdsjf");
+                this.bowserDefeatSound.play();
+            }
             this.explode(enemy);
             this.timesToHit = 1;
         }
@@ -302,8 +325,6 @@ bootcamp.Space.prototype = {
             }, 500);
             
         }
-        
-        
 
         if (this.enemies.countLiving() == 0) {
             // LEVEL KLAAR
@@ -384,7 +405,7 @@ bootcamp.Space.prototype = {
              this.respawnPlayer(this.player);
          }
         else {
-            this.gameOver();
+            this.game.state.start('MainMenu');
         }
     },
     
@@ -397,15 +418,6 @@ bootcamp.Space.prototype = {
         }, 3000);
     },
     
-    gameOver: function() {
-        setTimeout(function() {
-            gameOverText = this.add.text(this.world.centerX, this.world.centerY, "GAME OVER", this.style);
-            gameOverText.anchor.set(0.5, 0.5);
-            restartText = this.add.text(this.world.centerX, this.world.height - 16, "PRESS 'SPACE' TO RESTART", style);
-            restartText.anchor.set(0.5, 1);
-        }, 1000);
-    },
-    
     setupExplosion: function(explosion) {
            explosion.animations.add('explode');
     },
@@ -414,7 +426,6 @@ bootcamp.Space.prototype = {
         entity.kill();
 
         // And create an explosion :)
-        //explodeSound.play();
         var explosion = this.explosions.getFirstExists(false);
         explosion.reset(entity.body.x + (entity.width / 2), entity.body.y + (entity.height / 2));
         explosion.play('explode', 30, false, true);

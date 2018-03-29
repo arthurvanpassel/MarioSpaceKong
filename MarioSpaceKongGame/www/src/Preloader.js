@@ -20,7 +20,7 @@ bootcamp.Preloader.prototype = {
         this.load.spritesheet('playerS', 'img/ship.png', 52, 55 );
         this.load.spritesheet('enemyS', 'img/ufo.png', 30, 23);
         this.load.spritesheet('bowser', 'img/bowser.png', 67, 97);
-        this.load.image('bullet', 'img/bullet.png');
+        this.load.spritesheet('bullet', 'img/fireballs.png', 7,7);
         this.load.image('bomb', 'img/bomb.png');
         this.load.spritesheet('explosion', 'img/explosion.png', 80, 80);
         this.load.spritesheet('powerUp', 'img/objects.png', 16, 16, 2);
@@ -39,6 +39,8 @@ bootcamp.Preloader.prototype = {
         this.load.audio('lostlife', 'aud/lost_a_life.wav');
         this.load.audio('enemyhit', 'aud/enemyHit.wav');
         this.load.audio('bomb', 'aud/bomb.wav');
+        this.load.audio('bowserDefeat', 'aud/bowserDefeat.mp3');
+        this.load.audio('pipe', 'aud/pijp.mp3');
         
         // DONKEY KONG ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         this.load.spritesheet('kong', 'img/kong.png', 37,38, 6);
