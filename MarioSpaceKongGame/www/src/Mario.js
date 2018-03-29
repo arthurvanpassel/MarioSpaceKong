@@ -1,3 +1,5 @@
+var deadSoundPlayed = false;
+
 bootcamp.Mario = function (game) {};
 bootcamp.Mario.prototype = {
     create: function () {
@@ -384,7 +386,14 @@ bootcamp.Mario.prototype = {
                 }
 
             }
-
+            
+            if (deadSoundPlayed == false) {
+                this.lostLifeSound.play();
+                deadSoundPlayed = true;
+                setTimeout(function () {
+                    deadSoundPlayed = false;
+                }, 5000);
+            }
             this.player.animations.play("dead");
             this.player.body.velocity.x = 0;
 
