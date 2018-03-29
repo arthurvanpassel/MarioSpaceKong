@@ -40,7 +40,7 @@ bootcamp.Game.prototype = {
 		this.coins.setAll('body.allowGravity', false);
 
 		// player-----------------------------------------------------------------------------------------
-		this.player = this.add.sprite(bootcamp._WIDTH -25, bootcamp._HEIGHT -300, 'player');
+		this.player = this.add.sprite(bootcamp._WIDTH -25, bootcamp._HEIGHT -60, 'player');
 		this.player.scale.setTo(-1, 1);
 		this.player.smoothed = false;
 		this.player.anchor.set(0.5);
@@ -208,15 +208,15 @@ bootcamp.Game.prototype = {
 
 
 		//create barrel-----------------------------------------------------------------------------------------
-        /*
-        if (this.game.time.now > barrelTimer) {
+       
+        if ((this.game.time.now > barrelTimer)&& gameFinished===false) {
 			var barrel = new Barrel(this.game,0,0);
             barrel.name = "barrel" + barrelCount ;
 			this.barrels.add(barrel);
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
 		};
-        */
+       
 	},
 
 	handleOrientation: function(e) {
@@ -291,7 +291,7 @@ bootcamp.Game.prototype = {
                         bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
                         greentube.body.allowGravity = false;
                         bootcamp._player.body.allowGravity = false;
-                        greentube.body.velocity.x -= 50;
+                        greentube.body.velocity.x -= 100;
                         setTimeout(function() {
                             greentube.body.velocity.x = 0;
                             bootcamp._player.y -= 0.5;
