@@ -20,6 +20,6 @@ bootcamp.Preloader.prototype = {
 
 	},
 	create: function() {
-		this.game.state.start('MainMenu');
+		this.game.state.start('Game');
 	}
 };
