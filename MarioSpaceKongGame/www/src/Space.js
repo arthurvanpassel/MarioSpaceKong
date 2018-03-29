@@ -38,7 +38,8 @@ bootcamp.Space.prototype = {
         // ENEMIES
         this.createEnemies();
         this.animateEnemies();
-        this.timesToHit = 1;
+        //this.timesToHit = 1;
+        console.log("timesToHit42: "+this.timesToHit);
         
         // ENEMY BOMBS
         this.bombs = this.add.group();
@@ -233,7 +234,7 @@ bootcamp.Space.prototype = {
                 for (var x = 0; x < 2; x++) {
                     if (x == 1) {
                         this.timesToHit = 5;
-                        console.log(this.timesToHit);
+                        console.log("timesToHit237: "+this.timesToHit);
                         var enemy = this.enemies.create(x * 67, y * 97, 'bowser');
                         enemy.anchor.setTo(0.5, 0.5);
                         enemy.body.moves = false;
@@ -266,8 +267,8 @@ bootcamp.Space.prototype = {
         bullet.kill();
         this.dropItem(enemy);
         
-        this.timesToHit--;
-        console.log("timesToHit = " +this.timesToHit);
+        this.timesToHit --;
+        console.log("timesToHit271: " +this.timesToHit);
         
         if (this.timesToHit == 0) {
             this.explode(enemy);
