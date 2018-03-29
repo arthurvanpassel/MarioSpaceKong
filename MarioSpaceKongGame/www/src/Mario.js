@@ -226,6 +226,8 @@ bootcamp.Mario.prototype = {
         this.lostLifeSound = this.add.audio('lostlife', 3, false);
         this.enemyHitSound = this.add.audio('enemyhit', 1, false);
         this.pipeSound = this.add.audio('pipe', 1, false);
+        this.jumpSound = this.add.audio('jump', 1, false);
+        this.spaceshipSound = this.add.audio('spaceship', 1, false);
 
         this.keys = this.game.input.keyboard.createCursorKeys();
 
@@ -296,10 +298,12 @@ bootcamp.Mario.prototype = {
             }
             // Make the player jump if he is touching the ground
             if (this.keys.up.isDown && this.player.body.touching.down) {
+                this.jumpSound.play();
                 this.player.body.velocity.y = -250;
             }
 
             if (this.game.input.pointer1.isDown && this.player.body.touching.down) {
+                this.jumpSound.play();
                 this.player.body.velocity.y = -250;
             }
 
@@ -328,6 +332,7 @@ bootcamp.Mario.prototype = {
             if (this.endAnim == 0) {
                 if (this.inShip) {
                     this.ship.body.velocity.y -= 5;
+                    this.spaceshipSound.play();
                 }
                 if (this.ship.body.position.y < 0) {
                     this.inShip = false;
@@ -346,8 +351,8 @@ bootcamp.Mario.prototype = {
 
                 if (this.onTube) {
                     this.player.body.position.x = this.endTube.body.position.x;
+                    this.pipeSound.play();
                     if (this.player.body.position.y >= this.endTube.body.position.y) {
-                        this.pipeSound.play();
                         this.game.state.start('Kong');
                         bootcamp._MARIOLEVELS++;
                         bootcamp._LASTSTATE = "Mario";
@@ -360,10 +365,9 @@ bootcamp.Mario.prototype = {
 
             this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
 
-        } else if (this.playerDead == true && this.started) {
-
+        } 
+        else if (this.playerDead == true && this.started) {
             if (this.player.body.position.y > bootcamp._HEIGHT + 27) {
-                bootcamp._LIVES -= 1;
                 this.livesText.text = bootcamp._LIVES;
                 if (bootcamp._LIVES <= 0) {
                     this.inShip = false;
@@ -382,10 +386,10 @@ bootcamp.Mario.prototype = {
             }
 
             this.player.animations.play("dead");
-            //this.lostLifeSound.play();
             this.player.body.velocity.x = 0;
 
-        } else if (!this.playerDead && !this.started) {
+        } 
+        else if (!this.playerDead && !this.started) {
             if (this.startAnim == 0) {
                 if (this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
                     this.startShip.frame = 0;

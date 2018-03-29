@@ -67,6 +67,11 @@ bootcamp.Kong.prototype = {
         //sounds-----------------------------------------------------------------------------------------
         winningSound = this.game.add.audio('winningSound');
         walkSound = this.game.add.audio('walkSound');
+        this.coinSound = this.add.audio('coin', 1, false);
+        this.lostLifeSound = this.add.audio('lostlife', 3, false);
+        pipeSound = this.add.audio('pipe', 1, false);
+        this.jumpSound = this.add.audio('jump', 1, false);
+        spaceshipSound = this.add.audio('spaceship', 1, false);
 
         //barrels-----------------------------------------------------------------------------------------
         this.barrels = this.add.group();
@@ -207,10 +212,12 @@ bootcamp.Kong.prototype = {
             // Make the player jump if he is touching the ground
             if (this.keys.up.isDown && this.player.body.touching.down) {
                 this.player.body.velocity.y = -300;
+                this.jumpSound.play();
             }
 
             if (this.game.input.pointer1.isDown && this.player.body.touching.down) {
                 this.player.body.velocity.y = -300;
+                this.jumpSound.play();
             }
 
             if (this.player.body.velocity.x == 0) {
@@ -281,6 +288,7 @@ bootcamp.Kong.prototype = {
     collisionHandlerCoin: function (player, coin) {
         bootcamp._SCORE += 1;
         this.scoreText.text = bootcamp._SCORE;
+        this.coinSound.play();
         this.coinsCollected += 1;
         coin.kill();
     },
@@ -379,6 +387,7 @@ bootcamp.Kong.prototype = {
                                     greentube.kill();
                                     endGamePlayed = false;
                                     bootcamp._player.body.collideWorldBounds = true;
+                                    pipeSound.play();
                                     bootcamp._LASTSTATE = 'Kong';
                                     bootcamp._game.state.start('Mario');
                                 }, 1000);
@@ -434,6 +443,7 @@ bootcamp.Kong.prototype = {
                                     bootcamp._player.body.allowGravity = true;
                                     bootcamp._game.physics.arcade.gravity.y = 600;
                                     endGamePlayed = false;
+                                    spaceshipSound.play();
                                     bootcamp._player.body.collideWorldBounds = true;
                                     bootcamp._LASTSTATE = 'Kong';
                                     bootcamp._game.state.start('Space');
