@@ -5,6 +5,7 @@ var bootcamp = {
     _LIVES: 3,
     _LASTSTATE: null,
     _SPACEINVADERSLEVELS: 0,
+    _MARIOLEVELS: 0,
 };
 bootcamp.Boot = function(game) {};
 bootcamp.Boot.prototype = {
