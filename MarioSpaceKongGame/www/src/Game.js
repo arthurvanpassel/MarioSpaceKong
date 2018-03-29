@@ -11,14 +11,14 @@ var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
 var winningSound, walkSound;
-
+var bootcamp;
 
 
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
 		bootcamp._this = this;
-
+		bootcamp = this.player;
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
         //kong-----------------------------------------------------------------------------------------
@@ -165,27 +165,25 @@ bootcamp.Game.prototype = {
 		//player movement-----------------------------------------------------------------------------------------
 
 		if (gameFinished == false) {
-			if(controls.left.isDown) {
+			/*if(controls.left.isDown) {
 				this.player.body.velocity.x -= 25;
 				this.player.scale.setTo(-1, 1);
-			}
-			else if(controls.right.isDown) {
+			}*/
+			/*else if(controls.right.isDown) {
 				this.player.body.velocity.x += 25;
 				this.player.scale.setTo(1, 1);
-			}
+			} */
 			if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
 				this.player.body.velocity.y -= 300;
 			}
-			if (this.game.input.pointer1.isDown && this.player.body.touching.down && hitplatform) {
+			if (this.game.input.pointer1.isDown && this.player.body.touching.down && ( hitplatform||hitplatformBottom)) {
 				this.player.body.velocity.y -= 300;
 			}
 
 			if (this.player.body.blocked.down || hitplatform || hitplatformBottom) {
 				if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 					this.player.animations.play('walk');
-					if(this.player.body.velocity.x < 0){
-						this.player.scale.setTo(1, 1);
-					}
+					
 				}
 				else {
 					this.player.animations.play('idle');
@@ -226,7 +224,12 @@ bootcamp.Game.prototype = {
 		var x = e.gamma; // range [-90,90], left-right
 		var y = e.beta;  // range [-180,180], top-bottom
 		var z = e.alpha; // range [0,360], up-down
-        bootcamp._player.body.velocity.x += 5*x;
+		bootcamp._player.body.velocity.x += 5*x;
+		
+		if(bootcamp._player.body.velocity.x > 0){
+			bootcamp._player.scale.setTo(-1, 1);
+		}
+		
 	},
 	collideBarrelPlatform: function(steel, barrel){
 		if(steel.name == 'steelLow'){
