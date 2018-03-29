@@ -295,12 +295,12 @@ bootcamp.Game.prototype = {
                         bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
                         greentube.body.allowGravity = false;
                         bootcamp._player.body.allowGravity = false;
-                        greentube.body.velocity.x -= 100;
+                        greentube.body.velocity.x -= 50;
                         setTimeout(function() {
                             greentube.body.velocity.x = 0;
                             bootcamp._player.y -= 0.5;
                             bootcamp._player.body.collideWorldBounds = false;
-                            bootcamp._player.body.velocity.x += 50;
+                            bootcamp._player.body.velocity.x += 100;
                             setTimeout(function() {
                                 bootcamp._player.body.velocity.x = 0;
                             }, 5000);
