@@ -38,8 +38,6 @@ bootcamp.Game.prototype = {
 		this.coins.physicsBodyType = Phaser.Physics.ARCADE;
 		this.coins.enableBody = true;
 		this.coins.setAll('body.allowGravity', false);
-		
-
 
 		// player-----------------------------------------------------------------------------------------
 		this.player = this.add.sprite(bootcamp._WIDTH -25, bootcamp._HEIGHT -300, 'player');
@@ -274,8 +272,7 @@ bootcamp.Game.prototype = {
 
 				setTimeout(function(){
 					bootcamp._game.physics.arcade.gravity.y = 400;
-					var greentube = bootcamp._this.add.sprite(screenWidth-50, screenHeight, 'greenTube');
-					greentube.scale.setTo(0.02);
+					var greentube = bootcamp._this.add.sprite(screenWidth-40, screenHeight, 'greenTube');
 					bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
 					greentube.body.allowGravity = false;
 					bootcamp._player.body.allowGravity = false;
@@ -288,7 +285,7 @@ bootcamp.Game.prototype = {
 							bootcamp._player.body.velocity.x = 0;
                             hitplatformEnd = false;
 							bootcamp._player.body.velocity.y += 50;
-						}, 950)
+						}, 1000)
 					}, 600)
 				}, 2500);
 			}, 2000);
