@@ -331,6 +331,7 @@ bootcamp.Kong.prototype = {
                                 greentube.kill();
                                 endGamePlayed = false;
                                 bootcamp._player.body.collideWorldBounds = true;
+                                bootcamp._LASTSTATE = 'Kong';
                                 bootcamp._game.state.start('Mario');
 
                             }, 1000);

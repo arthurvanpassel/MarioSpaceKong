@@ -404,7 +404,6 @@ bootcamp.Mario.prototype = {
             }
 
         }
-        console.log(this.player.body.position.y);
         //MAX SPEED
         if (this.player.body.velocity.x < -150) {
             this.player.body.velocity.x = -150;
