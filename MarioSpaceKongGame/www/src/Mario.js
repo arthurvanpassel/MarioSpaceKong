@@ -20,7 +20,7 @@ bootcamp.Mario.prototype = {
         var level1 = [
             '                                                  ',
             '                                                  ',
-            '                                                 ',
+            '                                                  ',
             '              bbb                                 ',
             '                                                  ',
             '            ccc ccc                        s      ',
