@@ -148,6 +148,7 @@ bootcamp.Game.prototype = {
 		i +=70;
 		holeRight = !holeRight;
 		};
+        this.beginAnim();
 	},
 	update: function() {
         //collide-----------------------------------------------------------------------------------------
@@ -251,6 +252,9 @@ bootcamp.Game.prototype = {
 	},
 	collisionHandlerCoin: function (player, coin) {
         coin.kill();
+    },
+    beginAnim: function() {
+        console.log('begin');
     },
     finishGame: function() {
     
