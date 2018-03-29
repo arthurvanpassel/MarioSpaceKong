@@ -12,6 +12,7 @@ var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
 var winningSound, walkSound;
+var MovingSteels;
 
 
 bootcamp.Game = function(game) {};
@@ -96,7 +97,7 @@ bootcamp.Game.prototype = {
         bootcamp._platforms = this.platforms;
 
 		//create random platforms1-----------------------------------------------------------------------------------------
-        var holeRight = true;
+        /*var holeRight = true;
 		var startposition = bootcamp._WIDTH;
 		var endposition = bootcamp._WIDTH;
 		for(i = (bootcamp._HEIGHT/100)+45; i < (bootcamp._HEIGHT) - 10;){
@@ -147,10 +148,10 @@ bootcamp.Game.prototype = {
 
 		i +=70;
 		holeRight = !holeRight;
-		};
+		}; */
         
         //create random platforms2-----------------------------------------------------------------------------------------
-		/*var startposition = 0;
+		var startposition = 0;
 		var endposition = bootcamp._WIDTH;
 		for(i = (bootcamp._HEIGHT/100)+45; i < (bootcamp._HEIGHT) - 10;){
 
@@ -185,16 +186,16 @@ bootcamp.Game.prototype = {
 					    
 				}
 				else if(w > 150 ) {
-					steel = this.MovingSteels.create(w,i, 'steel');
+					movePlatform = this.MovingSteels.create(w,i, 'steel');
 
-					steel.scale.setTo(0.5);
-					steel.body.immovable = true;
-					this.physics.enable(steel, Phaser.Physics.ARCADE);
-					steel.body.allowGravity = false;
+					movePlatform.scale.setTo(0.5);
+					movePlatform.body.immovable = true;
+					this.physics.enable(movePlatform, Phaser.Physics.ARCADE);
+					movePlatform.body.allowGravity = false;
 					//steel.body.friction = 0.5;
-					steel.body.width = 24;
-					steel.body.height = 16;
-					steel.body.velocity.x = -100;
+					movePlatform.body.width = 24;
+					movePlatform.body.height = 16;
+					movePlatform.body.velocity.x = -100;
 					
 					if(w<(bootcamp._WIDTH-5)){
 					this.coinCreator(i,w);
@@ -206,7 +207,7 @@ bootcamp.Game.prototype = {
 		i +=70;
 		};
         
-        */
+    
         
         this.beginAnimSpace();
 	},
@@ -218,16 +219,13 @@ bootcamp.Game.prototype = {
         }        
         this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
-		this.physics.arcade.collide(this.platforms, this.MovingSteels, this.collidePlatformMoving(steel), null, this);
+		this.physics.arcade.collide(this.MovingSteels,this.platforms,  function(MovingSteels){
+			MovingSteels.body.velocity.x = 150;
+		}, null, this);
 		this.physics.arcade.overlap(this.player, this.coins, this.collisionHandlerCoin, null, this);
 
 
-<<<<<<< HEAD
-
-        this.physics.arcade.collide(this.player, this.kong, this.finishGame, null, this);
-=======
         this.physics.arcade.collide(this.player, this.kong, this.finishGameSpace, null, this);
->>>>>>> 523300bb454074eb46579982cd2333088a18470f
 
 		//player movement-----------------------------------------------------------------------------------------
         if (this.player.body.velocity.x > 150) {
@@ -288,6 +286,7 @@ bootcamp.Game.prototype = {
 		};
        
 	},
+	
 
 	handleOrientation: function(e) {
 		// Device Orientation API
@@ -340,19 +339,6 @@ bootcamp.Game.prototype = {
                 gameFinished = false;
             }, 1400)
         }, 600)
-<<<<<<< HEAD
-        /*setTimeout(function() {
-            bootcamp._player.body.collideWorldBounds = true;
-            greentube.body.velocity.x += 50;
-            setTimeout(function() {
-                greentube.destroy();
-            })
-        }, 500);*/
-	},
-	collidePlatformMoving: function(steel){
-		steel.body.velocity.x = 100;
-	},
-=======
     },
     beginAnimSpace: function() {
         bootcamp._player.body.allowGravity = false;
@@ -369,7 +355,6 @@ bootcamp.Game.prototype = {
             bootcamp._player.body.allowGravity = true;
         }, 300)
     },
->>>>>>> 523300bb454074eb46579982cd2333088a18470f
     finishGame: function() {
     
             if (endGamePlayed == false) {
