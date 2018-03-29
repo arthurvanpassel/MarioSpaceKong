@@ -257,13 +257,6 @@ bootcamp.Space.prototype = {
         //tween.onLoop.add(this.descend, this);
     },
     
-    /* descend: function() {
-        if (this.player.alive) {
-        //enemies.y += 8;
-        this.add.tween(this.enemies).to( { y: this.enemies.y + 100 }, 3000, Phaser.Easing.Linear.None, true, 0, 0, false);
-        }
-    }, */
-    
     bulletHitsEnemy: function(bullet, enemy) {
         bullet.kill();
         this.dropItem(enemy);
@@ -271,13 +264,6 @@ bootcamp.Space.prototype = {
         this.timesToHit --;
         console.log("timesToHit271: " +this.timesToHit);
         
-        if (bootcamp._SPACEINVADERSLEVELS == 0) {
-            enemy.animations.play('bowserDead');
-            setTimeout(function () {
-                enemy.animations.play('bowserLive');
-            }, 500);
-            
-        }
         
         if (this.timesToHit == 0) {
             this.explode(enemy);
@@ -285,6 +271,10 @@ bootcamp.Space.prototype = {
         }
         else {
             //animate a hit
+            enemy.animations.play('bowserDead');
+            setTimeout(function () {
+                enemy.animations.play('bowserLive');
+            }, 500);
             
         }
         
