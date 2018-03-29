@@ -16,6 +16,7 @@ bootcamp.Mario.prototype = {
 
         var inShip = false;
         var started = false;
+        this.coinsCollected = 0;
 
         var level1 = [
             '                                                  ',
@@ -154,6 +155,7 @@ bootcamp.Mario.prototype = {
 
     },
     update: function () {
+
         this.physics.arcade.collide(this.enemies, this.ground, null, function (enemy) {
             if (enemy.dead) {
                 return false;
@@ -163,10 +165,10 @@ bootcamp.Mario.prototype = {
         this.physics.arcade.collide(this.enemies);
 
         if (this.playerDead == false && this.started) {
-            if(this.startShip.body.position.y < -100) {
+            if (this.startShip.body.position.y < -100) {
                 this.startShip.kill();
             }
-            
+
             this.physics.arcade.collide(this.player, this.ground, null, function () {
                 if (this.playerDead) {
                     return false;
@@ -207,8 +209,6 @@ bootcamp.Mario.prototype = {
             if (this.player.body.velocity.y < 0) {
                 this.player.animations.play('jump');
             }
-            
-            console.log(this.ship.body.position.y);
 
             //END LEVEL
             if (this.inShip) {
@@ -220,18 +220,34 @@ bootcamp.Mario.prototype = {
                 this.game.state.start('Space');
             }
 
-            if (this.player.body.position.y > 227) {
-                this.player.kill;
+            this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
+
+        } else if (this.playerDead == true && this.started) {
+            if (this.player.body.position.y > bootcamp._HEIGHT + 27) {
+                bootcamp._LIVES -= 1;
+                this.livesText.text = bootcamp._LIVES;
+                if (bootcamp._LIVES <= 0) {
+                    this.inShip = false;
+                    this.started = false;
+                    this.game.state.start('MainMenu');
+                    bootcamp._LIVES = 3;
+                } else {
+                    console.log(this.coinsCollected);
+                    bootcamp._SCORE = bootcamp._SCORE - this.coinsCollected;
+                    this.scoreText.text = bootcamp._SCORE;
+                    this.inShip = false;
+                    this.started = false;
+                    this.game.state.start('Mario');
+                }
+
             }
 
-            this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
-        } else if (this.playerDead == true && this.started) {
-            
             this.player.animations.play("dead");
             this.player.body.velocity.x = 0;
+
         } else if (!this.playerDead && !this.started) {
             console.log("startanimation");
-            if(this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
+            if (this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
                 this.startShip.frame = 0;
                 this.player.body.position.y = this.startShip.body.position.y;
                 this.player.body.position.x = this.startShip.body.position.x;
@@ -269,6 +285,7 @@ bootcamp.Mario.prototype = {
     collisionHandlerCoin: function (player, coin) {
         bootcamp._SCORE += 1;
         this.scoreText.text = bootcamp._SCORE;
+        this.coinsCollected += 1;
         coin.kill();
     },
     handleOrientation: function (e) {
