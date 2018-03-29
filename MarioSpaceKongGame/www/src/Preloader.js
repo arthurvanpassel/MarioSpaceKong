@@ -17,7 +17,6 @@ bootcamp.Preloader.prototype = {
         this.game.load.audio('winningSound', 'audio/dk-a2600_victory.wav');
         this.game.load.audio('walkSound', 'audio/dk-a2600_walk.wav');
 
-
 	},
 	create: function() {
 		this.game.state.start('Game');
