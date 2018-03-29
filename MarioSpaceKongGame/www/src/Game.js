@@ -162,8 +162,10 @@ bootcamp.Game.prototype = {
 
 		//barrel movement-----------------------------------------------------------------------------------------
 		bootcamp._game = this.game;
-		this.physics.arcade.collide(this.player, this.barrels, function() {
+		this.physics.arcade.collide(this.player, this.barrels, function(player) {
 			console.log('death');
+			player.kill();
+			player.revive();
 		});
 
 		this.physics.arcade.collide(this.barrels, this.Bottoms, function(barrel){
