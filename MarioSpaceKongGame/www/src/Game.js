@@ -12,14 +12,12 @@ var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
 var winningSound, walkSound;
-var bootcamp;
 
 
 bootcamp.Game = function(game) {};
 bootcamp.Game.prototype = {
 	create: function() {
 		bootcamp._this = this;
-		bootcamp = this.player;
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
         //kong-----------------------------------------------------------------------------------------
@@ -49,7 +47,7 @@ bootcamp.Game.prototype = {
 		this.physics.enable(this.player, Phaser.Physics.ARCADE);
 		this.player.body.setCircle(13);
 		this.player.body.mass = 50;
-		this.player.body.collideWorldBounds = true;
+        this.player.body.collideWorldBounds = true;
 
         //physics-----------------------------------------------------------------------------------------
 		this.game.physics.arcade.TILE_BIAS = 32;
@@ -89,7 +87,7 @@ bootcamp.Game.prototype = {
 		this.Bottoms.setAll('body.allowGravity', false);
 
 		bootcamp._bottoms = this.Bottoms;
-    bootcamp._platforms = this.platforms;
+        bootcamp._platforms = this.platforms;
 
 		//create random platforms-----------------------------------------------------------------------------------------
 		var holeRight = true;
@@ -167,14 +165,14 @@ bootcamp.Game.prototype = {
 		//player movement-----------------------------------------------------------------------------------------
 
 		if (gameFinished == false) {
-			/*if(controls.left.isDown) {
+			if(controls.left.isDown) {
 				this.player.body.velocity.x -= 25;
 				this.player.scale.setTo(-1, 1);
-			}*/
-			/*else if(controls.right.isDown) {
+			}
+			else if(controls.right.isDown) {
 				this.player.body.velocity.x += 25;
 				this.player.scale.setTo(1, 1);
-			} */
+			} 
 			if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
 				this.player.body.velocity.y -= 300;
 			}
@@ -255,7 +253,8 @@ bootcamp.Game.prototype = {
         coin.kill();
     },
     finishGame: function() {
-
+    
+            if (endGamePlayed == false) {
 
 			//bool to remove animation conditions
 
@@ -295,17 +294,19 @@ bootcamp.Game.prototype = {
                         greentube.body.velocity.x -= 50;
                         setTimeout(function() {
                             greentube.body.velocity.x = 0;
+                            bootcamp._player.y -= 0.5;
+                            bootcamp._player.body.collideWorldBounds = false;
+                            bootcamp._player.body.velocity.x += 50;
                             setTimeout(function() {
                                 bootcamp._player.body.velocity.x = 0;
-                                bootcamp._player.body.velocity.y += 50;
-                            }, 1000);
+                            }, 5000);
+
                         }, 600);
                     }, 2500);
                 }, 2000);
             }, 500);
             endGamePlayed = true;
         }
-			
     }
 
 };
