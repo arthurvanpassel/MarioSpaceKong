@@ -162,6 +162,12 @@ bootcamp.Mario.prototype = {
         this.player.animations.add('walk', [0, 1, 2, 3], 10, true);
         this.player.animations.add('jump', [6], 1, true);
         this.player.animations.add('dead', [4], 1, true);
+        
+        //SOUNDS
+        // Initialize sounds
+        this.coinSound = this.add.audio('coin', 1, false);
+        this.lostLifeSound = this.add.audio('lostlife', 3, false);
+        this.enemyHitSound = this.add.audio('enemyhit', 1, false);
 
         this.keys = this.game.input.keyboard.createCursorKeys();
 
@@ -252,6 +258,7 @@ bootcamp.Mario.prototype = {
 
             //KILL WHEN ON THE GROUND
             if (this.player.body.blocked.down) {
+                this.lostLifeSound.play();
                 this.playerDead = true;
                 this.player.body.velocity.y = -300;
                 this.player.body.collideWorldBounds = false;
@@ -271,6 +278,7 @@ bootcamp.Mario.prototype = {
             this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
 
         } else if (this.playerDead == true && this.started) {
+            
             if (this.player.body.position.y > bootcamp._HEIGHT + 27) {
                 bootcamp._LIVES -= 1;
                 this.livesText.text = bootcamp._LIVES;
@@ -291,6 +299,7 @@ bootcamp.Mario.prototype = {
             }
 
             this.player.animations.play("dead");
+            //this.lostLifeSound.play();
             this.player.body.velocity.x = 0;
 
         } else if (!this.playerDead && !this.started) {
@@ -315,6 +324,7 @@ bootcamp.Mario.prototype = {
     collisionHandlerEnemy: function (player, enemy) {
         if (enemy.body.touching.up) {
             enemy.animations.play("dead");
+            this.enemyHitSound.play();
             enemy.dead = true;
             enemy.body.velocity.y = -100;
             player.body.velocity.y = -250;
@@ -334,6 +344,7 @@ bootcamp.Mario.prototype = {
         bootcamp._SCORE += 1;
         this.scoreText.text = bootcamp._SCORE;
         this.coinsCollected += 1;
+        this.coinSound.play();
         coin.kill();
     },
     handleOrientation: function (e) {

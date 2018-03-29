@@ -38,7 +38,7 @@ bootcamp.Space.prototype = {
         // ENEMIES
         this.createEnemies();
         this.animateEnemies();
-        //this.timesToHit = 1;
+        this.timesToHit = 1;
         console.log("timesToHit42: "+this.timesToHit);
         
         // ENEMY BOMBS
@@ -64,7 +64,7 @@ bootcamp.Space.prototype = {
         this.coins = this.add.group();
         this.coins.enableBody = true;
         this.coins.physicsBodyType = Phaser.Physics.ARCADE;
-        this.coins.createMultiple(10, 'powerUp', [1]);
+        this.coins.createMultiple(10, 'tilesM', [17]);
         this.coins.setAll('anchor.x', 0.5);
         this.coins.setAll('anchor.y', 0.5);
         this.coins.setAll('checkWorldBounds', true);
@@ -209,12 +209,27 @@ bootcamp.Space.prototype = {
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
         
-        if (bootcamp._SPACEINVADERSLEVELS == 1) {
+        if (bootcamp._SPACEINVADERSLEVELS == 0) {
             for (var y = 0; y < 1; y++) {
                 for (var x = 0; x < 6; x++) {
                     var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
                     enemy.anchor.setTo(0.5, 0.5);
                     enemy.body.moves = false;
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }
+        
+        if (bootcamp._SPACEINVADERSLEVELS == 1) {
+            for (var y = 0; y < 3; y++) {
+                for (var x = 0; x < 6; x++) {
+                    if (x == 2 || x == 3) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
                 }
             }
 
@@ -318,7 +333,9 @@ bootcamp.Space.prototype = {
                 coin = this.coins.getFirstExists(false);
                 coin.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
                 coin.body.velocity.y = +100;
-                coin.body.gravity.y = 75
+                coin.body.gravity.y = 75;
+                coin.animations.add('coin', [17, 18, 19, 18], 10, true);
+                coin.animations.play('coin');
             }
             if (chanceOfDroppingOneUp == 0 && chanceOfDroppingCoin != 0 && this.timesToHit == 1) {
                 console.log("1UP");        
