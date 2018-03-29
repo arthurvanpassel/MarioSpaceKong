@@ -7,6 +7,7 @@ var barrelTimer = 0;
 var steel;
 var coins;
 var gameFinished = false;
+var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
 
@@ -140,7 +141,9 @@ bootcamp.Game.prototype = {
 	update: function() {
         //collide-----------------------------------------------------------------------------------------
 		var hitplatform = this.physics.arcade.collide(this.player, this.platforms);
-        var hitplatformBottom = this.physics.arcade.collide(this.player, this.Bottoms);
+        if (hitplatformEnd == true) {
+            var hitplatformBottom = this.physics.arcade.collide(this.player, this.Bottoms);
+        }        
         this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
 
@@ -261,6 +264,7 @@ bootcamp.Game.prototype = {
 						bootcamp._player.body.velocity.x += 50;
 						setTimeout(function() {
 							bootcamp._player.body.velocity.x = 0;
+                            hitplatformEnd = false;
 							bootcamp._player.body.velocity.y += 50;
 						}, 950)
 					}, 600)
