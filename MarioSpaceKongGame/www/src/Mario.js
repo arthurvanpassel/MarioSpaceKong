@@ -184,7 +184,7 @@ bootcamp.Mario.prototype = {
             } else if (this.keys.right.isDown) {
                 this.player.body.velocity.x = 200;
             } else {
-                this.player.body.velocity.x = 0;
+                /*this.player.body.velocity.x = 0;*/
             }
             // Make the player jump if he is touching the ground
             if (this.keys.up.isDown && this.player.body.touching.down) {
