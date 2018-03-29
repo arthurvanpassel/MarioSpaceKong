@@ -27,7 +27,7 @@ bootcamp.Mario.prototype = {
             '            ccc ccc                        s      ',
             '            bbb bbb                       LGR     ',
             '                                         LxxxR    ',
-            '                                        LxxxxxR   ',
+            '              !                         LxxxxxR   ',
             'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGxxxxxxxGGG',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
@@ -252,16 +252,16 @@ bootcamp.Mario.prototype = {
                 this.player.body.position.y = this.startShip.body.position.y;
                 this.player.body.position.x = this.startShip.body.position.x;
                 this.player.body.velocity.y = -300;
-                this.player.body.collideWorldBounds = false;
+                this.player.body.collideWorldBounds = true;
                 this.started = true;
             }
         }
 
         //MAX SPEED
-        if (this.player.body.velocity.x < -200) {
-            this.player.body.velocity.x = -200;
-        } else if (this.player.body.velocity.x > 200) {
-            this.player.body.velocity.x = 200;
+        if (this.player.body.velocity.x < -150) {
+            this.player.body.velocity.x = -150;
+        } else if (this.player.body.velocity.x > 150) {
+            this.player.body.velocity.x = 150;
         }
     },
     collisionHandlerEnemy: function (player, enemy) {
@@ -293,7 +293,7 @@ bootcamp.Mario.prototype = {
         var x = e.gamma; // range [-90,90], left-right
         var y = e.beta; // range [-180,180], top-bottom
         var z = e.alpha; // range [0,360], up-down
-        bootcamp._player.body.velocity.x += 5 * x;
+        bootcamp._player.body.velocity.x += 2 * x;
 
     },
     render: function () {
