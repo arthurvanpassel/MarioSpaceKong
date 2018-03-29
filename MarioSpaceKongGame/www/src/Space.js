@@ -157,8 +157,8 @@ bootcamp.Space.prototype = {
             this.player.body.velocity.y -= 5;
         }
         if (this.player.body.position.y == 0) {
+            bootcamp._SPACEINVADERSLEVELS ++;
             this.game.state.start('Mario');
-            this.player.body.position.y = 0
         }
 	},
     
@@ -199,16 +199,34 @@ bootcamp.Space.prototype = {
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
         
-        for (var y = 0; y < 1; y++) {
-            for (var x = 0; x < 1; x++) {
-                var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
-                enemy.anchor.setTo(0.5, 0.5);
-                enemy.body.moves = false;
+        if (bootcamp._SPACEINVADERSLEVELS == 1) {
+            for (var y = 0; y < 1; y++) {
+                for (var x = 0; x < 6; x++) {
+                    var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                    enemy.anchor.setTo(0.5, 0.5);
+                    enemy.body.moves = false;
+                }
             }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
         }
         
-        this.enemies.x = 16;
-        this.enemies.y = 28;
+        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+            for (var y = 0; y < 3; y++) {
+                for (var x = 0; x < 6; x++) {
+                    if (x == 2 || x == 3) {
+                        var enemy = this.enemies.create(x * 32, y * 25, 'enemyS');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 28;
+        }
+        
     },
     
     animateEnemies: function() {
@@ -216,7 +234,6 @@ bootcamp.Space.prototype = {
         var tween = this.add.tween(this.enemies).to( { x: 30}, 3000, Phaser.Easing.Quintic.InOut, true, 0, 1000, true);
         
         // When the tween loops it calls descend
-            console.log("test");
         tween.onLoop.add(this.descend, this);
     },
     

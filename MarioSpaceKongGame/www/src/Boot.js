@@ -3,7 +3,8 @@ var bootcamp = {
 	_HEIGHT: 200 * (window.innerHeight / window.innerWidth),
     _SCORE: 0,
     _LIVES: 3,
-    _LASTSTATE: null
+    _LASTSTATE: null,
+    _SPACEINVADERSLEVELS: 0,
 };
 bootcamp.Boot = function(game) {};
 bootcamp.Boot.prototype = {
