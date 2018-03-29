@@ -18,7 +18,7 @@ bootcamp.Mario.prototype = {
         var started = false;
         this.coinsCollected = 0;
 
-        var level1 = [
+        var level2 = [
             '                                                  ',
             '                                                  ',
             '                                                  ',
@@ -29,6 +29,20 @@ bootcamp.Mario.prototype = {
             '                                         LxxxR    ',
             '              !                         LxxxxxR   ',
             'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGxxxxxxxGGG',
+            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        ];
+        
+        var level1 = [
+            '          ccc                                     ',
+            '          bbb      bbbbb                          ',
+            '                c                                 ',
+            '                !         !                       ',
+            '               !b        !LR                      ',
+            '              !bbb      !LxxR              s      ',
+            '              bbbbb     LxxxxR            LGR     ',
+            '                       LxxxxxxR          LxxxR    ',
+            '               ccc   !LxxxxxxxxR    c   LxxxxxR   ',
+            'GGGGGGGGGGGGGGGGGGGGGGxxxxxxxxxxGGGGGGGGxxxxxxxGGG',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
 
@@ -293,7 +307,7 @@ bootcamp.Mario.prototype = {
         var x = e.gamma; // range [-90,90], left-right
         var y = e.beta; // range [-180,180], top-bottom
         var z = e.alpha; // range [0,360], up-down
-        bootcamp._player.body.velocity.x += 2 * x;
+        bootcamp._player.body.velocity.x += 5 * x;
 
     },
     render: function () {
