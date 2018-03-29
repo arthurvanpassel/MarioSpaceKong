@@ -137,7 +137,16 @@ bootcamp.Kong.prototype = {
             i += 70;
             holeRight = !holeRight;
         };
-        this.beginAnim();
+
+        var rndNumberBegin = this.rnd.integerInRange(0, 1);
+        var rndNumberEnd = this.rnd.integerInRange(0, 1);
+        bootcamp._rndEnd = rndNumberEnd;
+        console.log('startanim: ' + rndNumberBegin);
+        if (rndNumberBegin == 1) {
+            this.beginAnimSpace();
+        } else {
+            this.beginAnimMario();
+        }
     },
     update: function () {
         //collide-----------------------------------------------------------------------------------------
@@ -150,7 +159,7 @@ bootcamp.Kong.prototype = {
         this.physics.arcade.overlap(this.player, this.coins, this.collisionHandlerCoin, null, this);
 
 
-        this.physics.arcade.collide(this.player, this.kong, this.finishGame, null, this);
+        this.physics.arcade.collide(this.player, this.kong, this.finishGameAnim, null, this);
 
         //player movement-----------------------------------------------------------------------------------------
         if (this.player.body.velocity.x > 150) {
@@ -244,86 +253,149 @@ bootcamp.Kong.prototype = {
     collisionHandlerCoin: function (player, coin) {
         coin.kill();
     },
-    beginAnim: function () {
+    beginAnimMario: function () {
         bootcamp._player.body.allowGravity = false;
         gameFinished = true;
         bootcamp._player.animations.play('walk');
-        var greentube = bootcamp._this.add.sprite(screenWidth, screenHeight - 28, 'greenTube');
+        var greentube = bootcamp._this.add.sprite(screenWidth, screenHeight - 30, 'greenTube');
         greentube.angle = -90;
         bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
         greentube.body.allowGravity = false;
         greentube.body.velocity.x -= 50;
         setTimeout(function () {
-                greentube.body.velocity.x = 0;
-                bootcamp._player.body.velocity.x -= 75;
-                setTimeout(function () {
-                    bootcamp._player.body.velocity.x = 0;
-                    bootcamp._player.body.collideWorldBounds = true;
-                    greentube.body.velocity.x += 50;
-                    bootcamp._player.body.allowGravity = true;
-                    gameFinished = false;
-                }, 1400)
-            }, 600)
-            /*setTimeout(function() {
+            greentube.body.velocity.x = 0;
+            bootcamp._player.body.velocity.x -= 75;
+            setTimeout(function () {
+                bootcamp._player.body.velocity.x = 0;
                 bootcamp._player.body.collideWorldBounds = true;
                 greentube.body.velocity.x += 50;
-                setTimeout(function() {
-                    greentube.destroy();
-                })
-            }, 500);*/
+                bootcamp._player.body.allowGravity = true;
+                gameFinished = false;
+            }, 1400)
+        }, 600)
     },
-    finishGame: function () {
+    beginAnimSpace: function () {
+        bootcamp._player.body.allowGravity = false;
+        gameFinished = true;
+        var spaceShipMario = bootcamp._this.add.sprite(screenWidth - 60, screenHeight, 'spaceShipMario');
+        spaceShipMario.frame = 1
+        bootcamp._this.physics.enable(spaceShipMario, Phaser.Physics.ARCADE);
+        spaceShipMario.body.allowGravity = false;
+        spaceShipMario.body.velocity.y -= 400;
+        setTimeout(function () {
+            spaceShipMario.frame = 0;
+            bootcamp._player.x = screenWidth - 50;
+            bootcamp._player.y = screenHeight - 75;
+            bootcamp._player.body.allowGravity = true;
+            bootcamp._player.body.collideWorldBounds = true;
+            gameFinished = false;
+        }, 300)
+    },
+    finishGameAnim: function () {
+        console.log('endanim: ' + bootcamp._rndEnd);
+        if (bootcamp._rndEnd == 1) {
+            if (endGamePlayed == false) {
 
-        if (endGamePlayed == false) {
+                //bool to remove animation conditions
 
-            //bool to remove animation conditions
+                gameFinished = true;
+                bootcamp._player.animations.play('idle');
 
-            gameFinished = true;
-            bootcamp._player.animations.play('idle');
+                //destroy coins
+                bootcamp._coins.destroy();
+                bootcamp._barrels.destroy();
 
-            //destroy coins
-            bootcamp._coins.destroy();
-            bootcamp._barrels.destroy();
-
-            var explode = this.add.sprite(-15, -10, 'explosionAnim')
-            explode.animations.add('explode', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 10, false);
-            explode.animations.play('explode');
-            setTimeout(function () {
-                bootcamp._kong.destroy();
-                //set player garvity off and set position/scale
-                bootcamp._player.body.allowGravity = false;
-                bootcamp._player.scale.setTo(1, 1);
-                winningSound.play();
-
-                //allow gravity from platforms and set player animation on walk
+                var explode = this.add.sprite(-15, -10, 'explosionAnim')
+                explode.animations.add('explode', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 10, false);
+                explode.animations.play('explode');
                 setTimeout(function () {
-                    bootcamp._platforms.setAll('body.allowGravity', true);
-                }, 500);
-                setTimeout(function () {
-                    bootcamp._player.body.allowGravity = true;
-                    bootcamp._game.physics.arcade.gravity.y = 100;
+                    bootcamp._kong.destroy();
+                    //set player garvity off and set position/scale
+                    bootcamp._player.body.allowGravity = false;
+                    bootcamp._player.scale.setTo(1, 1);
+                    winningSound.play();
 
+                    //allow gravity from platforms and set player animation on walk
                     setTimeout(function () {
-                        bootcamp._game.physics.arcade.gravity.y = 400;
-                        var greentube = bootcamp._this.add.sprite(screenWidth, screenHeight - 26, 'greenTube');
-                        greentube.angle = -90;
-                        bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
-                        greentube.body.allowGravity = false;
-                        bootcamp._player.body.allowGravity = false;
-                        greentube.body.velocity.x -= 50;
+                        bootcamp._platforms.setAll('body.allowGravity', true);
+                    }, 500);
+                    setTimeout(function () {
+                        bootcamp._player.body.allowGravity = true;
+                        bootcamp._game.physics.arcade.gravity.y = 100;
+
                         setTimeout(function () {
-                            greentube.body.velocity.x = 0;
-                            bootcamp._player.y -= 0.5;
-                            bootcamp._player.body.collideWorldBounds = false;
-                            bootcamp._player.body.velocity.x += 100;
-                            bootcamp._player.animations.play('walk');
-                            walkSound.play();
-
-
-
+                            bootcamp._game.physics.arcade.gravity.y = 400;
+                            var greentube = bootcamp._this.add.sprite(screenWidth, screenHeight - 30, 'greenTube');
+                            greentube.angle = -90;
+                            bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
+                            greentube.body.allowGravity = false;
+                            bootcamp._player.body.allowGravity = false;
+                            greentube.body.velocity.x -= 50;
                             setTimeout(function () {
-                                bootcamp._player.body.velocity.x = 0;
+                                greentube.body.velocity.x = 0;
+                                bootcamp._player.y -= 0.5;
+                                bootcamp._player.body.collideWorldBounds = false;
+                                bootcamp._player.body.velocity.x += 100;
+                                bootcamp._player.animations.play('walk');
+                                walkSound.play();
+                                setTimeout(function () {
+                                    bootcamp._player.body.velocity.x = 0;
 
+                                    console.log("anim");
+                                    gameFinished = false;
+                                    bootcamp._player.body.allowGravity = true;
+                                    bootcamp._game.physics.arcade.gravity.y = 600;
+                                    greentube.kill();
+                                    endGamePlayed = false;
+                                    bootcamp._player.body.collideWorldBounds = true;
+                                    bootcamp._LASTSTATE = 'Kong';
+                                    bootcamp._game.state.start('Mario');
+                                }, 1000);
+
+                            }, 600);
+                        }, 2500);
+                    }, 2000);
+                }, 500);
+                endGamePlayed = true;
+            }
+        } else {
+            if (endGamePlayed == false) {
+
+                //bool to remove animation conditions
+
+                gameFinished = true;
+                bootcamp._player.animations.play('idle');
+
+                //destroy coins
+                bootcamp._coins.destroy();
+                bootcamp._barrels.destroy();
+
+                var explode = this.add.sprite(-15, -10, 'explosionAnim')
+                explode.animations.add('explode', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 10, false);
+                explode.animations.play('explode');
+                setTimeout(function () {
+                    bootcamp._kong.destroy();
+                    //set player garvity off and set position/scale
+                    bootcamp._player.body.allowGravity = false;
+                    bootcamp._player.scale.setTo(1, 1);
+                    winningSound.play();
+
+                    //allow gravity from platforms and set player animation on walk
+                    setTimeout(function () {
+                        bootcamp._platforms.setAll('body.allowGravity', true);
+                    }, 500);
+                    setTimeout(function () {
+                        bootcamp._player.body.allowGravity = true;
+                        bootcamp._game.physics.arcade.gravity.y = 400;
+
+                        setTimeout(function () {
+                            var spaceShipMario = bootcamp._this.add.sprite((screenWidth / 2) - 30, screenHeight, 'ship');
+                            bootcamp._this.physics.enable(spaceShipMario, Phaser.Physics.ARCADE);
+                            spaceShipMario.body.allowGravity = false;
+                            spaceShipMario.body.velocity.y -= 400;
+                            setTimeout(function () {
+                                bootcamp._player.kill();
+                                spaceShipMario.frame = 1;
                                 console.log("anim");
                                 gameFinished = false;
                                 bootcamp._player.body.allowGravity = true;
@@ -332,15 +404,15 @@ bootcamp.Kong.prototype = {
                                 endGamePlayed = false;
                                 bootcamp._player.body.collideWorldBounds = true;
                                 bootcamp._LASTSTATE = 'Kong';
-                                bootcamp._game.state.start('Mario');
-
-                            }, 1000);
-                        }, 600);
-                    }, 2500);
-                }, 2000);
-            }, 500);
-            endGamePlayed = true;
+                                bootcamp._game.state.start('Space');
+                            }, 300);
+                        }, 500);
+                    }, 2000);
+                }, 500);
+                endGamePlayed = true;
+            }
         }
+
     }
 
 };
