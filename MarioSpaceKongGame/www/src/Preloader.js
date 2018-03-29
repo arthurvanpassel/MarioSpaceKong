@@ -19,6 +19,7 @@ bootcamp.Preloader.prototype = {
         //SPRITES
         this.load.spritesheet('playerS', 'img/ship.png', 52, 55 );
         this.load.spritesheet('enemyS', 'img/ufo.png', 30, 23);
+        this.load.spritesheet('bowser', 'img/bowser.png', 67, 97);
         this.load.image('bullet', 'img/bullet.png');
         this.load.image('bomb', 'img/bomb.png');
         this.load.spritesheet('explosion', 'img/explosion.png', 80, 80);
