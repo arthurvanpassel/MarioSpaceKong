@@ -201,6 +201,9 @@ bootcamp.Space.prototype = {
                 this.bullet.body.velocity.x = this.player.body.velocity.x / 4
                 this.bulletTime = this.time.now + 400;
                 this.fireballSound.play();
+                
+                this.bullet.animations.add('coin', [0, 1, 2, 3], 10, true);
+                this.bullet.animations.play('coin');
             }
         }
     },
