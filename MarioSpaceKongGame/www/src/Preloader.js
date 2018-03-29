@@ -10,7 +10,7 @@ bootcamp.Preloader.prototype = {
 		this.load.spritesheet('mainmenuGif', 'img/HomePageSpriteSheet.png', 200, 400, 61);
 
 		this.load.image('steel', 'img/steel.png');
-		this.load.image('greenTube', 'img/greenTube.png');
+		this.load.image('greenTube', 'img/tube.png');
 		this.load.image('button', 'img/button.png');
         
         this.game.load.audio('winningSound', 'audio/dk-a2600_victory.wav');
