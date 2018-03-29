@@ -174,8 +174,17 @@ bootcamp.Game.prototype = {
 		};
         
         */
+        var rndNumberBegin = this.rnd.integerInRange(0,1);
+        var rndNumberEnd = this.rnd.integerInRange(0,1);
+        bootcamp._rndEnd = rndNumberEnd;
+        console.log('startanim: ' + rndNumberBegin);
+        if (rndNumberBegin == 1) {
+            this.beginAnimSpace();
+        }
+        else {
+            this.beginAnimMario();
+        }
         
-        this.beginAnimSpace();
 	},
 	update: function() {
         //collide-----------------------------------------------------------------------------------------
@@ -187,8 +196,8 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
 		this.physics.arcade.overlap(this.player, this.coins, this.collisionHandlerCoin, null, this);
 
-
-        this.physics.arcade.collide(this.player, this.kong, this.finishGameSpace, null, this);
+        
+        this.physics.arcade.collide(this.player, this.kong, this.finishGameAnim, null, this);
 
 		//player movement-----------------------------------------------------------------------------------------
         if (this.player.body.velocity.x > 150) {
@@ -281,7 +290,7 @@ bootcamp.Game.prototype = {
 	collisionHandlerCoin: function (player, coin) {
         coin.kill();
     },
-    beginAnim: function() {
+    beginAnimMario: function() {
         bootcamp._player.body.allowGravity = false;
         gameFinished = true;
         bootcamp._player.animations.play('walk');
@@ -315,10 +324,13 @@ bootcamp.Game.prototype = {
             bootcamp._player.x = screenWidth-50;
             bootcamp._player.y = screenHeight-75;
             bootcamp._player.body.allowGravity = true;
+             bootcamp._player.body.collideWorldBounds = true;
+            gameFinished = false;
         }, 300)
     },
-    finishGame: function() {
-    
+    finishGameAnim: function() {
+        console.log('endanim: ' + bootcamp._rndEnd);
+        if (bootcamp._rndEnd == 1) {
             if (endGamePlayed == false) {
 
 			//bool to remove animation conditions
@@ -372,10 +384,10 @@ bootcamp.Game.prototype = {
                 }, 2000);
             }, 500);
             endGamePlayed = true;
+            }
         }
-    },
-    finishGameSpace: function() {
-        if (endGamePlayed == false) {
+        else {
+            if (endGamePlayed == false) {
 
 			//bool to remove animation conditions
 
@@ -421,4 +433,6 @@ bootcamp.Game.prototype = {
         }
     }
 
-};
+    }
+}
+
