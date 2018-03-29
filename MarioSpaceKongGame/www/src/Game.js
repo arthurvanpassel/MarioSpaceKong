@@ -89,8 +89,9 @@ bootcamp.Game.prototype = {
 		bootcamp._bottoms = this.Bottoms;
         bootcamp._platforms = this.platforms;
 
-		//create random platforms-----------------------------------------------------------------------------------------
-		var holeRight = true;
+		//create random platforms1-----------------------------------------------------------------------------------------
+		/*
+        var holeRight = true;
 		var startposition = bootcamp._WIDTH;
 		var endposition = bootcamp._WIDTH;
 		for(i = (bootcamp._HEIGHT/100)+45; i < (bootcamp._HEIGHT) - 10;){
@@ -141,7 +142,40 @@ bootcamp.Game.prototype = {
 
 		i +=70;
 		holeRight = !holeRight;
+		};*/
+        
+        //create random platforms2-----------------------------------------------------------------------------------------
+		var startposition = 0;
+		var endposition = bootcamp._WIDTH;
+		for(i = (bootcamp._HEIGHT/100)+45; i < (bootcamp._HEIGHT) - 10;){
+
+			for( w=startposition; w < endposition; ){
+                if (true) {
+                    steel = this.platforms.create(w,i, 'steel');
+
+						steel.scale.setTo(0.5);
+						steel.body.immovable = true;
+						this.physics.enable(steel, Phaser.Physics.ARCADE);
+						steel.body.allowGravity = false;
+						//steel.body.friction = 0.5;
+						steel.body.width = 24;
+						steel.body.height = 16;
+						if(w >= 30){
+							if(w%4==0){
+							this.coinCreator(i,w);
+							}
+						}
+					
+					    w +=15;
+                }
+                        
+		}
+
+		i +=70;
 		};
+        
+        
+        
         this.beginAnim();
 	},
 	update: function() {
