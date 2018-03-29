@@ -131,7 +131,7 @@ bootcamp.Game.prototype = {
 						steel.body.width = 24;
 						steel.body.height = 16;
 						if(w >= 30){
-							if(w%2==0){
+							if(w%4==0){
 							this.coinCreator(i,w);
 							}
 						}
