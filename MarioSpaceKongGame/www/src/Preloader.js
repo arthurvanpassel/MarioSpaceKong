@@ -32,6 +32,15 @@ bootcamp.Preloader.prototype = {
         // SCORE //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         this.load.spritesheet('stats', 'img/stats.png', 22, 12, 2);
         
+        // SOUNDS  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        this.load.audio('1up', 'aud/1up.wav');
+        this.load.audio('coin', 'aud/coin.wav');
+        this.load.audio('fireball', 'aud/fireball.wav');
+        this.load.audio('lostlife', 'aud/lost_a_life.wav');
+        this.load.audio('enemyhit', 'aud/enemyHit.wav');
+        this.load.audio('bomb', 'aud/bomb.wav');
+        
+        
 	},
 	create: function() {
 		this.game.state.start('MainMenu');
