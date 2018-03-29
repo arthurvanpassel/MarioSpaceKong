@@ -57,7 +57,7 @@ bootcamp.Mario.prototype = {
             '                                                cb',
             '                                                cc',
             'bbbbbbbbbbb                                     cc',
-            '                                        b    b  bb',
+            'bbbbbbbbbbb                             b    b  bb',
         ];
         var currentLevel = null;
         
@@ -67,6 +67,9 @@ bootcamp.Mario.prototype = {
             currentLevel = level2;
         }else if(bootcamp._MARIOLEVELS == 2) {
             currentLevel = level3;
+        }else if(bootcamp._MARIOLEVELS > 2) {
+            bootcamp._MARIOLEVELS = 0;
+            currentLevel = level1;
         }
 
         for (var i = 0; i < currentLevel.length; i++) {
