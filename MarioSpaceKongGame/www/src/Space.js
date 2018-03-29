@@ -318,7 +318,9 @@ bootcamp.Space.prototype = {
                 coin = this.coins.getFirstExists(false);
                 coin.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
                 coin.body.velocity.y = +100;
-                coin.body.gravity.y = 75
+                coin.body.gravity.y = 75;
+                coin.animations.add('coin', [17, 18, 19, 18], 10, true);
+                coin.animations.play('coin');
             }
             if (chanceOfDroppingOneUp == 0 && chanceOfDroppingCoin != 0 && this.timesToHit == 1) {
                 console.log("1UP");        
