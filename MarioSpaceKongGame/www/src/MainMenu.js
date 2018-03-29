@@ -12,6 +12,7 @@ bootcamp.MainMenu.prototype = {
 	},
 	startGame: function() {
         bootcamp._SCORE = 0;
+        bootcamp._LIVES = 3;
 		this.game.state.start('Mario');
 	}
 };
