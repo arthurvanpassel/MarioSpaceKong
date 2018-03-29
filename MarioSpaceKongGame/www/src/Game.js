@@ -198,9 +198,7 @@ bootcamp.Game.prototype = {
 		//barrel movement-----------------------------------------------------------------------------------------
 		bootcamp._game = this.game;
 		this.physics.arcade.collide(this.player, this.barrels, function(player) {
-			console.log('death');
-			player.kill();
-			player.revive();
+			//bootcamp._game.state.start('Game');
 		});
 
 		this.physics.arcade.collide(this.barrels, this.Bottoms, function(barrel){
@@ -307,10 +305,8 @@ bootcamp.Game.prototype = {
                 //allow gravity from platforms and set player animation on walk
                 setTimeout(function(){
                     bootcamp._platforms.setAll('body.allowGravity', true);
-                    bootcamp._player.animations.play('walk');
                 }, 500);
                 setTimeout(function(){
-                    walkSound.play();
                     bootcamp._player.body.allowGravity = true;
                     bootcamp._game.physics.arcade.gravity.y = 100;
 
@@ -327,6 +323,8 @@ bootcamp.Game.prototype = {
                             bootcamp._player.y -= 0.5;
                             bootcamp._player.body.collideWorldBounds = false;
                             bootcamp._player.body.velocity.x += 100;
+                            bootcamp._player.animations.play('walk');
+                            walkSound.play();
                             setTimeout(function() {
                                 bootcamp._player.body.velocity.x = 0;
                             }, 5000);
