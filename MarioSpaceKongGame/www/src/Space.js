@@ -77,25 +77,29 @@ bootcamp.Space.prototype = {
         this.explosions.forEach(this.setupExplosion, this);
         
         // SCORES + TEXT
-        this.lives = 5;
-        this.score = 0;
-        this.highscore = 0 ;
-        this.savedHighScore = 240;
-        //Cookies.set('highScore', this.highScore, { expires: '2078-12-31' });
-        
-        this.style = { font: "9px silkscreen", fill: "#fff ", align: "center" };
-        
-        this.livesText = this.add.text(this.world.bounds.width - 5, 0, "LIVES: " + this.lives, this.style);
-        this.livesText.anchor.set(1, 0);
+        this.score = this.add.sprite(1, 1, 'stats');
+        this.score.frame = 1;
+        this.score.fixedToCamera = true;
+        this.lives = this.add.sprite(165, 1, 'stats');
+        this.lives.frame = 0;
 
-        this.scoreText = this.add.text(this.world.centerX, 0, '', this.style);
+        this.style = {
+            font: "9px silkscreen",
+            fill: "#fff ",
+            align: "left"
+        };
+
+        this.scoreText = this.add.text(30, -1, bootcamp._SCORE, this.style);
         this.scoreText.anchor.set(0.5, 0);
+        this.scoreText.stroke = '#000000';
+        this.scoreText.strokeThickness = 3;
+        this.scoreText.fixedToCamera = true;
 
-        this.highScoreText = this.add.text(5, 0, '', this.style);
-        this.highScoreText.anchor.set(0, 0);
-
-        this.getHighScore();
-        this.updateScore();
+        this.livesText = this.add.text(195, -1, bootcamp._LIVES, this.style);
+        this.livesText.anchor.set(0.5, 0);
+        this.livesText.stroke = '#000000';
+        this.livesText.strokeThickness = 3;
+        this.livesText.fixedToCamera = true;
         
         // ACCELEROMETER
         bootcamp._player = this.player;
@@ -149,10 +153,10 @@ bootcamp.Space.prototype = {
         
         //LEVELCOMPLETE
         if (this.levelCompleteVar) {
-            this.player.body.collideWorldBounds = false;
+            this.player.body.collideWorldBounds = true;
             this.player.body.velocity.y -= 5;
         }
-        if (this.player.body.position.y < 0) {
+        if (this.player.body.position.y == 0) {
             this.game.state.start('Mario');
             this.player.body.position.y = 0
         }
@@ -171,7 +175,7 @@ bootcamp.Space.prototype = {
         }
         else {
             // Stop
-            /*this.player.body.velocity.x = 0 ;*/
+            this.player.body.velocity.x = 0 ;
         }
     },
     
@@ -228,8 +232,6 @@ bootcamp.Space.prototype = {
         this.dropItem(enemy);
         
         this.explode(enemy);
-        this.score += 10;
-        this.updateScore();
 
         if (this.enemies.countLiving() == 0) {
             // LEVEL KLAAR
@@ -274,15 +276,14 @@ bootcamp.Space.prototype = {
     oneUpHitsplayer: function(player, oneUp) {
         oneUp.kill();
         console.log("oneuphitsplayer");
-        this.lives += 1;
-        this.livesText.text = "LIVES: " + this.lives;
+        bootcamp._LIVES += 1;
     },
     
     coinHitsPlayer: function(player, coin) {
         coin.kill();
         console.log("coinhitsplayer");
-        this.score += 10;
-        this.updateScore();
+        bootcamp._SCORE += 1;
+        this.scoreText.text = bootcamp._SCORE;
     },
     
     handleBombs: function() {
@@ -298,9 +299,9 @@ bootcamp.Space.prototype = {
     bombHitsPlayer: function(bomb, player) {
         bomb.kill();
         this.explode(player);
-        this.lives -= 1;
-        this.livesText.text = "LIVES: " + this.lives;
-        if (this.lives > 0) {
+        bootcamp._LIVES -= 1;
+        this.livesText.text = bootcamp._LIVES;
+        if (bootcamp._LIVES > 0) {
              this.respawnPlayer(this.player);
          }
         else {
@@ -339,20 +340,12 @@ bootcamp.Space.prototype = {
         explosion.play('explode', 30, false, true);
     },
     
-    getHighScore: function() {
+    /* getHighScore: function() {
         //this.savedHighScore = this.Cookies.get('highScore');
         if (this.savedHighScore != undefined) {
             this.highScore = this.savedHighScore;
         }
-    },
-    
-    updateScore: function() {
-        if (this.score > this.highScore) {
-            this.highScore = this.score;
-        }
-        this.scoreText.text = this.pad(this.score, 4);
-        this.highScoreText.text = "HIGH: " + this.pad(this.highScore, 4);
-    },
+    }, */
     
     pad: function(number, length) {
         var str = '' + number;
