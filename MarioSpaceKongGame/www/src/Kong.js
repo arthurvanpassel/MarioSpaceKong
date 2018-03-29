@@ -138,15 +138,43 @@ bootcamp.Kong.prototype = {
             holeRight = !holeRight;
         };
 
-        var rndNumberBegin = this.rnd.integerInRange(0, 1);
-        var rndNumberEnd = this.rnd.integerInRange(0, 1);
-        bootcamp._rndEnd = rndNumberEnd;
-        console.log('startanim: ' + rndNumberBegin);
-        if (rndNumberBegin == 1) {
+        if (bootcamp._LASTSTATE == "Space") {
             this.beginAnimSpace();
-        } else {
+        } else if (bootcamp._LASTSTATE == "Mario"){
+            this.beginAnimMario();
+        } else if (bootcamp._LASTSTATE == null) {
             this.beginAnimMario();
         }
+        
+        var rndEnd = this.rnd.integerInRange(0, 1);
+        bootcamp._rndEnd = rndEnd;
+        
+        // stats
+        
+        this.score = this.add.sprite(1, 1, 'stats');
+        this.score.frame = 1;
+        this.score.fixedToCamera = true;
+        this.lives = this.add.sprite(165, 1, 'stats');
+        this.lives.frame = 0;
+        this.lives.fixedToCamera = true;
+
+        this.style = {
+            font: "9px silkscreen",
+            fill: "#fff ",
+            align: "left"
+        };
+
+        this.scoreText = this.add.text(30, -1, bootcamp._SCORE, this.style);
+        this.scoreText.anchor.set(0.5, 0);
+        this.scoreText.stroke = '#000000';
+        this.scoreText.strokeThickness = 3;
+        this.scoreText.fixedToCamera = true;
+
+        this.livesText = this.add.text(195, -1, bootcamp._LIVES, this.style);
+        this.livesText.anchor.set(0.5, 0);
+        this.livesText.stroke = '#000000';
+        this.livesText.strokeThickness = 3;
+        this.livesText.fixedToCamera = true;
     },
     update: function () {
         //collide-----------------------------------------------------------------------------------------
@@ -251,6 +279,9 @@ bootcamp.Kong.prototype = {
         this.coins.add(coin);
     },
     collisionHandlerCoin: function (player, coin) {
+        bootcamp._SCORE += 1;
+        this.scoreText.text = bootcamp._SCORE;
+        this.coinsCollected += 1;
         coin.kill();
     },
     beginAnimMario: function () {
@@ -284,7 +315,7 @@ bootcamp.Kong.prototype = {
         spaceShipMario.body.velocity.y -= 400;
         setTimeout(function () {
             spaceShipMario.frame = 0;
-            bootcamp._player.x = screenWidth - 50;
+            bootcamp._player.x = spaceShipMario.body.position.x;
             bootcamp._player.y = screenHeight - 75;
             bootcamp._player.body.allowGravity = true;
             bootcamp._player.body.collideWorldBounds = true;
