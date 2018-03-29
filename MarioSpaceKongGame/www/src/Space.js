@@ -38,6 +38,7 @@ bootcamp.Space.prototype = {
         // ENEMIES
         this.createEnemies();
         this.animateEnemies();
+        this.timesToHit = 1;
         
         // ENEMY BOMBS
         this.bombs = this.add.group();
@@ -212,7 +213,7 @@ bootcamp.Space.prototype = {
             this.enemies.y = 28;
         }
         
-        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+        if (bootcamp._SPACEINVADERSLEVELS == 2) {
             for (var y = 0; y < 3; y++) {
                 for (var x = 0; x < 6; x++) {
                     if (x == 2 || x == 3) {
@@ -225,6 +226,23 @@ bootcamp.Space.prototype = {
 
             this.enemies.x = 16;
             this.enemies.y = 28;
+        }
+        
+        if (bootcamp._SPACEINVADERSLEVELS == 0) {
+            for (var y = 0; y < 1; y++) {
+                for (var x = 0; x < 2; x++) {
+                    if (x == 1) {
+                        this.timesToHit = 5;
+                        console.log(this.timesToHit);
+                        var enemy = this.enemies.create(x * 67, y * 97, 'bowser');
+                        enemy.anchor.setTo(0.5, 0.5);
+                        enemy.body.moves = false;
+                    }
+                }
+            }
+
+            this.enemies.x = 16;
+            this.enemies.y = 50;
         }
         
     },
@@ -248,7 +266,15 @@ bootcamp.Space.prototype = {
         bullet.kill();
         this.dropItem(enemy);
         
-        this.explode(enemy);
+        this.timesToHit--;
+        console.log("timesToHit = " +this.timesToHit);
+        
+        if (this.timesToHit == 0) {
+            this.explode(enemy);
+            this.timesToHit = 1;
+        }
+        
+        
 
         if (this.enemies.countLiving() == 0) {
             // LEVEL KLAAR
