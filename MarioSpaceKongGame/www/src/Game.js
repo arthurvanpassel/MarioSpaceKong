@@ -127,7 +127,9 @@ bootcamp.Game.prototype = {
 						//steel.body.friction = 0.5;
 						steel.body.width = 24;
 						steel.body.height = 16;
-						this.coinCreator(i,w);
+						if((i%2===0||i%3===0)&&w >=5){
+							this.coinCreator(i,w);
+						};
 						if (holeRight) {
 							i +=0.5;
 						}
