@@ -21,13 +21,13 @@ bootcamp.Mario.prototype = {
         var level1 = [
             '                                                  ',
             '                                                  ',
-            '                !                                 ',
+            '                                                  ',
             '              bbb                                 ',
             '                                                  ',
             '            ccc ccc                        s      ',
             '            bbb bbb                       LGR     ',
             '                                         LxxxR    ',
-            '              !   !                    !LxxxxxR   ',
+            '                                        LxxxxxR   ',
             'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGxxxxxxxGGG',
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
