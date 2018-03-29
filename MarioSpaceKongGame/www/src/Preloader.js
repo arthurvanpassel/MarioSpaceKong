@@ -39,6 +39,7 @@ bootcamp.Preloader.prototype = {
         this.load.audio('lostlife', 'aud/lost_a_life.wav');
         this.load.audio('enemyhit', 'aud/enemyHit.wav');
         this.load.audio('bomb', 'aud/bomb.wav');
+        this.load.audio('bowserDead', 'aud/bowserDefeat.mp3');
         
         // DONKEY KONG ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         this.load.spritesheet('kong', 'img/kong.png', 37,38, 6);
