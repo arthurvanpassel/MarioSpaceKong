@@ -56,7 +56,6 @@ bootcamp.Space.prototype = {
         this.oneUps.enableBody = true;
         this.oneUps.physicsBodyType = Phaser.Physics.ARCADE;
         this.oneUps.createMultiple(10, 'powerUp', [0]);
-        this.oneUps.frame = 0;
         this.oneUps.setAll('anchor.x', 0.5);
         this.oneUps.setAll('anchor.y', 0.5);
         this.oneUps.setAll('checkWorldBounds', true);
@@ -120,7 +119,6 @@ bootcamp.Space.prototype = {
             }
         }
             
-        
         //SCROLL BACKGROUND
         this.background.tilePosition.y += 2;
         
@@ -143,8 +141,8 @@ bootcamp.Space.prototype = {
         // HIT & EXPLODE
         this.physics.arcade.overlap(this.bullets, this.enemies, this.bulletHitsEnemy, null, this);
         this.physics.arcade.overlap(this.bombs, this.player, this.bombHitsPlayer, null, this);
-        this.physics.arcade.overlap(this.oneUps, this.player, this.oneUpHitsPlayer, null, this);
         this.physics.arcade.overlap(this.coins, this.player, this.coinHitsPlayer, null, this);
+        this.physics.arcade.overlap(this.oneUps, this.player, this.oneUpHitsplayer, null, this);
         
         //MAX SPEED
         if(this.player.body.velocity.x < -200) {
@@ -235,9 +233,11 @@ bootcamp.Space.prototype = {
                     if (x == 1) {
                         this.timesToHit = 5;
                         console.log("timesToHit237: "+this.timesToHit);
-                        var enemy = this.enemies.create(x * 67, y * 97, 'bowser');
-                        enemy.anchor.setTo(0.5, 0.5);
-                        enemy.body.moves = false;
+                        var bowser = this.enemies.create(x * 67, y * 97, 'bowser');
+                        bowser.anchor.setTo(0.5, 0.5);
+                        bowser.body.moves = false;
+                        bowser.animations.add('bowser', [0, 1, 2, 3, 4], 10, true);
+                        bowser.animations.play('bowser');
                     }
                 }
             }
@@ -249,19 +249,19 @@ bootcamp.Space.prototype = {
     },
     
     animateEnemies: function() {
-        // LETS THE ENEMIES MOVE
+        // LET THE ENEMIES MOVE
         var tween = this.add.tween(this.enemies).to( { x: 30}, 3000, Phaser.Easing.Quintic.InOut, true, 0, 1000, true);
         
         // When the tween loops it calls descend
-        tween.onLoop.add(this.descend, this);
+        //tween.onLoop.add(this.descend, this);
     },
     
-    descend: function() {
+    /* descend: function() {
         if (this.player.alive) {
         //enemies.y += 8;
         this.add.tween(this.enemies).to( { y: this.enemies.y + 100 }, 3000, Phaser.Easing.Linear.None, true, 0, 0, false);
         }
-    },
+    }, */
     
     bulletHitsEnemy: function(bullet, enemy) {
         bullet.kill();
@@ -270,9 +270,15 @@ bootcamp.Space.prototype = {
         this.timesToHit --;
         console.log("timesToHit271: " +this.timesToHit);
         
+        
+        
         if (this.timesToHit == 0) {
             this.explode(enemy);
             this.timesToHit = 1;
+        }
+        else {
+            //animate a hit
+            
         }
         
         
@@ -298,8 +304,8 @@ bootcamp.Space.prototype = {
     
     dropItem: function(enemy) {
         if (this.player.alive) {
-            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 10);
-            chanceOfDroppingCoin = this.rnd.integerInRange(0, 3);
+            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 2);
+            chanceOfDroppingCoin = this.rnd.integerInRange(0, 2);
             if (chanceOfDroppingCoin == 0) {
                 console.log("COIN");
                 coin = this.coins.getFirstExists(false);
@@ -307,7 +313,7 @@ bootcamp.Space.prototype = {
                 coin.body.velocity.y = +100;
                 coin.body.gravity.y = 75
             }
-            if (chanceOfDroppingOneUp == 0 && chanceOfDroppingCoin != 0) {
+            if (chanceOfDroppingOneUp == 0 && chanceOfDroppingCoin != 0 && this.timesToHit == 1) {
                 console.log("1UP");        
                 oneUp = this.oneUps.getFirstExists(false);
                 oneUp.reset(enemy.x + this.enemies.x, enemy.y + this.enemies.y + 16);
@@ -321,6 +327,7 @@ bootcamp.Space.prototype = {
         oneUp.kill();
         console.log("oneuphitsplayer");
         bootcamp._LIVES += 1;
+        this.livesText.text = bootcamp._LIVES;
     },
     
     coinHitsPlayer: function(player, coin) {
