@@ -34,6 +34,10 @@ bootcamp.Game.prototype = {
 		//coins-----------------------------------------------------------------
 		this.coins = this.add.group();
 		bootcamp._coins = this.coins;
+		this.coins.physicsBodyType = Phaser.Physics.ARCADE;
+		this.coins.enableBody = true;
+		this.coins.setAll('body.allowGravity', false);
+		
 
 
 		// player-----------------------------------------------------------------------------------------
@@ -146,6 +150,7 @@ bootcamp.Game.prototype = {
         }        
         this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
+		this.physics.arcade.overlap(this.player, this.coins, this.collisionHandlerCoin, null, this);
 
 
         this.physics.arcade.collide(this.player, this.kong, this.finishGame, null, this);
@@ -224,10 +229,16 @@ bootcamp.Game.prototype = {
 		var coin = this.game.add.sprite(w,i, 'tiles');
 		coin.animations.add('coin', [17, 18, 19, 18], 10, true);
 		coin.animations.play('coin');
-		//coin.body.immovable = true;
+		this.physics.enable(coin, Phaser.Physics.ARCADE);
+		coin.body.allowGravity = false;
+		coin.body.immovable = true;
+						
 		coin.name = "coin" + i;
 		this.coins.add(coin);
 	},
+	collisionHandlerCoin: function (player, coin) {
+        coin.kill();
+    },
 
     finishGame: function() {
 			//bool to remove animation conditions
