@@ -77,6 +77,15 @@ bootcamp.Space.prototype = {
         this.explosions.setAll('anchor.y', 0.5);
         this.explosions.forEach(this.setupExplosion, this);
         
+        //SOUNDS
+        // Initialize sounds
+        this.oneUpSound = this.add.audio('1up', 1, false);
+        this.coinSound = this.add.audio('coin', 1, false);
+        this.fireballSound = this.add.audio('fireball', 1, false);
+        this.lostLifeSound = this.add.audio('lostlife', 3, false);
+        this.enemyHitSound = this.add.audio('enemyhit', 1, false);
+        this.bombSound = this.add.audio('bomb', 1, false);
+        
         // SCORES + TEXT
         this.score = this.add.sprite(1, 1, 'stats');
         this.score.frame = 1;
