@@ -13,6 +13,13 @@ bootcamp.MainMenu.prototype = {
 	startGame: function() {
         bootcamp._SCORE = 0;
         bootcamp._LIVES = 3;
-		this.game.state.start('Kong');
+        var rand = this.rnd.integerInRange(0, 2);
+        if(rand == 0) {
+            this.game.state.start('Kong');
+        }else if(rand == 1) {
+            this.game.state.start('Space');
+        }else if(rand == 2) {
+            this.game.state.start('Mario');
+        }
 	}
 };

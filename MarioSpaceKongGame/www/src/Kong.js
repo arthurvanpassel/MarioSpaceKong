@@ -54,7 +54,7 @@ bootcamp.Kong.prototype = {
 
         //animations-----------------------------------------------------------------------------------------
 		this.player.animations.add('idle', [0], 1, true);
-    	this.player.animations.add('walk', [1,2, 3, 4], 10, true);
+    	this.player.animations.add('walk', [0, 1, 2, 3], 10, true);
 		this.player.animations.add('jump', [6], 1, true);
 
         //controls-----------------------------------------------------------------------------------------
