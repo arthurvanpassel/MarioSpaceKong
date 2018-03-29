@@ -135,12 +135,6 @@ bootcamp.Game.prototype = {
 							this.coinCreator(i,w);
 							}
 						}
-						if (holeRight) {
-							i +=0.5;
-						}
-						else {
-							i -=0.5;
-						}
 					}
 					w +=15;
 		}
@@ -164,7 +158,12 @@ bootcamp.Game.prototype = {
         this.physics.arcade.collide(this.player, this.kong, this.finishGame, null, this);
 
 		//player movement-----------------------------------------------------------------------------------------
-
+        if (this.player.body.velocity.x > 150) {
+            this.player.body.velocity.x = 150
+        }
+        if (this.player.body.velocity.x < -150) {
+            this.player.body.velocity.x = -150
+        }
 		if (gameFinished == false) {
 			if(controls.left.isDown) {
 				this.player.body.velocity.x -= 25;
