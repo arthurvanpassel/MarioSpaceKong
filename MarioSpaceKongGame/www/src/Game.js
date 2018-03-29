@@ -12,7 +12,6 @@ var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
 var winningSound, walkSound;
-var MovingSteels;
 
 
 bootcamp.Game = function(game) {};
@@ -92,6 +91,7 @@ bootcamp.Game.prototype = {
 		this.MovingSteels.enableBody = true;
 		this.MovingSteels.setAll('body.allowGravity', false);
 
+		bootcamp._movingSteels = this.MovingSteels;
 
 		bootcamp._bottoms = this.Bottoms;
         bootcamp._platforms = this.platforms;
@@ -196,7 +196,7 @@ bootcamp.Game.prototype = {
 					
 					movePlatform.body.width = 24;
 					movePlatform.body.height = 16;
-					movePlatform.body.velocity.x = -75;
+					movePlatform.body.velocity.x = 75;
 					
 					
 					if(w<(bootcamp._WIDTH-10)){
@@ -306,7 +306,7 @@ bootcamp.Game.prototype = {
 			this.barrels.add(barrel);
 			barrelCount++;
 			barrelTimer = this.game.time.now + 3000;
-		};
+		}; 
        
 	},
 	
@@ -359,7 +359,9 @@ bootcamp.Game.prototype = {
                 bootcamp._player.body.collideWorldBounds = true;
                 greentube.body.velocity.x += 50;
                 bootcamp._player.body.allowGravity = true;
-                gameFinished = false;
+				gameFinished = false;
+				bootcamp._player.x = 25;
+				bootcamp._player.y = 15;
             }, 1400)
         }, 600)
     },
@@ -377,7 +379,10 @@ bootcamp.Game.prototype = {
             bootcamp._player.y = screenHeight-75;
             bootcamp._player.body.allowGravity = true;
              bootcamp._player.body.collideWorldBounds = true;
-            gameFinished = false;
+			gameFinished = false;
+			bootcamp._player.x =25;
+			bootcamp._player.y =0;
+			
         }, 300)
     },
     finishGameAnim: function() {
@@ -392,7 +397,7 @@ bootcamp.Game.prototype = {
 
 			//destroy coins
 			bootcamp._coins.destroy();
-            bootcamp._barrels.destroy();
+			bootcamp._barrels.destroy();
         
             var explode = this.add.sprite(-15, -10, 'explosionAnim')        
             explode.animations.add('explode', [0,1,2,3,4,5,6,7,8,9], 10, false);
@@ -406,7 +411,8 @@ bootcamp.Game.prototype = {
 
                 //allow gravity from platforms and set player animation on walk
                 setTimeout(function(){
-                    bootcamp._platforms.setAll('body.allowGravity', true);
+					bootcamp._platforms.setAll('body.allowGravity', true);
+					bootcamp._movingSteels.setAll('body.allowGravity', true);
                 }, 500);
                 setTimeout(function(){
                     bootcamp._player.body.allowGravity = true;
