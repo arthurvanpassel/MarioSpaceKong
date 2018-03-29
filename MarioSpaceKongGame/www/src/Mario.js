@@ -15,7 +15,10 @@ bootcamp.Mario.prototype = {
         this.ships = this.game.add.group();
 
         var inShip = false;
+        var onTube = false;
         var started = false;
+        var endAnim = 0;
+
         this.coinsCollected = 0;
 
         var level1 = [
@@ -60,14 +63,14 @@ bootcamp.Mario.prototype = {
             'bbbbbbbbbbb                             b    b  bb',
         ];
         var currentLevel = null;
-        
-        if(bootcamp._MARIOLEVELS == 0) {
+
+        if (bootcamp._MARIOLEVELS == 0) {
             currentLevel = level1;
-        }else if(bootcamp._MARIOLEVELS == 1) {
+        } else if (bootcamp._MARIOLEVELS == 1) {
             currentLevel = level2;
-        }else if(bootcamp._MARIOLEVELS == 2) {
+        } else if (bootcamp._MARIOLEVELS == 2) {
             currentLevel = level3;
-        }else if(bootcamp._MARIOLEVELS > 2) {
+        } else if (bootcamp._MARIOLEVELS > 2) {
             bootcamp._MARIOLEVELS = 0;
             currentLevel = level1;
         }
@@ -132,22 +135,26 @@ bootcamp.Mario.prototype = {
                     this.enemies.add(enemy);
                 }
 
-                // Create ship
+                /*// Create ship
                 else if (currentLevel[i][j] == 's') {
-                    this.ship = this.game.add.sprite(16 * j + 8, bootcamp._HEIGHT - 176 + 16 * i + 16, 'shipM');
-                    this.ship.frame = 0;
-                    this.ship.body.immovable = true;
-                    this.ship.name = "ship";
-                    this.ship.anchor.set(0.5, 1);
-                }
+                    var rand = this.rnd.integerInRange(0, 1);
+                    if (rand = 0) {
+                        this.ship = this.game.add.sprite(16 * j + 8, bootcamp._HEIGHT - 176 + 16 * i + 16, 'shipM');
+                        this.ship.frame = 0;
+                        this.ship.body.immovable = true;
+                        this.ship.name = "ship";
+                        this.ship.anchor.set(0.5, 1);
+                        this.endAnim = 0;
+                    } else {
+                        this.endTube = this.game.add.sprite(16 * j + 8, bootcamp._HEIGHT - 176 + 16 * i + 16, 'greenTube');
+                        this.endTube.anchor.set(0.5, 1);
+                        this.endTube.body.immovable = true;
+                        this.endTube.name = "tube";
+                        this.endAnim = 1;
+                    }
+                }*/
             }
         }
-        this.startShip = this.game.add.sprite(100, bootcamp._HEIGHT + 60, 'shipM');
-        this.startShip.frame = 1;
-        this.startShip.body.immovable = true;
-        this.startShip.name = "startShip";
-        this.startShip.anchor.set(0.5, 1);
-        this.startShip.body.velocity.y = -400;
 
         this.playerDead = false;
         this.player = this.add.sprite(40, 1000, 'playerM');
@@ -162,7 +169,57 @@ bootcamp.Mario.prototype = {
         this.player.animations.add('walk', [0, 1, 2, 3], 10, true);
         this.player.animations.add('jump', [6], 1, true);
         this.player.animations.add('dead', [4], 1, true);
-        
+
+        var rand = this.rnd.integerInRange(0, 1);
+        if (rand == 0) {
+            this.ship = this.game.add.sprite(16 * 43 + 8, bootcamp._HEIGHT - 176 + 16 * 6, 'shipM');
+            this.ship.frame = 0;
+            this.ship.body.immovable = true;
+            this.ship.name = "ship";
+            this.ship.anchor.set(0.5, 1);
+            this.endAnim = 0;
+
+
+        } else {
+            this.endTube = this.game.add.sprite(16 * 43 + 8, bootcamp._HEIGHT - 176 + 16 * 6, 'greenTube');
+            this.endTube.anchor.set(0.5, 1);
+            this.endTube.body.immovable = true;
+            this.endTube.name = "tube";
+            this.endAnim = 1;
+
+
+        }
+        var startAnim = 0;
+        if (bootcamp._LASTSTATE == "Space") {
+            this.startAnim = 0;
+            
+            this.startShip = this.game.add.sprite(100, bootcamp._HEIGHT + 60, 'shipM');
+            this.startShip.frame = 1;
+            this.startShip.body.immovable = true;
+            this.startShip.name = "startShip";
+            this.startShip.anchor.set(0.5, 1);
+            this.startShip.body.velocity.y = -400;
+        } else if(bootcamp._LASTSTATE == "Kong"){
+            this.startAnim = 1;
+
+            this.startTube = this.game.add.sprite(100, -32, 'greenTube');
+            this.startTube.anchor.set(0.5, 0.5);
+            this.startTube.body.immovable = true;
+            this.startTube.name = "tube";
+            this.startTube.body.velocity.y = 50;
+            this.startTube.angle = 180;
+        }else if(bootcamp._LASTSTATE == null){
+            console.log("call");
+            this.startAnim = 0;
+            
+            this.startShip = this.game.add.sprite(100, bootcamp._HEIGHT + 60, 'shipM');
+            this.startShip.frame = 1;
+            this.startShip.body.immovable = true;
+            this.startShip.name = "startShip";
+            this.startShip.anchor.set(0.5, 1);
+            this.startShip.body.velocity.y = -400;
+        }
+
         //SOUNDS
         // Initialize sounds
         this.coinSound = this.add.audio('coin', 1, false);
@@ -211,8 +268,10 @@ bootcamp.Mario.prototype = {
         this.physics.arcade.collide(this.enemies);
 
         if (this.playerDead == false && this.started) {
-            if (this.startShip.body.position.y < -100) {
-                this.startShip.kill();
+            if (this.startAnim == 0) {
+                if (this.startShip.body.position.y < -100) {
+                    this.startShip.kill();
+                }
             }
 
             this.physics.arcade.collide(this.player, this.ground, null, function () {
@@ -265,20 +324,42 @@ bootcamp.Mario.prototype = {
             }
 
             //END LEVEL
-            if (this.inShip) {
-                this.ship.body.velocity.y -= 5;
+            if (this.endAnim == 0) {
+                if (this.inShip) {
+                    this.ship.body.velocity.y -= 5;
+                }
+                if (this.ship.body.position.y < 0) {
+                    this.inShip = false;
+                    this.started = false;
+                    bootcamp._MARIOLEVELS++;
+                    bootcamp._LASTSTATE = "Mario";
+                    this.game.state.start('Space');
+                }
+            } else {
+                this.physics.arcade.collide(this.player, this.endTube, this.collisionHandlerTube, function () {
+                    if (this.onTube) {
+                        return false;
+                    }
+                    return true;
+                }, this);
+
+                if (this.onTube) {
+                    this.player.body.position.x = this.endTube.body.position.x;
+                    if (this.player.body.position.y >= this.endTube.body.position.y) {
+                        this.game.state.start('Kong');
+                        bootcamp._MARIOLEVELS++;
+                        bootcamp._LASTSTATE = "Mario";
+                        this.started = false;
+                        this.onTube = false;
+                    }
+                }
             }
-            if (this.ship.body.position.y < 0) {
-                this.inShip = false;
-                this.started = false;
-                bootcamp._MARIOLEVELS++;
-                this.game.state.start('Space');
-            }
+
 
             this.bg.body.position.x = this.game.camera.x / 600 * 288 - 2;
 
         } else if (this.playerDead == true && this.started) {
-            
+
             if (this.player.body.position.y > bootcamp._HEIGHT + 27) {
                 bootcamp._LIVES -= 1;
                 this.livesText.text = bootcamp._LIVES;
@@ -303,17 +384,27 @@ bootcamp.Mario.prototype = {
             this.player.body.velocity.x = 0;
 
         } else if (!this.playerDead && !this.started) {
-            console.log("startanimation");
-            if (this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
-                this.startShip.frame = 0;
-                this.player.body.position.y = this.startShip.body.position.y;
-                this.player.body.position.x = this.startShip.body.position.x;
-                this.player.body.velocity.y = -300;
-                this.player.body.collideWorldBounds = true;
-                this.started = true;
+            if (this.startAnim == 0) {
+                if (this.startShip.body.position.y < bootcamp._HEIGHT / 4 * 3) {
+                    this.startShip.frame = 0;
+                    this.player.body.position.y = this.startShip.body.position.y;
+                    this.player.body.position.x = this.startShip.body.position.x;
+                    this.player.body.velocity.y = -300;
+                    this.player.body.collideWorldBounds = true;
+                    this.started = true;
+                }
+            }else {
+                if (this.startTube.body.position.y > 0) {
+                    this.player.body.position.y = this.startTube.body.position.y;
+                    this.player.body.position.x = this.startTube.body.position.x + 5;
+                    this.startTube.body.velocity.y = -50;
+                    this.player.body.velocity.y = 0;
+                    this.started = true;
+                }
             }
-        }
 
+        }
+        console.log(this.player.body.position.y);
         //MAX SPEED
         if (this.player.body.velocity.x < -150) {
             this.player.body.velocity.x = -150;
@@ -346,6 +437,12 @@ bootcamp.Mario.prototype = {
         this.coinsCollected += 1;
         this.coinSound.play();
         coin.kill();
+    },
+    collisionHandlerTube: function (player, tube) {
+        if (tube.body.touching.up) {
+            this.onTube = true;
+            this.player.body.position.x = this.endTube.body.position.x;
+        }
     },
     handleOrientation: function (e) {
         // Device Orientation API
