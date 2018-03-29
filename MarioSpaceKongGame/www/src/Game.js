@@ -10,6 +10,7 @@ var gameFinished = false;
 var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
+var winningSound, walkSound;
 
 
 
@@ -68,7 +69,11 @@ bootcamp.Game.prototype = {
 
 		bootcamp._player = this.player;
 		window.addEventListener("deviceorientation", this.handleOrientation, true);
-
+        
+        //sounds-----------------------------------------------------------------------------------------
+        winningSound= this.game.add.audio('winningSound');
+        walkSound= this.game.add.audio('walkSound');
+        
         //barrels-----------------------------------------------------------------------------------------
 		this.barrels = this.add.group();
 
@@ -255,6 +260,7 @@ bootcamp.Game.prototype = {
 			bootcamp._player.x = 70;
 			bootcamp._player.y = 30;
 			bootcamp._player.scale.setTo(1, 1);
+            winningSound.play();
 
 			//allow gravity from platforms and set player animation on walk
 			setTimeout(function(){
@@ -262,6 +268,7 @@ bootcamp.Game.prototype = {
 				bootcamp._player.animations.play('walk');
 			}, 500);
 			setTimeout(function(){
+                walkSound.play();
 				bootcamp._player.body.allowGravity = true;
 				bootcamp._game.physics.arcade.gravity.y = 150;
 
