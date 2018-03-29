@@ -9,7 +9,7 @@ bootcamp.Preloader.prototype = {
 
 		this.load.spritesheet('mainmenuGif', 'img/HomePageSpriteSheet.png', 200, 400, 61);
 		this.load.spritesheet('explosionAnim', 'img/explosion.png', 80, 80 , 10);
-		this.load.spritesheet('fuck', 'img/gameover.png', 200, 400, 45);
+		this.load.spritesheet('gameOverscreen', 'img/GameOverScreen.png', 200, 400, 45);
 
 		this.load.image('steel', 'img/steel.png');
 		this.load.image('greenTube', 'img/tube.png');
@@ -20,6 +20,6 @@ bootcamp.Preloader.prototype = {
 
 	},
 	create: function() {
-		this.game.state.start('Game');
+		this.game.state.start('MainMenu');
 	}
 };
