@@ -196,7 +196,7 @@ bootcamp.Game.prototype = {
 					
 					movePlatform.body.width = 24;
 					movePlatform.body.height = 16;
-					movePlatform.body.velocity.x = -50;
+					movePlatform.body.velocity.x = -75;
 					
 					
 					if(w<(bootcamp._WIDTH-10)){
@@ -230,15 +230,16 @@ bootcamp.Game.prototype = {
         }        
         this.physics.arcade.collide(this.platforms, this.Bottoms);
 		this.physics.arcade.collide(this.barrels, this.platforms, this.collideBarrelPlatform, null, this);
+		this.physics.arcade.collide(this.barrels, this.MovingSteels);
 		//bewegende platformen----------------------------------------
 		this.physics.arcade.collide(this.MovingSteels,this.platforms,  function(MovingSteels){
 			if((MovingSteels.body.velocity.x) > 0){
 				
-				MovingSteels.body.velocity.x =  -50;
+				MovingSteels.body.velocity.x =  -75;
 			}
 			else{
 				
-			MovingSteels.body.velocity.x = 50;
+			MovingSteels.body.velocity.x = 75;
 			}
 		}, null, this);
 
@@ -246,13 +247,7 @@ bootcamp.Game.prototype = {
 		this.physics.arcade.overlap(this.player, this.coins, this.collisionHandlerCoin, null, this);
 
 
-<<<<<<< HEAD
-		this.physics.arcade.collide(this.player, this.kong, this.finishGameSpace, null, this);
-		
-		
-=======
         this.physics.arcade.collide(this.player, this.kong, this.finishGameAnim, null, this);
->>>>>>> dc3e865a54b71918b87233565fc7a2d763af45ec
 
 		//player movement-----------------------------------------------------------------------------------------
         if (this.player.body.velocity.x > 150) {
