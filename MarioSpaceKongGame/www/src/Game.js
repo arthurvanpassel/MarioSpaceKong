@@ -7,6 +7,7 @@ var barrelTimer = 0;
 var steel;
 var coins;
 var gameFinished = false;
+var endGamePlayed = false;
 var hitplatformEnd = true;
 var screenWidth = bootcamp._WIDTH;
 var screenHeight = bootcamp._HEIGHT;
@@ -31,6 +32,7 @@ bootcamp.Game.prototype = {
 		this.kong.animations.play('donkey');
 
 		bootcamp._kong = this.kong;
+        bootcamp._explode = this.explode;
 
 		//coins-----------------------------------------------------------------
 		this.coins = this.add.group();
@@ -244,51 +246,56 @@ bootcamp.Game.prototype = {
 	collisionHandlerCoin: function (player, coin) {
         coin.kill();
     },
-
     finishGame: function() {
-			//bool to remove animation conditions
+        if (endGamePlayed == false) {
+            //bool to remove animation conditions
 			gameFinished = true;
 			bootcamp._player.animations.play('idle');
 
 			//destroy coins
 			bootcamp._coins.destroy();
+        
+            var explode = this.add.sprite(-15, -10, 'explosionAnim')        
+            explode.animations.add('explode', [0,1,2,3,4,5,6,7,8,9], 10, false);
+            explode.animations.play('explode');
+            setTimeout(function() {
+                bootcamp._kong.destroy();
+                //set player garvity off and set position/scale
+                bootcamp._player.body.allowGravity = false;
+                bootcamp._player.scale.setTo(1, 1);
+                winningSound.play();
 
-			//set player garvity off and set position/scale
-			bootcamp._player.body.allowGravity = false;
-			bootcamp._player.x = 70;
-			bootcamp._player.y = 30;
-			bootcamp._player.scale.setTo(1, 1);
-            winningSound.play();
+                //allow gravity from platforms and set player animation on walk
+                setTimeout(function(){
+                    bootcamp._platforms.setAll('body.allowGravity', true);
+                    bootcamp._player.animations.play('walk');
+                }, 500);
+                setTimeout(function(){
+                    walkSound.play();
+                    bootcamp._player.body.allowGravity = true;
+                    bootcamp._game.physics.arcade.gravity.y = 100;
 
-			//allow gravity from platforms and set player animation on walk
-			setTimeout(function(){
-				bootcamp._platforms.setAll('body.allowGravity', true);
-				bootcamp._player.animations.play('walk');
-			}, 500);
-			setTimeout(function(){
-                walkSound.play();
-				bootcamp._player.body.allowGravity = true;
-				bootcamp._game.physics.arcade.gravity.y = 150;
-
-				setTimeout(function(){
-					bootcamp._game.physics.arcade.gravity.y = 400;
-					var greentube = bootcamp._this.add.sprite(screenWidth-40, screenHeight, 'greenTube');
-					bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
-					greentube.body.allowGravity = false;
-					bootcamp._player.body.allowGravity = false;
-					greentube.body.velocity.y -= 50;
-					setTimeout(function() {
-						greentube.body.velocity.y = 0;
-						bootcamp._player.y -= 0.1;
-						bootcamp._player.body.velocity.x += 50;
-						setTimeout(function() {
-							bootcamp._player.body.velocity.x = 0;
-                            hitplatformEnd = false;
-							bootcamp._player.body.velocity.y += 50;
-						}, 1000)
-					}, 600)
-				}, 2500);
-			}, 2000);
+                    setTimeout(function(){
+                        bootcamp._game.physics.arcade.gravity.y = 400;
+                        var greentube = bootcamp._this.add.sprite(screenWidth, screenHeight-30, 'greenTube');
+                        greentube.angle = -90;
+                        bootcamp._this.physics.enable(greentube, Phaser.Physics.ARCADE);
+                        greentube.body.allowGravity = false;
+                        bootcamp._player.body.allowGravity = false;
+                        greentube.body.velocity.x -= 50;
+                        setTimeout(function() {
+                            greentube.body.velocity.x = 0;
+                            setTimeout(function() {
+                                bootcamp._player.body.velocity.x = 0;
+                                bootcamp._player.body.velocity.y += 50;
+                            }, 1000);
+                        }, 600);
+                    }, 2500);
+                }, 2000);
+            }, 500);
+            endGamePlayed = true;
+        }
+			
     }
 
 };
