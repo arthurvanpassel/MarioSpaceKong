@@ -18,7 +18,7 @@ bootcamp.Mario.prototype = {
         var started = false;
         this.coinsCollected = 0;
 
-        var level2 = [
+        var level1 = [
             '                                                  ',
             '                                                  ',
             '                                                  ',
@@ -32,7 +32,7 @@ bootcamp.Mario.prototype = {
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
 
-        var level3 = [
+        var level2 = [
             '          ccc                                     ',
             '          bbb      bbbbb                          ',
             '                c                                 ',
@@ -46,12 +46,12 @@ bootcamp.Mario.prototype = {
             'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
         ];
 
-        var level1 = [
-            '            c                                    ',
+        var level3 = [
+            '            c                                     ',
             '           bbb                                    ',
             '                                                  ',
-            '     bbb                                        cc',
-            '                    !                           cb',
+            '     bbb                                          ',
+            '                    !                           cc',
             '               cc bbb    !       !         s    cc',
             'bbb                     bb    bbbb   bb  bbbbb  cc',
             '                                                cb',
@@ -59,12 +59,21 @@ bootcamp.Mario.prototype = {
             'bbbbbbbbbbb                                     cc',
             '                                        b    b  bb',
         ];
+        var currentLevel = null;
+        
+        if(bootcamp._MARIOLEVELS == 0) {
+            currentLevel = level1;
+        }else if(bootcamp._MARIOLEVELS == 1) {
+            currentLevel = level2;
+        }else if(bootcamp._MARIOLEVELS == 2) {
+            currentLevel = level3;
+        }
 
-        for (var i = 0; i < level1.length; i++) {
-            for (var j = 0; j < level1[i].length; j++) {
+        for (var i = 0; i < currentLevel.length; i++) {
+            for (var j = 0; j < currentLevel[i].length; j++) {
 
                 // Create ground
-                if (level1[i][j] == 'x') {
+                if (currentLevel[i][j] == 'x') {
                     var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tilesM');
                     ground.frame = 4;
                     ground.body.immovable = true;
@@ -72,7 +81,7 @@ bootcamp.Mario.prototype = {
                 }
 
                 // Create ground top
-                else if (level1[i][j] == 'G') {
+                else if (currentLevel[i][j] == 'G') {
                     var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tilesM');
                     ground.frame = 1;
                     ground.body.immovable = true;
@@ -80,7 +89,7 @@ bootcamp.Mario.prototype = {
                 }
 
                 // Create ground left top border
-                else if (level1[i][j] == 'L') {
+                else if (currentLevel[i][j] == 'L') {
                     var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tilesM');
                     ground.frame = 0;
                     ground.body.immovable = true;
@@ -88,7 +97,7 @@ bootcamp.Mario.prototype = {
                 }
 
                 // Create ground right top border
-                else if (level1[i][j] == 'R') {
+                else if (currentLevel[i][j] == 'R') {
                     var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tilesM');
                     ground.frame = 2;
                     ground.body.immovable = true;
@@ -96,7 +105,7 @@ bootcamp.Mario.prototype = {
                 }
 
                 // Create ground right top border
-                else if (level1[i][j] == 'b') {
+                else if (currentLevel[i][j] == 'b') {
                     var ground = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tilesM');
                     ground.frame = 9;
                     ground.body.immovable = true;
@@ -104,7 +113,7 @@ bootcamp.Mario.prototype = {
                 }
 
                 // Create coins
-                else if (level1[i][j] == 'c') {
+                else if (currentLevel[i][j] == 'c') {
                     var coin = this.game.add.sprite(16 * j, bootcamp._HEIGHT - 176 + 16 * i, 'tilesM');
                     coin.animations.add('coin', [17, 18, 19, 18], 10, true);
                     coin.animations.play('coin');
@@ -114,14 +123,14 @@ bootcamp.Mario.prototype = {
                 }
 
                 // Create enemy
-                else if (level1[i][j] == '!') {
+                else if (currentLevel[i][j] == '!') {
                     var enemy = new Enemy(this.game, 16 * j, bootcamp._HEIGHT - 176 + 16 * i);
                     enemy.name = "enemy" + i + j;
                     this.enemies.add(enemy);
                 }
 
                 // Create ship
-                else if (level1[i][j] == 's') {
+                else if (currentLevel[i][j] == 's') {
                     this.ship = this.game.add.sprite(16 * j + 8, bootcamp._HEIGHT - 176 + 16 * i + 16, 'shipM');
                     this.ship.frame = 0;
                     this.ship.body.immovable = true;
@@ -252,6 +261,7 @@ bootcamp.Mario.prototype = {
             if (this.ship.body.position.y < 0) {
                 this.inShip = false;
                 this.started = false;
+                bootcamp._MARIOLEVELS++;
                 this.game.state.start('Space');
             }
 
