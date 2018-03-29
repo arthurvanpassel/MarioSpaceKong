@@ -225,6 +225,7 @@ bootcamp.Mario.prototype = {
         this.coinSound = this.add.audio('coin', 1, false);
         this.lostLifeSound = this.add.audio('lostlife', 3, false);
         this.enemyHitSound = this.add.audio('enemyhit', 1, false);
+        this.pipeSound = this.add.audio('pipe', 1, false);
 
         this.keys = this.game.input.keyboard.createCursorKeys();
 
@@ -346,6 +347,7 @@ bootcamp.Mario.prototype = {
                 if (this.onTube) {
                     this.player.body.position.x = this.endTube.body.position.x;
                     if (this.player.body.position.y >= this.endTube.body.position.y) {
+                        this.pipeSound.play();
                         this.game.state.start('Kong');
                         bootcamp._MARIOLEVELS++;
                         bootcamp._LASTSTATE = "Mario";

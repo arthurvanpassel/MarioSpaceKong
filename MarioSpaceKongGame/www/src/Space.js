@@ -395,7 +395,7 @@ bootcamp.Space.prototype = {
     
     handleBombs: function() {
         this.enemies.forEachAlive(function (enemy) {
-            chanceOfDroppingBomb = this.rnd.integerInRange(0, 50 * this.enemies.countLiving());
+            chanceOfDroppingBomb = this.rnd.integerInRange(0, 80 * this.enemies.countLiving());
             if (chanceOfDroppingBomb == 0) {
                 this.dropBomb(enemy);
                 this.bombSound.play();
@@ -405,16 +405,18 @@ bootcamp.Space.prototype = {
     },
     
     bombHitsPlayer: function(bomb, player) {
-        bomb.kill();
-        this.explode(player);
-        bootcamp._LIVES -= 1;
-        this.livesText.text = bootcamp._LIVES;
-        if (bootcamp._LIVES > 0) {
-            this.setT
-             this.respawnPlayer(this.player);
-         }
-        else {
-            this.game.state.start('MainMenu');
+        if (this.levelCompleteVar == 0) {
+            bomb.kill();
+            this.explode(player);
+            bootcamp._LIVES -= 1;
+            this.livesText.text = bootcamp._LIVES;
+            if (bootcamp._LIVES > 0) {
+                this.setT
+                 this.respawnPlayer(this.player);
+             }
+            else {
+                this.game.state.start('MainMenu');
+            }
         }
     },
     
