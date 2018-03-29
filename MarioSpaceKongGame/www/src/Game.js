@@ -132,9 +132,11 @@ bootcamp.Game.prototype = {
 						//steel.body.friction = 0.5;
 						steel.body.width = 24;
 						steel.body.height = 16;
-						if((i%2===0||i%3===0)&&w >=5){
+						if(w >= 30){
+							if(w%2==0){
 							this.coinCreator(i,w);
-						};
+							}
+						}
 						if (holeRight) {
 							i +=0.5;
 						}
@@ -166,11 +168,11 @@ bootcamp.Game.prototype = {
 
 		if (gameFinished == false) {
 			if(controls.left.isDown) {
-				this.player.body.velocity.x -= 20;
+				this.player.body.velocity.x -= 25;
 				this.player.scale.setTo(-1, 1);
 			}
 			else if(controls.right.isDown) {
-				this.player.body.velocity.x += 20;
+				this.player.body.velocity.x += 25;
 				this.player.scale.setTo(1, 1);
 			}
 			if (controls.up.isDown && ( this.player.body.touching.down || this.player.body.blocked.down)) {
@@ -183,6 +185,9 @@ bootcamp.Game.prototype = {
 			if (this.player.body.blocked.down || hitplatform || hitplatformBottom) {
 				if (this.player.body.velocity.x > 0 || this.player.body.velocity.x < 0) {
 					this.player.animations.play('walk');
+					if(this.player.body.velocity.x < 0){
+						this.player.scale.setTo(1, 1);
+					}
 				}
 				else {
 					this.player.animations.play('idle');
@@ -248,6 +253,7 @@ bootcamp.Game.prototype = {
     },
 
     finishGame: function() {
+
 			//bool to remove animation conditions
 			gameFinished = true;
 			bootcamp._player.animations.play('idle');
