@@ -84,7 +84,8 @@ bootcamp.Space.prototype = {
         this.lostLifeSound = this.add.audio('lostlife', 3, false);
         this.enemyHitSound = this.add.audio('enemyhit', 1, false);
         this.bombSound = this.add.audio('bomb', 1, false);
-        this.bowserDefeatSound = this.add.audio('bowserDead', 7, false);
+        this.bowserDefeatSound = this.add.audio('bowserDefeat', 1, false);
+        
         
         // SCORES + TEXT
         this.score = this.add.sprite(1, 1, 'stats');
@@ -309,17 +310,9 @@ bootcamp.Space.prototype = {
         
         
         if (this.timesToHit == 0) {
-            console.log(this.bossLevel);
             if (this.bossLevel) {
+                console.log("dksjflkqdsjfmkjqdsjf");
                 this.bowserDefeatSound.play();
-                for (var y = 0; y < 5; y++) {
-                    var explosion = this.explosions.getFirstExists(false);
-                     setTimeout(function () {
-                    explosion.reset(enemy.body.x + (enemy.width / 2), enemy.body.y + (enemy.height / 2));
-                    explosion.play('explode', 30, false, true);
-                    enemy.animations.play('bowserDead');
-                     }, 30
-                }
             }
             this.explode(enemy);
             this.timesToHit = 1;
