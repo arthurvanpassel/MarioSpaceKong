@@ -357,8 +357,8 @@ bootcamp.Space.prototype = {
     
     dropItem: function(enemy) {
         if (this.player.alive) {
-            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 2);
-            chanceOfDroppingCoin = this.rnd.integerInRange(0, 2);
+            chanceOfDroppingOneUp = this.rnd.integerInRange(0, 6);
+            chanceOfDroppingCoin = this.rnd.integerInRange(0, 4);
             if (chanceOfDroppingCoin == 0) {
                 console.log("COIN");
                 coin = this.coins.getFirstExists(false);
